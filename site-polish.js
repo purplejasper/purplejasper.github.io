@@ -89,7 +89,6 @@
             </div>
           </article>
         </div>
-        <span class="badge-flip-hint" aria-hidden="true">${badgeCopy.flipHint || 'CLICK / TAP TO FLIP ↻'}</span>
       </div>`;
 
     const scene = badge.querySelector('.badge-scene');
@@ -111,8 +110,8 @@
       links.append(link);
     });
 
-    const toggleBadge = () => {
-      const flipped = scene.classList.toggle('is-flipped');
+    const setBadgeSide = (flipped) => {
+      scene.classList.toggle('is-flipped', flipped);
       badge.querySelector('.badge-face--front').setAttribute('aria-hidden', String(flipped));
       badge.querySelector('.badge-face--back').setAttribute('aria-hidden', String(!flipped));
       links.querySelectorAll('a').forEach((link) => { link.tabIndex = flipped ? 0 : -1; });
@@ -125,11 +124,23 @@
       badge.classList.add('is-responding');
     };
 
+    const toggleBadge = () => setBadgeSide(!scene.classList.contains('is-flipped'));
+    const usesHover = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
     badge.querySelector('.badge-face--front').setAttribute('aria-hidden', 'false');
     badge.querySelector('.badge-face--back').setAttribute('aria-hidden', 'true');
 
+    scene.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'touch' || !usesHover()) return;
+      setBadgeSide(true);
+    });
+    scene.addEventListener('pointerleave', (event) => {
+      if (event.pointerType === 'touch' || !usesHover()) return;
+      setBadgeSide(false);
+    });
     scene.addEventListener('click', (event) => {
       if (event.target.closest('a')) return;
+      if (usesHover()) return;
       toggleBadge();
     });
     scene.addEventListener('keydown', (event) => {

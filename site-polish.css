@@ -127,11 +127,18 @@ header nav {
   position: relative;
   width: 100%;
   aspect-ratio: .69;
+  transform: rotateY(0deg);
+  transform-origin: center center;
   transform-style: preserve-3d;
   transition: transform .72s cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
 }
 
 #top .badge-scene.is-flipped .badge-flipper { transform: rotateY(180deg); }
+
+@media (hover: hover) and (pointer: fine) {
+  #top .badge-scene:hover .badge-flipper { transform: rotateY(180deg); }
+}
 
 #top .badge-face {
   position: absolute;
@@ -140,7 +147,8 @@ header nav {
   -webkit-backface-visibility: hidden;
 }
 
-#top .badge-face--back { transform: rotateY(180deg); }
+#top .badge-face--front { transform: rotateY(0deg) translateZ(1px); }
+#top .badge-face--back { transform: rotateY(180deg) translateZ(1px); }
 
 #top .badge-shell {
   box-sizing: border-box;
@@ -380,26 +388,6 @@ header nav {
 
 #top .badge-barcode--wide { width: 42%; height: 38px; }
 
-#top .badge-flip-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 18px;
-  z-index: 3;
-  padding: 7px 11px;
-  border: 1px solid rgb(255 255 255 / .22);
-  border-radius: 999px;
-  color: rgb(255 255 255 / .74);
-  font-size: 8px;
-  font-weight: 760;
-  letter-spacing: .13em;
-  background: rgb(31 15 39 / .72);
-  transform: translateX(-50%);
-  transition: opacity .25s ease;
-  pointer-events: none;
-}
-
-#top .badge-scene.is-flipped .badge-flip-hint { opacity: 0; }
-
 @keyframes badge-first-settle {
   0% { transform: rotateZ(-1.4deg); }
   52% { transform: rotateZ(.8deg); }
@@ -422,7 +410,6 @@ header nav {
   #top .badge-clip-pin { top: 18px; width: 27px; height: 34px; }
   #top .badge-shell { padding-top: 43px; }
   #top .badge-shell-slot { top: 17px; height: 13px; }
-  #top .badge-flip-hint { bottom: 13px; }
 }
 
 #work {

@@ -41,7 +41,6 @@
       backLabel: 'Retro del badge',
       professionalId: 'PROFESSIONAL ID',
       contactDetails: 'CONTACT / DETAILS',
-      flipHint: 'CLICK / TAP TO FLIP ↻',
       showBack: 'Mostra il retro del badge di Marica Mariniello',
       showFront: 'Mostra il fronte del badge di Marica Mariniello',
       linkedinLabel: 'LinkedIn ↗'
