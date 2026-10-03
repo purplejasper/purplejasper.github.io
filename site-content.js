@@ -172,7 +172,7 @@
     },
 
     contact: {
-      title: "Let's create clear digital experiences.",
+      title: "Let's create <br> clear digital experiences.",
       highlightedWord: 'experiences.',
       description: "I'm currently interested in opportunities across UI/UX Design, Visual UI Design and Product Design, where I can combine my visual background with interface and experience design.",
       cta: 'Get in touch'
