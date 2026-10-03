@@ -574,3 +574,416 @@ footer .footer-linkedin:focus-visible {
 
   #top .badge-assembly { transform: none !important; }
 }
+
+/* Extracted from inline <style> blocks in index.html */
+
+#lovable-badge {
+		--badge-bg: #1b1b1b;
+		--badge-text: #c5c1b9;
+		--badge-text-hover: #dcdad5;
+		--badge-radius: 6px;
+		--badge-padding: 8px;
+		--badge-gap: 6px;
+		--badge-shadow:
+			0 0 0 1px rgba(0, 0, 0, 0.88),
+			0 1px 0 0 rgba(0, 0, 0, 0.04),
+			0 2px 2px -1px rgba(0, 0, 0, 0.08),
+			0 4px 4px -2px rgba(0, 0, 0, 0.08),
+			0 8px 8px -4px rgba(0, 0, 0, 0.08),
+			0 16px 16px -8px rgba(0, 0, 0, 0.08);
+		--badge-transition-duration: 0.2s;
+		--badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
+		--focus-color: #575ECF;
+		--focus-offset: 2px;
+		--focus-width: 2px;
+
+		position: fixed;
+		bottom: 12px;
+		right: 12px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		z-index: 1000000;
+		background-color: var(--badge-bg) !important;
+		color: var(--badge-text) !important;
+		border-radius: var(--badge-radius);
+		box-shadow: var(--badge-shadow) !important;
+		font-size: 12px;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-weight: 400 !important;
+		text-transform: none !important;
+		font-feature-settings: normal !important;
+		transform: translateZ(0);
+		will-change: transform, opacity;
+		transition: opacity var(--badge-transition-duration) var(--badge-transition-easing);
+	}
+
+	#lovable-badge.closing {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	#lovable-badge-cta {
+		display: flex;
+		align-items: baseline;
+		gap: var(--badge-gap);
+		box-sizing: border-box;
+		padding: 4px var(--badge-padding) 0;
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		white-space: nowrap;
+		border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+		transition:
+			background-color var(--badge-transition-duration) ease,
+			color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-cta:hover {
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--badge-text-hover);
+	}
+
+	#lovable-badge-cta:active {
+		transform: scale(0.98);
+	}
+
+	#lovable-badge-cta:focus {
+		outline: none;
+	}
+
+	#lovable-badge-cta:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: var(--focus-offset);
+		z-index: 1;
+	}
+
+	#lovable-badge-text {
+		line-height: 1;
+	}
+
+	/* The wordmark baseline sits at y=12 of the 16px logo; an empty 12px box
+	   makes that the flex baseline so the text aligns to it on any system font. */
+	#lovable-badge-logo {
+		position: relative;
+		display: block;
+		width: 52px;
+		height: 12px;
+	}
+
+	#lovable-badge-logo svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	#lovable-badge-divider {
+		width: 1px;
+		height: 24px;
+		background-color: rgba(255, 255, 255, 0.04);
+		flex-shrink: 0;
+	}
+
+	#lovable-badge-close {
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
+		flex-shrink: 0;
+		transition:
+			background-color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-close:hover {
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	#lovable-badge-close:active {
+		transform: scale(0.92);
+	}
+
+	#lovable-badge-close:focus {
+		outline: none;
+	}
+
+	#lovable-badge-close:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: calc(var(--focus-offset) * -1);
+		z-index: 1;
+	}
+
+	#lovable-badge-close svg path {
+		fill: var(--badge-text);
+		transition: fill var(--badge-transition-duration) ease;
+	}
+
+	#lovable-badge-close:hover svg path {
+		fill: var(--badge-text-hover);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#lovable-badge,
+		#lovable-badge-cta,
+		#lovable-badge-close,
+		#lovable-badge-close svg path {
+			transition: none;
+		}
+
+		#lovable-badge-cta:active,
+		#lovable-badge-close:active {
+			transform: none;
+		}
+	}
+
+	@media (prefers-contrast: high) {
+		#lovable-badge {
+			--badge-bg: #000;
+			--badge-text: #fff;
+			--badge-text-hover: #fff;
+			border: 2px solid currentColor;
+		}
+
+		#lovable-badge-cta:focus-visible,
+		#lovable-badge-close:focus-visible {
+			outline-width: 3px;
+		}
+	}
+
+/* Next extracted style block */
+
+#work .work-carousel-header {
+    margin-bottom: 2rem;
+  }
+
+  #work .work-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 1.5rem;
+  }
+
+  #work .work-carousel-actions,
+  #work .work-carousel-dots {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+  }
+
+  #work .work-carousel-button {
+    min-height: 44px;
+    padding: .7rem 1.1rem;
+    border: 1px solid rgb(255 252 245 / .24);
+    border-radius: 999px;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .25s ease, color .25s ease, opacity .25s ease;
+  }
+
+  #work .work-carousel-button:hover:not(:disabled),
+  #work .work-carousel-button:focus-visible {
+    color: #171717;
+    background: #f6c7d1;
+    outline: none;
+  }
+
+  #work .work-carousel-button:disabled {
+    opacity: .34;
+    cursor: default;
+  }
+
+  #work .work-carousel-count {
+    min-width: 4.25rem;
+    color: rgb(255 252 245 / .58);
+    font-size: .76rem;
+    letter-spacing: .18em;
+    text-align: center;
+  }
+
+  #work .work-carousel-dot {
+    width: 2rem;
+    height: .3rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgb(255 252 245 / .22);
+    cursor: pointer;
+    transition: width .3s ease, background-color .3s ease;
+  }
+
+  #work .work-carousel-dot[aria-current="true"] {
+    width: 3.5rem;
+    background: #f6c7d1;
+  }
+
+  #work .work-carousel-viewport {
+    position: relative;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x pan-y;
+    cursor: grab;
+    perspective: 1400px;
+    padding-block: 1.25rem 2rem;
+  }
+
+  #work .work-carousel-viewport.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+    user-select: none;
+  }
+
+  #work .work-carousel-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  #work .work-carousel-track {
+    display: flex;
+    align-items: stretch;
+    gap: 1.5rem;
+    width: 100%;
+    padding-inline: 3.5rem;
+    transform-style: preserve-3d;
+  }
+
+  #work .work-carousel-slide {
+    flex: 0 0 calc(100% - 7rem);
+    min-width: 0;
+    margin: 0;
+    padding: 2rem;
+    border: 1px solid rgb(255 252 245 / .16);
+    border-radius: 2rem;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    background: rgb(255 255 255 / .025);
+    opacity: var(--slide-opacity, 1);
+    transform: translate3d(0, var(--slide-lift, 0), 0) scale(var(--slide-scale, 1)) rotateY(var(--slide-tilt, 0deg));
+    transform-origin: center center;
+    will-change: transform, opacity;
+    transition: border-color .35s ease;
+  }
+
+  #work .work-carousel-slide[aria-hidden="true"] {
+    border-color: rgb(255 252 245 / .1);
+  }
+
+  #work .work-carousel-slide[aria-hidden="false"] {
+    border-color: rgb(246 199 209 / .46);
+  }
+
+  #work .work-carousel-visual,
+  #work .work-carousel-copy {
+    will-change: transform;
+    transition: transform .12s linear;
+  }
+
+  #work .work-carousel-visual {
+    transform: translate3d(var(--visual-shift, 0), var(--visual-lift, 0), 0) rotate(var(--visual-rotate, 0deg));
+  }
+
+  #work .work-carousel-copy {
+    transform: translate3d(var(--copy-shift, 0), 0, 0);
+  }
+
+  @media (max-width: 767px) {
+    #work .work-carousel-controls {
+      align-items: flex-end;
+    }
+
+    #work .work-carousel-dots {
+      gap: .35rem;
+    }
+
+    #work .work-carousel-dot {
+      width: 1rem;
+    }
+
+    #work .work-carousel-dot[aria-current="true"] {
+      width: 2rem;
+    }
+
+    #work .work-carousel-slide {
+      flex-basis: calc(100% - 1.75rem);
+      padding: 1.1rem;
+      border-radius: 1.4rem;
+    }
+
+    #work .work-carousel-track {
+      gap: .85rem;
+      padding-inline: .875rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #work .work-carousel-viewport {
+      scroll-behavior: auto;
+    }
+
+    #work .work-carousel-slide,
+    #work .work-carousel-visual,
+    #work .work-carousel-copy {
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+/* Next extracted style block */
+
+footer > div {
+    align-items: flex-start;
+  }
+
+  footer .footer-profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  footer .footer-linkedin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border: 1px solid rgb(255 252 245 / .22);
+    border-radius: 999px;
+    color: rgb(255 252 245 / .72);
+    transition: color .25s ease, background-color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+
+  footer .footer-linkedin:hover,
+  footer .footer-linkedin:focus-visible {
+    color: #171717;
+    background: #f6c7d1;
+    border-color: #f6c7d1;
+    transform: translateY(-2px) rotate(-4deg);
+    outline: none;
+  }
+
+  footer .footer-linkedin svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    footer .footer-linkedin {
+      transition: none;
+    }
+  }
