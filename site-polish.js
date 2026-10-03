@@ -25,34 +25,128 @@
 
   const enhanceHeroBadge = () => {
     const badge = document.querySelector('#top .badge-sway');
-    const card = badge?.children?.[2];
-    if (!badge || !card || card.dataset.interactiveBadge === 'true') return;
+    const currentCard = badge?.children?.[2];
+    if (!badge || !currentCard || badge.dataset.interactiveBadge === 'true') return;
 
-    card.dataset.interactiveBadge = 'true';
-    card.classList.add('hero-badge-card');
+    const portrait = currentCard.querySelector('img');
+    const portraitSrc = portrait?.getAttribute('src');
+    const portraitAlt = portrait?.getAttribute('alt') || 'Marica Mariniello';
+    if (!portraitSrc) return;
+
+    badge.dataset.interactiveBadge = 'true';
+    badge.classList.add('badge-assembly');
+    badge.innerHTML = `
+      <div class="badge-lanyard" aria-hidden="true"></div>
+      <div class="badge-hardware" aria-hidden="true">
+        <span class="badge-clip-ring"></span>
+        <span class="badge-clip-pin"></span>
+      </div>
+      <div class="badge-scene" role="button" tabindex="0" aria-pressed="false" aria-label="Mostra il retro del badge di Marica Mariniello">
+        <div class="badge-flipper">
+          <article class="badge-shell badge-face badge-face--front" aria-label="Fronte del badge">
+            <span class="badge-shell-slot" aria-hidden="true"></span>
+            <div class="badge-card badge-card--front">
+              <div class="badge-photo">
+                <img alt="" draggable="false">
+                <div class="badge-micro badge-micro--left" aria-hidden="true">UX/UI<br>VISUAL<br>DESIGNER</div>
+                <div class="badge-micro badge-micro--right" aria-hidden="true"><span class="badge-globe">◎</span>DIGITAL<br>PROFILE</div>
+              </div>
+              <div class="badge-identity">
+                <div class="badge-identity-main">
+                  <p class="badge-first-name">MARICA</p>
+                  <p class="badge-role">UX/UI Designer<br><span>+ Visual Design Specialist</span></p>
+                  <span class="badge-status"><i aria-hidden="true"></i> OPEN TO WORK</span>
+                </div>
+                <div class="badge-id-column" aria-hidden="true">
+                  <span class="badge-monogram">MM✦</span>
+                  <span class="badge-barcode"></span>
+                  <span class="badge-id-number">ID 0001</span>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="badge-shell badge-face badge-face--back" aria-label="Retro del badge">
+            <span class="badge-shell-slot" aria-hidden="true"></span>
+            <div class="badge-card badge-card--back">
+              <div class="badge-back-top">
+                <span>PROFESSIONAL ID</span>
+                <span>MM✦</span>
+              </div>
+              <div class="badge-back-title">
+                <p>MARICA<br>MARINIELLO</p>
+                <span>UX/UI Designer<br>+ Visual Design Specialist</span>
+              </div>
+              <div class="badge-back-details">
+                <p class="badge-back-label">CONTACT / DETAILS</p>
+                <div class="badge-back-links"></div>
+              </div>
+              <div class="badge-back-footer" aria-hidden="true">
+                <span class="badge-barcode badge-barcode--wide"></span>
+                <span>MM✦ &nbsp; ID 0001</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <span class="badge-flip-hint" aria-hidden="true">CLICK / TAP TO FLIP ↻</span>
+      </div>`;
+
+    const scene = badge.querySelector('.badge-scene');
+    const image = badge.querySelector('.badge-photo img');
+    const links = badge.querySelector('.badge-back-links');
+    image.src = portraitSrc;
+    image.alt = portraitAlt;
+
+    const contactLink = document.querySelector('#contact a[href^="mailto:"]');
+    const linkedInLink = document.querySelector('footer a[href*="linkedin.com"]');
+    [contactLink, linkedInLink].forEach((source) => {
+      if (!source) return;
+      const link = document.createElement('a');
+      link.href = source.href;
+      link.textContent = source.href.includes('linkedin.com') ? 'LinkedIn ↗' : source.href.replace(/^mailto:/, '');
+      if (source.target) link.target = source.target;
+      if (source.rel) link.rel = source.rel;
+      link.tabIndex = -1;
+      links.append(link);
+    });
+
+    const toggleBadge = () => {
+      const flipped = scene.classList.toggle('is-flipped');
+      badge.querySelector('.badge-face--front').setAttribute('aria-hidden', String(flipped));
+      badge.querySelector('.badge-face--back').setAttribute('aria-hidden', String(!flipped));
+      links.querySelectorAll('a').forEach((link) => { link.tabIndex = flipped ? 0 : -1; });
+      scene.setAttribute('aria-pressed', String(flipped));
+      scene.setAttribute('aria-label', flipped
+        ? 'Mostra il fronte del badge di Marica Mariniello'
+        : 'Mostra il retro del badge di Marica Mariniello');
+      badge.classList.remove('is-responding');
+      void badge.offsetWidth;
+      badge.classList.add('is-responding');
+    };
+
+    badge.querySelector('.badge-face--front').setAttribute('aria-hidden', 'false');
+    badge.querySelector('.badge-face--back').setAttribute('aria-hidden', 'true');
+
+    scene.addEventListener('click', (event) => {
+      if (event.target.closest('a')) return;
+      toggleBadge();
+    });
+    scene.addEventListener('keydown', (event) => {
+      if (event.target.closest('a')) return;
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      toggleBadge();
+    });
+    badge.addEventListener('animationend', (event) => {
+      if (event.animationName === 'badge-physical-response') badge.classList.remove('is-responding');
+    });
 
     badge.addEventListener('pointermove', (event) => {
-      if (event.pointerType === 'touch') return;
-      const rect = card.getBoundingClientRect();
-      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
-      card.style.setProperty('--badge-ry', `${((x - .5) * 10).toFixed(2)}deg`);
-      card.style.setProperty('--badge-rx', `${((.5 - y) * 8).toFixed(2)}deg`);
-      card.style.setProperty('--badge-y', '-6px');
+      if (event.pointerType === 'touch' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      const rect = badge.getBoundingClientRect();
+      const ratio = Math.max(-1, Math.min(1, (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)));
+      badge.style.setProperty('--assembly-sway', `${(ratio * 1.2).toFixed(2)}deg`);
     });
-
-    badge.addEventListener('pointerleave', () => {
-      card.style.removeProperty('--badge-ry');
-      card.style.removeProperty('--badge-rx');
-      card.style.removeProperty('--badge-y');
-    });
-
-    card.addEventListener('pointerdown', () => {
-      card.classList.remove('is-tapped');
-      void card.offsetWidth;
-      card.classList.add('is-tapped');
-    });
-    card.addEventListener('animationend', () => card.classList.remove('is-tapped'));
+    badge.addEventListener('pointerleave', () => badge.style.setProperty('--assembly-sway', '0deg'));
   };
 
   const enhanceCarousel = () => {
@@ -96,15 +190,13 @@
   };
 
   const start = () => {
-    window.setTimeout(() => {
+    apply();
+    let attempts = 0;
+    const retry = window.setInterval(() => {
       apply();
-      let attempts = 0;
-      const retry = window.setInterval(() => {
-        apply();
-        attempts += 1;
-        if (attempts > 12 && document.querySelector('#work .work-carousel-viewport[data-polished="true"]')) window.clearInterval(retry);
-      }, 180);
-    }, 850);
+      attempts += 1;
+      if (attempts > 12 && document.querySelector('#work .work-carousel-viewport[data-polished="true"]')) window.clearInterval(retry);
+    }, 180);
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
