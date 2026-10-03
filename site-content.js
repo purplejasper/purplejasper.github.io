@@ -17,7 +17,7 @@
     },
 
     navigation: {
-      logo: 'MM✦',
+      logo: 'Marica Mariniello - Designer',
       work: 'Work',
       about: 'About',
       contact: "Let's talk"
