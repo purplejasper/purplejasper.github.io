@@ -1,4 +1,11 @@
 (() => {
+  const styleVersion = '16';
+  const currentStyles = document.createElement('link');
+  currentStyles.rel = 'stylesheet';
+  currentStyles.href = `/site-polish.css?v=${styleVersion}`;
+  currentStyles.dataset.sitePolishVersion = styleVersion;
+  document.head.appendChild(currentStyles);
+
   const caseStudies = [
     '/case-studies/arkipiu/',
     '/case-studies/groupline-shop/',
@@ -125,7 +132,7 @@
     };
 
     const toggleBadge = () => setBadgeSide(!scene.classList.contains('is-flipped'));
-    const usesHover = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const usesHover = () => window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches;
 
     badge.querySelector('.badge-face--front').setAttribute('aria-hidden', 'false');
     badge.querySelector('.badge-face--back').setAttribute('aria-hidden', 'true');
@@ -154,7 +161,7 @@
     });
 
     badge.addEventListener('pointermove', (event) => {
-      if (event.pointerType === 'touch' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      if (event.pointerType === 'touch' || !window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches) return;
       const rect = badge.getBoundingClientRect();
       const ratio = Math.max(-1, Math.min(1, (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)));
       badge.style.setProperty('--assembly-sway', `${(ratio * 1.2).toFixed(2)}deg`);
