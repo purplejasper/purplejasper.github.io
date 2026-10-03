@@ -1,0 +1,210 @@
+:root {
+  --ink: #15121b;
+  --paper: #f4f3f6;
+  --violet: #7f45bf;
+  --magenta: #9b5bd1;
+  --lilac: #c79ae8;
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--ink); }
+body { margin: 0; color: var(--paper); background: var(--ink); }
+a { color: inherit; }
+
+.case-nav {
+  position: fixed;
+  z-index: 20;
+  top: 1rem;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(calc(100% - 2rem), 1180px);
+  padding: .62rem .7rem .62rem 1rem;
+  border: 1px solid rgb(244 243 246 / .15);
+  border-radius: 999px;
+  background: rgb(18 19 24 / .76);
+  backdrop-filter: blur(14px);
+  transform: translateX(-50%);
+}
+
+.case-nav__mark { font-weight: 800; letter-spacing: -.03em; text-decoration: none; }
+.case-nav__back {
+  padding: .65rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  background: rgb(244 243 246 / .08);
+  transition: background .2s ease;
+}
+.case-nav__back:hover { background: rgb(201 134 232 / .22); }
+
+.case-hero {
+  min-height: 92vh;
+  display: grid;
+  align-items: end;
+  padding: 9rem max(1.25rem, calc((100vw - 1180px) / 2)) 5rem;
+  background:
+    radial-gradient(circle at 78% 30%, rgb(127 69 191 / .58), transparent 31%),
+    radial-gradient(circle at 12% 82%, rgb(155 91 209 / .28), transparent 32%),
+    var(--ink);
+}
+
+.case-hero__eyebrow,
+.case-section__eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--lilac);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.case-hero h1 {
+  max-width: 1000px;
+  margin: 0;
+  font-size: clamp(3.7rem, 10vw, 9.5rem);
+  line-height: .88;
+  letter-spacing: -.07em;
+}
+
+.case-hero__intro {
+  max-width: 720px;
+  margin: 2rem 0 0;
+  color: rgb(244 243 246 / .72);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.55;
+}
+
+.case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: 2rem;
+}
+.case-meta span {
+  padding: .52rem .85rem;
+  border: 1px solid rgb(244 243 246 / .2);
+  border-radius: 999px;
+  font-size: .8rem;
+}
+
+.case-section {
+  padding: 7rem max(1.25rem, calc((100vw - 1180px) / 2));
+}
+.case-section--paper { color: var(--ink); background: var(--paper); }
+.case-section--ink { background: var(--ink); }
+.case-section h2 {
+  max-width: 850px;
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 5.7rem);
+  line-height: .96;
+  letter-spacing: -.055em;
+}
+.case-section__lead {
+  max-width: 760px;
+  margin: 1.7rem 0 0;
+  color: rgb(18 19 24 / .68);
+  font-size: 1.12rem;
+  line-height: 1.7;
+}
+.case-section--ink .case-section__lead { color: rgb(244 243 246 / .7); }
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 3.5rem;
+}
+.case-card {
+  min-height: 250px;
+  padding: 1.5rem;
+  border: 1px solid rgb(18 19 24 / .12);
+  border-radius: 1.6rem;
+  background: #fff;
+}
+.case-card__number { color: var(--violet); font-size: .78rem; font-weight: 800; letter-spacing: .16em; }
+.case-card h3 { margin: 4.5rem 0 .8rem; font-size: 1.5rem; letter-spacing: -.035em; }
+.case-card p { margin: 0; color: rgb(18 19 24 / .62); line-height: 1.55; }
+
+.case-visual {
+  position: relative;
+  min-height: min(68vw, 720px);
+  overflow: hidden;
+  margin-top: 3rem;
+  border: 1px solid rgb(244 243 246 / .16);
+  border-radius: 2rem;
+  background:
+    linear-gradient(130deg, rgb(244 243 246 / .08), transparent 45%),
+    radial-gradient(circle at 78% 25%, rgb(155 91 209 / .62), transparent 30%),
+    radial-gradient(circle at 18% 80%, rgb(127 69 191 / .55), transparent 34%),
+    #17181e;
+}
+.case-visual::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 7%;
+  bottom: 8%;
+  max-width: 84%;
+  font-size: clamp(3rem, 10vw, 8.5rem);
+  font-weight: 850;
+  line-height: .86;
+  letter-spacing: -.07em;
+  white-space: pre-line;
+}
+.case-visual::after {
+  content: "MARICA MARINIELLO — PORTFOLIO 2026";
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  color: rgb(244 243 246 / .62);
+  font-size: .7rem;
+  letter-spacing: .18em;
+}
+
+.case-results {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 3.5rem;
+}
+.case-result {
+  padding: 1.6rem 0;
+  border-top: 1px solid rgb(244 243 246 / .2);
+}
+.case-result strong { display: block; color: var(--lilac); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; }
+.case-result span { display: block; margin-top: .75rem; color: rgb(244 243 246 / .58); }
+
+.case-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 5rem max(1.25rem, calc((100vw - 1180px) / 2));
+  color: var(--ink);
+  background: linear-gradient(115deg, var(--lilac), var(--magenta));
+  text-decoration: none;
+}
+.case-next small { display: block; margin-bottom: .6rem; text-transform: uppercase; letter-spacing: .18em; }
+.case-next strong { font-size: clamp(2rem, 6vw, 5.5rem); line-height: .95; letter-spacing: -.05em; }
+.case-next__arrow { font-size: clamp(3rem, 8vw, 7rem); }
+
+.case-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding: .75rem max(1.25rem, calc((100vw - 1180px) / 2));
+  color: rgb(244 243 246 / .55);
+  font-size: .78rem;
+  background: #0d0e12;
+}
+
+@media (max-width: 760px) {
+  .case-grid, .case-results { grid-template-columns: 1fr; }
+  .case-card { min-height: 210px; }
+  .case-card h3 { margin-top: 2.5rem; }
+  .case-next { align-items: flex-end; }
+  .case-footer { gap: 1rem; }
+}
