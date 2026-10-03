@@ -24,6 +24,8 @@
   };
 
   const enhanceHeroBadge = () => {
+    const content = window.PORTFOLIO_CONTENT || {};
+    const badgeCopy = content.badge || {};
     const badge = document.querySelector('#top .badge-sway');
     const currentCard = badge?.children?.[2];
     if (!badge || !currentCard || badge.dataset.interactiveBadge === 'true') return;
@@ -41,53 +43,53 @@
         <span class="badge-clip-ring"></span>
         <span class="badge-clip-pin"></span>
       </div>
-      <div class="badge-scene" role="button" tabindex="0" aria-pressed="false" aria-label="Mostra il retro del badge di Marica Mariniello">
+      <div class="badge-scene" role="button" tabindex="0" aria-pressed="false" aria-label="${badgeCopy.showBack || 'Mostra il retro del badge di Marica Mariniello'}">
         <div class="badge-flipper">
-          <article class="badge-shell badge-face badge-face--front" aria-label="Fronte del badge">
+          <article class="badge-shell badge-face badge-face--front" aria-label="${badgeCopy.frontLabel || 'Fronte del badge'}">
             <span class="badge-shell-slot" aria-hidden="true"></span>
             <div class="badge-card badge-card--front">
               <div class="badge-photo">
                 <img alt="" draggable="false">
-                <div class="badge-micro badge-micro--left" aria-hidden="true">UX/UI<br>VISUAL<br>DESIGNER</div>
-                <div class="badge-micro badge-micro--right" aria-hidden="true"><span class="badge-globe">◎</span>DIGITAL<br>PROFILE</div>
+                <div class="badge-micro badge-micro--left" aria-hidden="true">${(badgeCopy.microLeft || ['UX/UI', 'VISUAL', 'DESIGNER']).join('<br>')}</div>
+                <div class="badge-micro badge-micro--right" aria-hidden="true"><span class="badge-globe">◎</span>${(badgeCopy.microRight || ['DIGITAL', 'PROFILE']).join('<br>')}</div>
               </div>
               <div class="badge-identity">
                 <div class="badge-identity-main">
-                  <p class="badge-first-name">MARICA</p>
-                  <p class="badge-role">UX/UI Designer<br><span>+ Visual Design Specialist</span></p>
-                  <span class="badge-status"><i aria-hidden="true"></i> OPEN TO WORK</span>
+                  <p class="badge-first-name">${badgeCopy.firstName || 'MARICA'}</p>
+                  <p class="badge-role">${badgeCopy.role || 'UX/UI Designer'}<br><span>${badgeCopy.roleSecondary || '+ Visual Design Specialist'}</span></p>
+                  <span class="badge-status"><i aria-hidden="true"></i> ${badgeCopy.status || 'OPEN TO WORK'}</span>
                 </div>
                 <div class="badge-id-column" aria-hidden="true">
-                  <span class="badge-monogram">MM✦</span>
+                  <span class="badge-monogram">${badgeCopy.monogram || 'MM✦'}</span>
                   <span class="badge-barcode"></span>
-                  <span class="badge-id-number">ID 0001</span>
+                  <span class="badge-id-number">${badgeCopy.id || 'ID 0001'}</span>
                 </div>
               </div>
             </div>
           </article>
-          <article class="badge-shell badge-face badge-face--back" aria-label="Retro del badge">
+          <article class="badge-shell badge-face badge-face--back" aria-label="${badgeCopy.backLabel || 'Retro del badge'}">
             <span class="badge-shell-slot" aria-hidden="true"></span>
             <div class="badge-card badge-card--back">
               <div class="badge-back-top">
-                <span>PROFESSIONAL ID</span>
-                <span>MM✦</span>
+                <span>${badgeCopy.professionalId || 'PROFESSIONAL ID'}</span>
+                <span>${badgeCopy.monogram || 'MM✦'}</span>
               </div>
               <div class="badge-back-title">
-                <p>MARICA<br>MARINIELLO</p>
-                <span>UX/UI Designer<br>+ Visual Design Specialist</span>
+                <p>${(badgeCopy.fullName || 'MARICA MARINIELLO').replace(' ', '<br>')}</p>
+                <span>${badgeCopy.role || 'UX/UI Designer'}<br>${badgeCopy.roleSecondary || '+ Visual Design Specialist'}</span>
               </div>
               <div class="badge-back-details">
-                <p class="badge-back-label">CONTACT / DETAILS</p>
+                <p class="badge-back-label">${badgeCopy.contactDetails || 'CONTACT / DETAILS'}</p>
                 <div class="badge-back-links"></div>
               </div>
               <div class="badge-back-footer" aria-hidden="true">
                 <span class="badge-barcode badge-barcode--wide"></span>
-                <span>MM✦ &nbsp; ID 0001</span>
+                <span>${badgeCopy.monogram || 'MM✦'} &nbsp; ${badgeCopy.id || 'ID 0001'}</span>
               </div>
             </div>
           </article>
         </div>
-        <span class="badge-flip-hint" aria-hidden="true">CLICK / TAP TO FLIP ↻</span>
+        <span class="badge-flip-hint" aria-hidden="true">${badgeCopy.flipHint || 'CLICK / TAP TO FLIP ↻'}</span>
       </div>`;
 
     const scene = badge.querySelector('.badge-scene');
@@ -102,7 +104,7 @@
       if (!source) return;
       const link = document.createElement('a');
       link.href = source.href;
-      link.textContent = source.href.includes('linkedin.com') ? 'LinkedIn ↗' : source.href.replace(/^mailto:/, '');
+      link.textContent = source.href.includes('linkedin.com') ? (badgeCopy.linkedinLabel || 'LinkedIn ↗') : source.href.replace(/^mailto:/, '');
       if (source.target) link.target = source.target;
       if (source.rel) link.rel = source.rel;
       link.tabIndex = -1;
@@ -116,8 +118,8 @@
       links.querySelectorAll('a').forEach((link) => { link.tabIndex = flipped ? 0 : -1; });
       scene.setAttribute('aria-pressed', String(flipped));
       scene.setAttribute('aria-label', flipped
-        ? 'Mostra il fronte del badge di Marica Mariniello'
-        : 'Mostra il retro del badge di Marica Mariniello');
+        ? (badgeCopy.showFront || 'Mostra il fronte del badge di Marica Mariniello')
+        : (badgeCopy.showBack || 'Mostra il retro del badge di Marica Mariniello'));
       badge.classList.remove('is-responding');
       void badge.offsetWidth;
       badge.classList.add('is-responding');
@@ -177,7 +179,7 @@
       link.href = caseStudies[index];
       link.className = oldButton.className;
       link.dataset.caseStudyLink = 'true';
-      link.textContent = 'View Case Study';
+      link.textContent = window.PORTFOLIO_CONTENT?.work?.viewCaseStudy || 'View Case Study';
       oldButton.replaceWith(link);
     });
     return true;

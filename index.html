@@ -45,15 +45,16 @@
       container.dataset.carouselReady = 'true';
       header.classList.add('work-carousel-header');
 
+      const carouselCopy = window.PORTFOLIO_CONTENT?.carousel || {};
       const controls = document.createElement('div');
       controls.className = 'work-carousel-controls';
       controls.innerHTML = `
         <div class="work-carousel-actions">
-          <button class="work-carousel-button" type="button" data-carousel-previous aria-label="Show previous project">Previous</button>
+          <button class="work-carousel-button" type="button" data-carousel-previous aria-label="${carouselCopy.previousAriaLabel || 'Show previous project'}">${carouselCopy.previous || 'Previous'}</button>
           <span class="work-carousel-count" aria-live="polite">01 / 04</span>
-          <button class="work-carousel-button" type="button" data-carousel-next aria-label="Show next project">Next</button>
+          <button class="work-carousel-button" type="button" data-carousel-next aria-label="${carouselCopy.nextAriaLabel || 'Show next project'}">${carouselCopy.next || 'Next'}</button>
         </div>
-        <div class="work-carousel-dots" aria-label="Choose project"></div>
+        <div class="work-carousel-dots" aria-label="${carouselCopy.chooseProjectAriaLabel || 'Choose project'}"></div>
       `;
 
       const viewport = document.createElement('div');
@@ -61,7 +62,7 @@
       viewport.tabIndex = 0;
       viewport.setAttribute('role', 'region');
       viewport.setAttribute('aria-roledescription', 'carousel');
-      viewport.setAttribute('aria-label', 'Selected work');
+      viewport.setAttribute('aria-label', carouselCopy.selectedWorkAriaLabel || 'Selected work');
 
       const track = document.createElement('div');
       track.className = 'work-carousel-track';
@@ -96,7 +97,7 @@
         const dot = document.createElement('button');
         dot.type = 'button';
         dot.className = 'work-carousel-dot';
-        dot.setAttribute('aria-label', `Show project ${index + 1}`);
+        dot.setAttribute('aria-label', `${carouselCopy.showProjectAriaLabel || 'Show project'} ${index + 1}`);
         dot.addEventListener('click', () => goTo(index));
         dots.appendChild(dot);
       });
@@ -269,6 +270,7 @@
   })();
 </script>
 
+<script src="/site-content.js"></script>
 <script id="footer-profile-script">
   (() => {
     const applyProfileDetails = () => {
@@ -295,13 +297,13 @@
       }
 
       const linkedIn = document.createElement('a');
-      linkedIn.href = 'https://www.linkedin.com/in/maricamariniello/';
+      linkedIn.href = window.PORTFOLIO_CONTENT?.links?.linkedin || 'https://www.linkedin.com/in/maricamariniello/';
       linkedIn.target = '_blank';
       linkedIn.rel = 'noopener noreferrer';
       linkedIn.className = 'footer-linkedin';
       linkedIn.dataset.linkedinFooter = 'true';
-      linkedIn.setAttribute('aria-label', 'Marica Mariniello on LinkedIn');
-      linkedIn.title = 'LinkedIn';
+      linkedIn.setAttribute('aria-label', window.PORTFOLIO_CONTENT?.footer?.linkedinAriaLabel || 'Marica Mariniello on LinkedIn');
+      linkedIn.title = window.PORTFOLIO_CONTENT?.footer?.linkedinTitle || 'LinkedIn';
       linkedIn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.42v1.57h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.29ZM5.32 7.41a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.1 20.45H3.54V8.98H7.1v11.47Z"/></svg>';
       identity.appendChild(linkedIn);
     };
