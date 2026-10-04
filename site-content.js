@@ -13,7 +13,8 @@
 
     links: {
       email: 'mailto:mariniello.marica@gmail.com',
-      linkedin: 'https://www.linkedin.com/in/maricamariniello/'
+      linkedin: 'https://www.linkedin.com/in/maricamariniello/',
+      behance: 'https://www.behance.net/maricamarinie'
     },
 
     navigation: {
@@ -194,7 +195,9 @@
       copyright: '© 2026 Marica Mariniello',
       backToTop: 'Back to top ↑',
       linkedinTitle: 'LinkedIn',
-      linkedinAriaLabel: 'Marica Mariniello on LinkedIn'
+      linkedinAriaLabel: 'Marica Mariniello on LinkedIn',
+      behanceTitle: 'Behance',
+      behanceAriaLabel: 'Marica Mariniello on Behance'
     },
 
     carousel: {
@@ -399,6 +402,12 @@
         linkedIn.href = content.links.linkedin;
         linkedIn.title = content.footer.linkedinTitle;
         linkedIn.setAttribute('aria-label', content.footer.linkedinAriaLabel);
+      }
+      const behance = footer.querySelector('[data-behance-footer]');
+      if (behance) {
+        behance.href = content.links.behance;
+        behance.title = content.footer.behanceTitle;
+        behance.setAttribute('aria-label', content.footer.behanceAriaLabel);
       }
     }
   };
