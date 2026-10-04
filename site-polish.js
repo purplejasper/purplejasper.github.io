@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '20';
+  const styleVersion = '21';
   const currentStyles = document.querySelector('link[href^="/site-polish.css"]') || document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
@@ -275,12 +275,117 @@
     return true;
   };
 
+  const setupCustomCursor = () => {
+    const root = document.documentElement;
+    if (root.dataset.customCursorSetup === 'true') return;
+    root.dataset.customCursorSetup = 'true';
+
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let cleanup = null;
+
+    const mount = () => {
+      if (cleanup || !finePointer.matches) return;
+
+      const controller = new AbortController();
+      const { signal } = controller;
+      const cursor = document.createElement('div');
+      cursor.className = 'portfolio-cursor';
+      cursor.dataset.state = 'default';
+      cursor.setAttribute('aria-hidden', 'true');
+      cursor.innerHTML = '<div class="portfolio-cursor__disc"><span class="portfolio-cursor__label"></span></div>';
+      document.body.append(cursor);
+      root.classList.add('has-custom-cursor');
+
+      const label = cursor.querySelector('.portfolio-cursor__label');
+      const stateLabels = { view: 'VIEW', flip: 'FLIP', back: 'BACK', drag: 'DRAG' };
+      let state = 'default';
+      let activeTarget = null;
+      let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
+      let currentX = targetX;
+      let currentY = targetY;
+      let visible = false;
+      let frame = 0;
+
+      const resolveState = (target) => {
+        const element = target instanceof Element ? target : null;
+        if (!element) return 'default';
+        const badge = element.closest('#top .badge-scene');
+        if (badge) return badge.classList.contains('is-flipped') ? 'back' : 'flip';
+        if (element.closest('#work .work-carousel-visual')) return 'view';
+        if (element.closest('a, button, input, textarea, select, summary, [role="button"], [tabindex]:not([tabindex="-1"])')) return 'link';
+        if (element.closest('#work .work-carousel-viewport')) return 'drag';
+        return 'default';
+      };
+
+      const setState = (nextState) => {
+        if (state === nextState) return;
+        state = nextState;
+        cursor.dataset.state = state;
+        label.textContent = stateLabels[state] || '';
+      };
+
+      const render = () => {
+        if (activeTarget?.isConnected) setState(resolveState(activeTarget));
+        const easing = reducedMotion.matches ? 1 : .22;
+        currentX += (targetX - currentX) * easing;
+        currentY += (targetY - currentY) * easing;
+        cursor.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0)`;
+        frame = window.requestAnimationFrame(render);
+      };
+
+      document.addEventListener('pointermove', (event) => {
+        if (event.pointerType === 'touch') return;
+        targetX = event.clientX;
+        targetY = event.clientY;
+        activeTarget = event.target;
+        if (!visible) {
+          visible = true;
+          currentX = targetX;
+          currentY = targetY;
+          cursor.classList.add('is-visible');
+        }
+        setState(resolveState(activeTarget));
+      }, { signal, passive: true });
+
+      document.addEventListener('pointerout', (event) => {
+        if (event.relatedTarget) return;
+        visible = false;
+        cursor.classList.remove('is-visible');
+      }, { signal, passive: true });
+
+      window.addEventListener('blur', () => {
+        visible = false;
+        cursor.classList.remove('is-visible');
+      }, { signal });
+      frame = window.requestAnimationFrame(render);
+
+      cleanup = () => {
+        controller.abort();
+        window.cancelAnimationFrame(frame);
+        cursor.remove();
+        root.classList.remove('has-custom-cursor');
+        cleanup = null;
+      };
+    };
+
+    const sync = () => {
+      if (finePointer.matches) mount();
+      else cleanup?.();
+    };
+
+    finePointer.addEventListener?.('change', sync);
+    sync();
+  };
+
   const apply = () => {
     removeRequestedSections();
     enhanceIntroduction();
     enhanceHeroBadge();
     enhanceCarousel();
     enhanceApproachIcons();
+    setupCustomCursor();
   };
 
   const start = () => {
