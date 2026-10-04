@@ -1,10 +1,10 @@
 (() => {
-  const styleVersion = '17';
-  const currentStyles = document.createElement('link');
+  const styleVersion = '18';
+  const currentStyles = document.querySelector('link[href^="/site-polish.css"]') || document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
   currentStyles.dataset.sitePolishVersion = styleVersion;
-  document.head.appendChild(currentStyles);
+  if (!currentStyles.isConnected) document.head.appendChild(currentStyles);
 
   const caseStudies = [
     '/case-studies/arkipiu/',
@@ -12,6 +12,52 @@
     '/case-studies/naili-gatto-perry/',
     '/case-studies/brand-digital-design/'
   ];
+
+  const escapeHTML = (value = '') => String(value).replace(/[&<>'"]/g, (character) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  })[character]);
+
+  const enhanceIntroduction = () => {
+    const section = document.querySelector('#top + section');
+    if (!section || section.dataset.introEnhanced === 'true') return false;
+
+    const intro = window.PORTFOLIO_CONTENT?.introduction || {};
+    const skills = intro.skills || ['UI Design', 'Responsive Design', 'Visual Systems', 'UX Foundations'];
+    section.dataset.introEnhanced = 'true';
+    section.className = 'intro-showcase';
+    section.innerHTML = `
+      <div class="intro-showcase__shell">
+        <div class="intro-showcase__ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+        <header class="intro-showcase__header">
+          <p data-intro="eyebrow">${escapeHTML(intro.eyebrow || 'Marica Mariniello — UX/UI Designer & Visual Design Specialist')}</p>
+          <span data-intro="visual-kicker">${escapeHTML(intro.visualKicker || 'UI × Visual Systems')}</span>
+        </header>
+        <div class="intro-showcase__composition">
+          <div class="intro-showcase__copy">
+            <h1><span data-intro="title-lead">${escapeHTML(intro.displayTitleLead || 'Design with')}</span><em data-intro="title-accent">${escapeHTML(intro.displayTitleAccent || 'clarity.')}</em><span data-intro="title-close">${escapeHTML(intro.displayTitleClose || 'Built with character.')}</span></h1>
+            <p data-intro="description">${escapeHTML(intro.description || '')}</p>
+            <div class="intro-showcase__actions">
+              <a href="#work" data-intro="primary-cta">${escapeHTML(intro.primaryCta || 'View Selected Work')}</a>
+              <a href="#about" data-intro="secondary-cta">${escapeHTML(intro.secondaryCta || 'About Me')}</a>
+            </div>
+          </div>
+          <div class="intro-showcase__visual" aria-label="UI and visual design disciplines">
+            <div class="intro-orbit intro-orbit--outer" aria-hidden="true"></div>
+            <div class="intro-orbit intro-orbit--inner" aria-hidden="true"></div>
+            <div class="intro-showcase__core" data-intro="visual-core">${escapeHTML(intro.visualCore || 'MM✦')}</div>
+            <span class="intro-showcase__satellite intro-showcase__satellite--top" data-intro="visual-orbit-top">${escapeHTML(intro.visualOrbitTop || 'UI DESIGN')}</span>
+            <span class="intro-showcase__satellite intro-showcase__satellite--right" data-intro="visual-orbit-right">${escapeHTML(intro.visualOrbitRight || 'RESPONSIVE')}</span>
+            <span class="intro-showcase__satellite intro-showcase__satellite--bottom" data-intro="visual-orbit-bottom">${escapeHTML(intro.visualOrbitBottom || 'VISUAL SYSTEMS')}</span>
+          </div>
+        </div>
+        <div class="intro-showcase__footer">
+          <article><strong data-intro="experience-value">${escapeHTML(intro.experienceValue || '06+')}</strong><span data-intro="experience-label">${escapeHTML(intro.experienceLabel || 'years visual & digital')}</span></article>
+          <article><strong data-intro="interface-value">${escapeHTML(intro.interfaceValue || '02+')}</strong><span data-intro="interface-label">${escapeHTML(intro.interfaceLabel || 'years focused on UI/Web')}</span></article>
+          <ul>${skills.map((skill) => `<li data-intro-skill>${escapeHTML(skill)}</li>`).join('')}</ul>
+        </div>
+      </div>`;
+    return true;
+  };
 
   const removeRequestedSections = () => {
     document.querySelectorAll('section').forEach((section) => {
@@ -28,6 +74,8 @@
 
     const workHeading = document.querySelector('#work h2');
     workHeading?.parentElement?.querySelector('p')?.remove();
+
+    document.querySelectorAll('#work .work-carousel-visual p, #work article > div:first-child p').forEach((title) => title.remove());
 
     document.querySelectorAll('#contact > div > div').forEach((block) => {
       const text = block.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
@@ -229,6 +277,7 @@
 
   const apply = () => {
     removeRequestedSections();
+    enhanceIntroduction();
     enhanceHeroBadge();
     enhanceCarousel();
     enhanceApproachIcons();
