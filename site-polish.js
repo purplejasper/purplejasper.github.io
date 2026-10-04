@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '21';
+  const styleVersion = '23';
   const currentStyles = document.querySelector('link[href^="/site-polish.css"]') || document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
@@ -182,17 +182,18 @@
     };
 
     const toggleBadge = () => setBadgeSide(!scene.classList.contains('is-flipped'));
-    const usesHover = () => window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches;
+    const hoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const usesHover = () => hoverQuery.matches;
 
     badge.querySelector('.badge-face--front').setAttribute('aria-hidden', 'false');
     badge.querySelector('.badge-face--back').setAttribute('aria-hidden', 'true');
 
-    scene.addEventListener('pointerenter', (event) => {
-      if (event.pointerType === 'touch' || !usesHover()) return;
+    scene.addEventListener('mouseenter', () => {
+      if (!usesHover()) return;
       setBadgeSide(true);
     });
-    scene.addEventListener('pointerleave', (event) => {
-      if (event.pointerType === 'touch' || !usesHover()) return;
+    scene.addEventListener('mouseleave', () => {
+      if (!usesHover()) return;
       setBadgeSide(false);
     });
     scene.addEventListener('click', (event) => {
@@ -206,8 +207,8 @@
       event.preventDefault();
       toggleBadge();
     });
-    badge.addEventListener('pointermove', (event) => {
-      if (event.pointerType === 'touch' || !window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches) return;
+    badge.addEventListener('mousemove', (event) => {
+      if (!usesHover()) return;
       const rect = badge.getBoundingClientRect();
       const ratio = Math.max(-1, Math.min(1, (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)));
       badge.style.setProperty('--assembly-sway', `${(ratio * 1.2).toFixed(2)}deg`);
@@ -292,10 +293,10 @@
       const cursor = document.createElement('div');
       cursor.className = 'portfolio-cursor';
       cursor.dataset.state = 'default';
+      cursor.dataset.tone = 'dark';
       cursor.setAttribute('aria-hidden', 'true');
       cursor.innerHTML = '<div class="portfolio-cursor__disc"><span class="portfolio-cursor__label"></span></div>';
       document.body.append(cursor);
-      root.classList.add('has-custom-cursor');
 
       const label = cursor.querySelector('.portfolio-cursor__label');
       const stateLabels = { view: 'VIEW', flip: 'FLIP', back: 'BACK', drag: 'DRAG' };
@@ -319,6 +320,14 @@
         return 'default';
       };
 
+      const resolveTone = (target) => {
+        const element = target instanceof Element ? target : document.body;
+        const color = window.getComputedStyle(element).color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+        if (!color || color.length < 3) return 'dark';
+        const luminance = (color[0] * .2126 + color[1] * .7152 + color[2] * .0722) / 255;
+        return luminance >= .58 ? 'dark' : 'light';
+      };
+
       const setState = (nextState) => {
         if (state === nextState) return;
         state = nextState;
@@ -335,28 +344,37 @@
         frame = window.requestAnimationFrame(render);
       };
 
-      document.addEventListener('pointermove', (event) => {
-        if (event.pointerType === 'touch') return;
+      const moveEvent = 'PointerEvent' in window ? 'pointermove' : 'mousemove';
+      const outEvent = 'PointerEvent' in window ? 'pointerout' : 'mouseout';
+
+      document.addEventListener(moveEvent, (event) => {
+        if ('pointerType' in event && event.pointerType === 'touch') return;
         targetX = event.clientX;
         targetY = event.clientY;
-        activeTarget = event.target;
+        if (activeTarget !== event.target) {
+          activeTarget = event.target;
+          cursor.dataset.tone = resolveTone(activeTarget);
+        }
         if (!visible) {
           visible = true;
           currentX = targetX;
           currentY = targetY;
+          root.classList.add('has-custom-cursor');
           cursor.classList.add('is-visible');
         }
         setState(resolveState(activeTarget));
       }, { signal, passive: true });
 
-      document.addEventListener('pointerout', (event) => {
+      document.addEventListener(outEvent, (event) => {
         if (event.relatedTarget) return;
         visible = false;
+        root.classList.remove('has-custom-cursor');
         cursor.classList.remove('is-visible');
       }, { signal, passive: true });
 
       window.addEventListener('blur', () => {
         visible = false;
+        root.classList.remove('has-custom-cursor');
         cursor.classList.remove('is-visible');
       }, { signal });
       frame = window.requestAnimationFrame(render);
@@ -375,7 +393,8 @@
       else cleanup?.();
     };
 
-    finePointer.addEventListener?.('change', sync);
+    if (finePointer.addEventListener) finePointer.addEventListener('change', sync);
+    else finePointer.addListener?.(sync);
     sync();
   };
 
@@ -389,13 +408,38 @@
   };
 
   const start = () => {
-    apply();
-    let attempts = 0;
-    const retry = window.setInterval(() => {
-      apply();
-      attempts += 1;
-      if (attempts > 12 && document.querySelector('#work .work-carousel-viewport[data-polished="true"]')) window.clearInterval(retry);
-    }, 180);
+    let hydrationChecks = 0;
+
+    const applyAfterHydration = () => {
+      if (window.$_TSR && hydrationChecks < 100) {
+        hydrationChecks += 1;
+        window.setTimeout(applyAfterHydration, 50);
+        return;
+      }
+
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+        apply();
+
+        let queuedApply = 0;
+        const observer = new MutationObserver(() => {
+          window.clearTimeout(queuedApply);
+          queuedApply = window.setTimeout(apply, 80);
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        let attempts = 0;
+        const retry = window.setInterval(() => {
+          apply();
+          attempts += 1;
+          if (attempts >= 24) {
+            window.clearInterval(retry);
+            observer.disconnect();
+          }
+        }, 250);
+      }));
+    };
+
+    applyAfterHydration();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
