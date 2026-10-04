@@ -95,12 +95,13 @@ header nav > a[href="#contact"]:focus-visible {
   --badge-plum: #211027;
   --badge-shell: rgb(36 24 48 / .64);
   --assembly-sway: 0deg;
+  --badge-rest-angle: -3deg;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: clamp(350px, 30vw, 440px);
   min-width: 0;
-  transform: rotateZ(var(--assembly-sway));
+  transform: rotateZ(calc(var(--badge-rest-angle) + var(--assembly-sway)));
   transform-origin: top center;
   transition: transform .42s cubic-bezier(.22, 1, .36, 1);
   animation: badge-first-settle 1.05s cubic-bezier(.22, 1, .36, 1) both;
@@ -461,10 +462,10 @@ header nav > a[href="#contact"]:focus-visible {
 #top .badge-barcode--wide { width: 42%; height: 38px; }
 
 @keyframes badge-first-settle {
-  0% { transform: rotateZ(-1.4deg); }
-  52% { transform: rotateZ(.8deg); }
-  78% { transform: rotateZ(-.35deg); }
-  100% { transform: rotateZ(0deg); }
+  0% { transform: rotateZ(-6deg); }
+  52% { transform: rotateZ(-1.5deg); }
+  78% { transform: rotateZ(-3.5deg); }
+  100% { transform: rotateZ(calc(var(--badge-rest-angle) + var(--assembly-sway))); }
 }
 
 @keyframes badge-physical-response {
@@ -561,7 +562,7 @@ header nav > a[href="#contact"]:focus-visible {
 }
 
 #contact {
-  min-height: 78vh !important;
+  min-height: 72vh !important;
   color: var(--portfolio-paper) !important;
   background:
     radial-gradient(circle at 78% 32%, rgb(127 69 191 / .62), transparent 30%),
@@ -577,8 +578,8 @@ header nav > a[href="#contact"]:focus-visible {
 }
 
 #contact h2 {
-  max-width: 960px;
-  font-size: clamp(2.9rem, 6.2vw, 5.25rem) !important;
+  max-width: 1000px;
+  font-size: clamp(3.1rem, 6.8vw, 5.75rem) !important;
   line-height: .93 !important;
 }
 #contact h2 .italic { color: var(--portfolio-lilac); }
@@ -1770,5 +1771,131 @@ footer > div {
   .intro-showcase__core,
   .intro-showcase__satellite {
     animation: none !important;
+  }
+}
+
+/* Portfolio refinements — v20 */
+
+section[data-content-section='approach'] > div > p:first-child::before {
+  content: '✳';
+  display: inline-block;
+  margin-right: .65rem;
+  color: #d77bfa;
+  font-size: 1.15em;
+  line-height: 0;
+  transform: translateY(.08em);
+}
+
+#contact h2 {
+  position: relative;
+}
+
+#contact h2::before {
+  content: '✳';
+  position: absolute;
+  left: 50%;
+  top: -2.35rem;
+  color: #df76fa;
+  font-size: 1.55rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 13px rgb(220 77 255 / .4));
+}
+
+section[data-content-section='approach'] .group {
+  position: relative;
+  transition: background-color .42s ease, border-color .42s ease, padding-inline .42s ease;
+}
+
+section[data-content-section='approach'] .group::before {
+  content: '';
+  position: absolute;
+  inset: .35rem 0;
+  z-index: -1;
+  border-radius: 1.25rem;
+  opacity: 0;
+  background: linear-gradient(90deg, rgb(155 91 209 / .16), rgb(220 77 255 / .055) 58%, transparent);
+  transform: scaleX(.96);
+  transform-origin: left center;
+  transition: opacity .42s ease, transform .42s cubic-bezier(.22, 1, .36, 1);
+}
+
+section[data-content-section='approach'] .group:hover::before,
+section[data-content-section='approach'] .group:focus-within::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+section[data-content-section='approach'] .group h3 {
+  transform-origin: left center;
+  transition: color .42s ease, transform .5s cubic-bezier(.22, 1, .36, 1), letter-spacing .42s ease !important;
+}
+
+section[data-content-section='approach'] .group:hover h3,
+section[data-content-section='approach'] .group:focus-within h3 {
+  color: #e7b6ff;
+  letter-spacing: -.035em;
+  transform: translateX(1.15rem) scale(1.075) !important;
+}
+
+.approach-icon {
+  position: relative;
+  width: 4.25rem;
+  height: 4.25rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  color: #c879ed !important;
+  background:
+    radial-gradient(circle at 36% 28%, rgb(232 168 255 / .16), transparent 38%),
+    rgb(19 15 25 / .88);
+  box-shadow: inset 0 0 0 5px rgb(199 121 237 / .055), 0 12px 32px rgb(0 0 0 / .22);
+  transition: color .4s ease, transform .5s cubic-bezier(.22, 1, .36, 1), box-shadow .4s ease, background .4s ease;
+}
+
+.approach-icon::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgb(215 136 249 / .22);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.approach-icon svg {
+  position: relative;
+  z-index: 1;
+  width: 2.05rem;
+  height: 2.05rem;
+  stroke-width: 1.75;
+}
+
+section[data-content-section='approach'] .group:nth-child(even) .approach-icon {
+  color: #e16df5 !important;
+}
+
+section[data-content-section='approach'] .group:hover .approach-icon,
+section[data-content-section='approach'] .group:focus-within .approach-icon {
+  color: #f08bff !important;
+  background: rgb(106 48 145 / .22);
+  box-shadow: inset 0 0 0 5px rgb(240 139 255 / .08), 0 0 32px rgb(220 77 255 / .24);
+  transform: rotate(-8deg) scale(1.13);
+}
+
+@media (max-width: 767px) {
+  #top .badge-assembly { --badge-rest-angle: -2deg; }
+  section[data-content-section='approach'] .group:hover h3,
+  section[data-content-section='approach'] .group:focus-within h3 {
+    transform: translateX(.55rem) scale(1.035) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section[data-content-section='approach'] .group,
+  section[data-content-section='approach'] .group::before,
+  section[data-content-section='approach'] .group h3,
+  .approach-icon {
+    transition: none !important;
   }
 }
