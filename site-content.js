@@ -48,13 +48,25 @@
 
     introduction: {
       eyebrow: 'Marica Mariniello — UX/UI Designer & Visual Design Specialist',
+      visualKicker: 'UI × Visual Systems',
+      displayTitleLead: 'Design with',
+      displayTitleAccent: 'clarity.',
+      displayTitleClose: 'Built with character.',
       title: 'I design clear, consistent digital experiences by combining UI design, visual systems and a strong graphic design background.',
       description: 'With 6+ years of experience in visual and digital design and 2+ years focused on UI/Web Design, I work across responsive interfaces, content hierarchy, reusable patterns and design delivery.',
       skills: ['UI Design', 'Responsive Design', 'Visual Systems', 'UX Foundations'],
       primaryCta: 'View Selected Work',
       secondaryCta: 'About Me',
       cvCta: 'Download CV',
-      experienceTag: '6+ yrs · Visual & Digital'
+      experienceTag: '6+ yrs · Visual & Digital',
+      visualCore: 'MM✦',
+      visualOrbitTop: 'UI DESIGN',
+      visualOrbitRight: 'RESPONSIVE',
+      visualOrbitBottom: 'VISUAL SYSTEMS',
+      experienceValue: '06+',
+      experienceLabel: 'years visual & digital',
+      interfaceValue: '02+',
+      interfaceLabel: 'years focused on UI/Web'
     },
 
     work: {
@@ -172,7 +184,7 @@
     },
 
     contact: {
-      title: "Let's create <br> clear digital experiences.",
+      title: "Let's create clear digital experiences.",
       highlightedWord: 'experiences.',
       description: "I'm currently interested in opportunities across UI/UX Design, Visual UI Design and Product Design, where I can combine my visual background with interface and experience design.",
       cta: 'Get in touch'
@@ -255,7 +267,25 @@
     texts(document.querySelectorAll('#top > span'), content.hero.words);
 
     const introduction = document.querySelector('#top + section');
-    if (introduction) {
+    if (introduction?.dataset.introEnhanced === 'true') {
+      text(introduction.querySelector('[data-intro="eyebrow"]'), content.introduction.eyebrow);
+      text(introduction.querySelector('[data-intro="visual-kicker"]'), content.introduction.visualKicker);
+      text(introduction.querySelector('[data-intro="title-lead"]'), content.introduction.displayTitleLead);
+      text(introduction.querySelector('[data-intro="title-accent"]'), content.introduction.displayTitleAccent);
+      text(introduction.querySelector('[data-intro="title-close"]'), content.introduction.displayTitleClose);
+      text(introduction.querySelector('[data-intro="description"]'), content.introduction.description);
+      text(introduction.querySelector('[data-intro="primary-cta"]'), content.introduction.primaryCta);
+      text(introduction.querySelector('[data-intro="secondary-cta"]'), content.introduction.secondaryCta);
+      text(introduction.querySelector('[data-intro="visual-core"]'), content.introduction.visualCore);
+      text(introduction.querySelector('[data-intro="visual-orbit-top"]'), content.introduction.visualOrbitTop);
+      text(introduction.querySelector('[data-intro="visual-orbit-right"]'), content.introduction.visualOrbitRight);
+      text(introduction.querySelector('[data-intro="visual-orbit-bottom"]'), content.introduction.visualOrbitBottom);
+      text(introduction.querySelector('[data-intro="experience-value"]'), content.introduction.experienceValue);
+      text(introduction.querySelector('[data-intro="experience-label"]'), content.introduction.experienceLabel);
+      text(introduction.querySelector('[data-intro="interface-value"]'), content.introduction.interfaceValue);
+      text(introduction.querySelector('[data-intro="interface-label"]'), content.introduction.interfaceLabel);
+      texts(introduction.querySelectorAll('[data-intro-skill]'), content.introduction.skills);
+    } else if (introduction) {
       const paragraphs = introduction.querySelectorAll('p');
       text(paragraphs[0], content.introduction.eyebrow);
       text(introduction.querySelector('h1'), content.introduction.title);
