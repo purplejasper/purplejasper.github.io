@@ -562,7 +562,8 @@ header nav > a[href="#contact"]:focus-visible {
 }
 
 #contact {
-  min-height: 72vh !important;
+  min-height: 100svh !important;
+  min-height: 100dvh !important;
   color: var(--portfolio-paper) !important;
   background:
     radial-gradient(circle at 78% 32%, rgb(127 69 191 / .62), transparent 30%),
@@ -1786,24 +1787,6 @@ section[data-content-section='approach'] > div > p:first-child::before {
   transform: translateY(.08em);
 }
 
-#contact h2 {
-  position: relative;
-}
-
-#contact h2::before {
-  content: '✳';
-  position: absolute;
-  left: 50%;
-  top: -2.35rem;
-  color: #df76fa;
-  font-size: 1.55rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 0 13px rgb(220 77 255 / .4));
-}
-
 section[data-content-section='approach'] .group {
   position: relative;
   transition: background-color .42s ease, border-color .42s ease, padding-inline .42s ease;
@@ -1836,7 +1819,7 @@ section[data-content-section='approach'] .group h3 {
 section[data-content-section='approach'] .group:hover h3,
 section[data-content-section='approach'] .group:focus-within h3 {
   color: #e7b6ff;
-  letter-spacing: -.035em;
+  letter-spacing: .04em;
   transform: translateX(1.15rem) scale(1.075) !important;
 }
 
@@ -1852,15 +1835,6 @@ section[data-content-section='approach'] .group:focus-within h3 {
     rgb(19 15 25 / .88);
   box-shadow: inset 0 0 0 5px rgb(199 121 237 / .055), 0 12px 32px rgb(0 0 0 / .22);
   transition: color .4s ease, transform .5s cubic-bezier(.22, 1, .36, 1), box-shadow .4s ease, background .4s ease;
-}
-
-.approach-icon::after {
-  content: '';
-  position: absolute;
-  inset: 5px;
-  border: 1px solid rgb(215 136 249 / .22);
-  border-radius: 50%;
-  pointer-events: none;
 }
 
 .approach-icon svg {
@@ -1880,7 +1854,7 @@ section[data-content-section='approach'] .group:focus-within .approach-icon {
   color: #f08bff !important;
   background: rgb(106 48 145 / .22);
   box-shadow: inset 0 0 0 5px rgb(240 139 255 / .08), 0 0 32px rgb(220 77 255 / .24);
-  transform: rotate(-8deg) scale(1.13);
+  transform: scale(1.13);
 }
 
 @media (max-width: 767px) {
@@ -1896,6 +1870,105 @@ section[data-content-section='approach'] .group:focus-within .approach-icon {
   section[data-content-section='approach'] .group::before,
   section[data-content-section='approach'] .group h3,
   .approach-icon {
+    transition: none !important;
+  }
+}
+
+/* Premium invert-disc cursor — desktop fine pointers only */
+
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor body * {
+    cursor: none !important;
+  }
+}
+
+.portfolio-cursor {
+  --cursor-size: 30px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483646;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+  transition: opacity .12s linear;
+}
+
+.portfolio-cursor.is-visible { opacity: 1; }
+
+.portfolio-cursor__disc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  border: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width .18s cubic-bezier(.22, 1, .36, 1), height .18s cubic-bezier(.22, 1, .36, 1);
+}
+
+.portfolio-cursor__disc::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #fff;
+  mix-blend-mode: difference;
+}
+
+.portfolio-cursor__label {
+  position: relative;
+  z-index: 1;
+  color: #15121b;
+  font-family: 'Manrope', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.portfolio-cursor[data-state='link'] { --cursor-size: 40px; }
+.portfolio-cursor[data-state='view'],
+.portfolio-cursor[data-state='drag'] { --cursor-size: 62px; }
+.portfolio-cursor[data-state='flip'],
+.portfolio-cursor[data-state='back'] { --cursor-size: 60px; }
+
+.portfolio-cursor[data-state='link'] .portfolio-cursor__disc::before,
+.portfolio-cursor[data-state='view'] .portfolio-cursor__disc::before,
+.portfolio-cursor[data-state='drag'] .portfolio-cursor__disc::before,
+.portfolio-cursor[data-state='flip'] .portfolio-cursor__disc::before,
+.portfolio-cursor[data-state='back'] .portfolio-cursor__disc::before {
+  background: #d7ff3f;
+  mix-blend-mode: normal;
+}
+
+@supports not (mix-blend-mode: difference) {
+  .portfolio-cursor__disc::before {
+    background: #d7ff3f;
+    mix-blend-mode: normal;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .portfolio-cursor { display: none !important; }
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor body * { cursor: auto !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-cursor,
+  .portfolio-cursor__disc {
     transition: none !important;
   }
 }
