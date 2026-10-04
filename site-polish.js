@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '18';
+  const styleVersion = '19';
   const currentStyles = document.querySelector('link[href^="/site-polish.css"]') || document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
