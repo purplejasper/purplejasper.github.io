@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '16';
+  const styleVersion = '17';
   const currentStyles = document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
@@ -20,9 +20,14 @@
       if (label === 'capabilities' || label === 'tools') section.remove();
     });
 
-    document.querySelectorAll('#contact a').forEach((link) => {
+    document.querySelectorAll('a').forEach((link) => {
       if (link.textContent.toLowerCase().includes('download cv')) link.remove();
     });
+
+    document.querySelector('#contact h2 + p')?.remove();
+
+    const workHeading = document.querySelector('#work h2');
+    workHeading?.parentElement?.querySelector('p')?.remove();
 
     document.querySelectorAll('#contact > div > div').forEach((block) => {
       const text = block.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
@@ -126,9 +131,6 @@
       scene.setAttribute('aria-label', flipped
         ? (badgeCopy.showFront || 'Mostra il fronte del badge di Marica Mariniello')
         : (badgeCopy.showBack || 'Mostra il retro del badge di Marica Mariniello'));
-      badge.classList.remove('is-responding');
-      void badge.offsetWidth;
-      badge.classList.add('is-responding');
     };
 
     const toggleBadge = () => setBadgeSide(!scene.classList.contains('is-flipped'));
@@ -156,10 +158,6 @@
       event.preventDefault();
       toggleBadge();
     });
-    badge.addEventListener('animationend', (event) => {
-      if (event.animationName === 'badge-physical-response') badge.classList.remove('is-responding');
-    });
-
     badge.addEventListener('pointermove', (event) => {
       if (event.pointerType === 'touch' || !window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches) return;
       const rect = badge.getBoundingClientRect();
@@ -203,10 +201,37 @@
     return true;
   };
 
+  const enhanceApproachIcons = () => {
+    const approachHeading = Array.from(document.querySelectorAll('section h2')).find((heading) =>
+      heading.textContent.trim() === 'From visual systems to digital experiences'
+    );
+    const section = approachHeading?.closest('section');
+    if (!section) return false;
+
+    const icons = [
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4.5 16s4.2-7 11.5-7 11.5 7 11.5 7-4.2 7-11.5 7S4.5 16 4.5 16Z"/><circle cx="16" cy="16" r="3.5"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="2"/><rect x="19" y="5" width="8" height="8" rx="2"/><rect x="5" y="19" width="8" height="8" rx="2"/><rect x="19" y="19" width="8" height="8" rx="2"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="7" width="15" height="18" rx="2.5"/><rect x="22" y="11" width="5" height="14" rx="1.5"/><path d="M10 12h5M10 16h5M10 20h3"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 16.5 12.5 23 26 9.5"/><path d="M26 17v7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h11"/></svg>'
+    ];
+
+    Array.from(section.querySelectorAll('h3')).slice(0, 4).forEach((heading, index) => {
+      const row = heading.parentElement;
+      const marker = row?.querySelector(':scope > span');
+      if (!marker || marker.dataset.approachIcon === 'true') return;
+      marker.dataset.approachIcon = 'true';
+      marker.className = 'approach-icon';
+      marker.innerHTML = icons[index];
+      marker.setAttribute('aria-hidden', 'true');
+    });
+    return true;
+  };
+
   const apply = () => {
     removeRequestedSections();
     enhanceHeroBadge();
     enhanceCarousel();
+    enhanceApproachIcons();
   };
 
   const start = () => {
