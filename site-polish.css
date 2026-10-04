@@ -117,9 +117,9 @@ header nav > a[href="#contact"]:focus-visible {
   width: clamp(42px, 3.2vw, 52px);
   height: clamp(105px, 15vh, 148px);
   flex: 0 0 auto;
-  background: linear-gradient(90deg, #7240a5 0%, #9b5bd1 20%, #c79ae8 52%, #9b5bd1 82%, #6d399e 100%);
-  border-inline: 1px solid rgb(255 255 255 / .14);
-  box-shadow: 0 8px 18px rgb(11 5 17 / .18), inset 9px 0 12px rgb(255 255 255 / .09);
+  background: linear-gradient(90deg, #050407 0%, #151019 22%, #2a2030 52%, #151019 80%, #050407 100%);
+  border-inline: 1px solid rgb(199 154 232 / .15);
+  box-shadow: 0 8px 18px rgb(0 0 0 / .28), inset 9px 0 12px rgb(199 154 232 / .055);
 }
 
 #top .badge-lanyard::after {
@@ -127,7 +127,7 @@ header nav > a[href="#contact"]:focus-visible {
   position: absolute;
   inset: 0 auto 0 48%;
   width: 2px;
-  background: rgb(255 255 255 / .18);
+  background: rgb(199 154 232 / .12);
 }
 
 #top .badge-hardware {
@@ -576,7 +576,11 @@ header nav > a[href="#contact"]:focus-visible {
   text-align: center;
 }
 
-#contact h2 { max-width: 1120px; }
+#contact h2 {
+  max-width: 960px;
+  font-size: clamp(2.9rem, 6.2vw, 5.25rem) !important;
+  line-height: .93 !important;
+}
 #contact h2 .italic { color: var(--portfolio-lilac); }
 #contact p { color: rgb(244 243 246 / .72) !important; }
 #contact > div > div { justify-content: center; }
@@ -1294,14 +1298,14 @@ footer > div {
   left: -26%;
   top: -35%;
   background: radial-gradient(circle, rgb(127 69 191 / .9) 0%, rgb(127 69 191 / .35) 38%, transparent 70%);
-  animation: contact-glow-left 15s ease-in-out infinite alternate;
+  animation: contact-glow-left 12s ease-in-out infinite alternate;
 }
 
 #contact::after {
   right: -28%;
   bottom: -46%;
-  background: radial-gradient(circle, rgb(199 154 232 / .78) 0%, rgb(155 91 209 / .3) 42%, transparent 72%);
-  animation: contact-glow-right 19s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgb(232 78 255 / .82) 0%, rgb(188 61 220 / .36) 42%, transparent 72%);
+  animation: contact-glow-right 15s ease-in-out infinite alternate;
 }
 
 #contact > div {
@@ -1660,7 +1664,9 @@ footer > div {
 
 .intro-showcase__footer article,
 .intro-showcase__footer ul {
-  min-height: 118px;
+  min-height: 150px;
+  height: 100%;
+  box-sizing: border-box;
   margin: 0 !important;
   padding: 1.25rem;
   border: 1px solid rgb(223 193 247 / .16);
@@ -1670,7 +1676,7 @@ footer > div {
 }
 
 .intro-showcase__footer article { display: flex; flex-direction: column; justify-content: space-between; }
-.intro-showcase__footer article strong { color: #e5b5ff; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(2.2rem, 4vw, 4rem); line-height: .85; letter-spacing: -.06em; }
+.intro-showcase__footer article strong { color: #e5b5ff; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(3.25rem, 6vw, 5.6rem); line-height: .8; letter-spacing: -.07em; }
 .intro-showcase__footer article span { color: rgb(244 243 246 / .58); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
 
 #top + section.intro-showcase .intro-showcase__footer ul {
