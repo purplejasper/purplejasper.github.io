@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '19';
+  const styleVersion = '20';
   const currentStyles = document.querySelector('link[href^="/site-polish.css"]') || document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
@@ -257,19 +257,19 @@
     if (!section) return false;
 
     const icons = [
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4.5 16s4.2-7 11.5-7 11.5 7 11.5 7-4.2 7-11.5 7S4.5 16 4.5 16Z"/><circle cx="16" cy="16" r="3.5"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="2"/><rect x="19" y="5" width="8" height="8" rx="2"/><rect x="5" y="19" width="8" height="8" rx="2"/><rect x="19" y="19" width="8" height="8" rx="2"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="7" width="15" height="18" rx="2.5"/><rect x="22" y="11" width="5" height="14" rx="1.5"/><path d="M10 12h5M10 16h5M10 20h3"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 16.5 12.5 23 26 9.5"/><path d="M26 17v7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h11"/></svg>'
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4.5 16s4.2-7 11.5-7 11.5 7 11.5 7-4.2 7-11.5 7S4.5 16 4.5 16Z"/><circle cx="16" cy="16" r="3.5"/><path d="M16 4V2.5M7.4 7.4 6.3 6.3M24.6 7.4l1.1-1.1"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="6" cy="8" r="2.7"/><rect x="13" y="5.3" width="6" height="5.4" rx="1"/><circle cx="26" cy="8" r="2.7"/><rect x="5" y="21" width="6" height="6" rx="1"/><rect x="21" y="21" width="6" height="6" rx="1"/><path d="M8.7 8h4.2M19.1 8h4.2M16 10.8v4.7M8 20.8c.5-4 3.5-6.4 8-6.4s7.5 2.4 8 6.4"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="19" height="17" rx="2.5"/><path d="M4 11h19M8 8.5h.1M11 8.5h.1M14 8.5h.1"/><rect x="20" y="14" width="8" height="13" rx="2"/><path d="M23 24h2"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 7 7-3 12H12L9 11l7-7Z"/><circle cx="16" cy="14" r="2.5"/><path d="M16 4v7.5M12 23v4h8v-4"/></svg>'
     ];
 
     Array.from(section.querySelectorAll('h3')).slice(0, 4).forEach((heading, index) => {
       const row = heading.parentElement;
       const marker = row?.querySelector(':scope > span');
-      if (!marker || marker.dataset.approachIcon === 'true') return;
+      if (!marker) return;
       marker.dataset.approachIcon = 'true';
       marker.className = 'approach-icon';
-      marker.innerHTML = icons[index];
+      if (!marker.querySelector('svg')) marker.innerHTML = icons[index];
       marker.setAttribute('aria-hidden', 'true');
     });
     return true;
