@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '23';
+  const styleVersion = '24';
   const currentStyles = document.querySelector('link[href^="/site-polish.css"]') || document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
@@ -98,13 +98,14 @@
     badge.dataset.interactiveBadge = 'true';
     badge.classList.add('badge-assembly');
     badge.innerHTML = `
-      <div class="badge-lanyard" aria-hidden="true"></div>
-      <div class="badge-hardware" aria-hidden="true">
-        <span class="badge-clip-ring"></span>
-        <span class="badge-clip-pin"></span>
-      </div>
-      <div class="badge-scene" role="button" tabindex="0" aria-pressed="false" aria-label="${badgeCopy.showBack || 'Mostra il retro del badge di Marica Mariniello'}">
-        <div class="badge-flipper">
+      <div class="badge-turntable">
+        <div class="badge-lanyard" aria-hidden="true"></div>
+        <div class="badge-hardware" aria-hidden="true">
+          <span class="badge-clip-ring"></span>
+          <span class="badge-clip-pin"></span>
+        </div>
+        <div class="badge-scene" role="button" tabindex="0" aria-pressed="false" aria-label="${badgeCopy.showBack || 'Mostra il retro del badge di Marica Mariniello'}">
+          <div class="badge-flipper">
           <article class="badge-shell badge-face badge-face--front" aria-label="${badgeCopy.frontLabel || 'Fronte del badge'}">
             <span class="badge-shell-slot" aria-hidden="true"></span>
             <div class="badge-card badge-card--front">
@@ -148,6 +149,7 @@
               </div>
             </div>
           </article>
+          </div>
         </div>
       </div>`;
 
@@ -172,6 +174,7 @@
 
     const setBadgeSide = (flipped) => {
       scene.classList.toggle('is-flipped', flipped);
+      badge.classList.toggle('is-flipped', flipped);
       badge.querySelector('.badge-face--front').setAttribute('aria-hidden', String(flipped));
       badge.querySelector('.badge-face--back').setAttribute('aria-hidden', String(!flipped));
       links.querySelectorAll('a').forEach((link) => { link.tabIndex = flipped ? 0 : -1; });
@@ -188,11 +191,11 @@
     badge.querySelector('.badge-face--front').setAttribute('aria-hidden', 'false');
     badge.querySelector('.badge-face--back').setAttribute('aria-hidden', 'true');
 
-    scene.addEventListener('mouseenter', () => {
+    badge.addEventListener('mouseenter', () => {
       if (!usesHover()) return;
       setBadgeSide(true);
     });
-    scene.addEventListener('mouseleave', () => {
+    badge.addEventListener('mouseleave', () => {
       if (!usesHover()) return;
       setBadgeSide(false);
     });
@@ -312,7 +315,7 @@
       const resolveState = (target) => {
         const element = target instanceof Element ? target : null;
         if (!element) return 'default';
-        const badge = element.closest('#top .badge-scene');
+        const badge = element.closest('#top .badge-assembly');
         if (badge) return badge.classList.contains('is-flipped') ? 'back' : 'flip';
         if (element.closest('#work .work-carousel-visual')) return 'view';
         if (element.closest('a, button, input, textarea, select, summary, [role="button"], [tabindex]:not([tabindex="-1"])')) return 'link';
@@ -404,6 +407,25 @@
     enhanceHeroBadge();
     enhanceCarousel();
     enhanceApproachIcons();
+
+    const contactTitle = document.querySelector('#contact h2');
+    if (contactTitle && contactTitle.dataset.gradientReady !== 'true') {
+      contactTitle.dataset.gradientReady = 'true';
+      contactTitle.innerHTML = `Let's create clear <span class="contact-gradient">digital experiences.</span>`;
+    }
+
+    const behance = document.querySelector('footer [data-behance-footer]');
+    if (behance && !behance.querySelector('.behance-mark')) {
+      behance.innerHTML = '<span class="behance-mark" aria-hidden="true"><b>B</b><i>ē</i></span>';
+    }
+
+    const backToTop = document.querySelector('footer a[href="#top"]');
+    if (backToTop && backToTop.textContent.trim() !== '↑') {
+      backToTop.textContent = '↑';
+      backToTop.setAttribute('aria-label', 'Back to top');
+      backToTop.title = 'Back to top';
+      backToTop.classList.add('footer-back-to-top');
+    }
     setupCustomCursor();
   };
 
