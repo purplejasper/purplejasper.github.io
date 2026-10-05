@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '24';
+  const styleVersion = '25';
   const currentStyles = document.querySelector('link[href^="/site-polish.css"]') || document.createElement('link');
   currentStyles.rel = 'stylesheet';
   currentStyles.href = `/site-polish.css?v=${styleVersion}`;
@@ -22,7 +22,11 @@
     if (!section || section.dataset.introEnhanced === 'true') return false;
 
     const intro = window.PORTFOLIO_CONTENT?.introduction || {};
-    const skills = intro.skills || ['UI Design', 'Responsive Design', 'Visual Systems', 'UX Foundations'];
+    const skills = intro.skills || ['UI Design', 'Responsive Design', 'Visual Systems'];
+    const closingTitle = String(intro.displayTitleClose || 'Built with character.').trim();
+    const closingWords = closingTitle.split(/\s+/);
+    const closingAccent = closingWords.pop() || 'character.';
+    const closingLead = closingWords.join(' ');
     section.dataset.introEnhanced = 'true';
     section.className = 'intro-showcase';
     section.innerHTML = `
@@ -34,7 +38,7 @@
         </header>
         <div class="intro-showcase__composition">
           <div class="intro-showcase__copy">
-            <h1><span data-intro="title-lead">${escapeHTML(intro.displayTitleLead || 'Design with')}</span><em data-intro="title-accent">${escapeHTML(intro.displayTitleAccent || 'clarity.')}</em><span data-intro="title-close">${escapeHTML(intro.displayTitleClose || 'Built with character.')}</span></h1>
+            <h1><span data-intro="title-lead">${escapeHTML(intro.displayTitleLead || 'Design with')}</span><em data-intro="title-accent">${escapeHTML(intro.displayTitleAccent || 'clarity.')}</em><span data-intro="title-close">${escapeHTML(closingLead)} <strong class="intro-character">${escapeHTML(closingAccent)}</strong></span></h1>
             <p data-intro="description">${escapeHTML(intro.description || '')}</p>
             <div class="intro-showcase__actions">
               <a href="#work" data-intro="primary-cta">${escapeHTML(intro.primaryCta || 'View Selected Work')}</a>
@@ -76,6 +80,11 @@
     workHeading?.parentElement?.querySelector('p')?.remove();
 
     document.querySelectorAll('#work .work-carousel-visual p, #work article > div:first-child p').forEach((title) => title.remove());
+
+    const performanceNote = Array.from(document.querySelectorAll('#work p')).find((paragraph) =>
+      paragraph.textContent.includes('Website performance measured')
+    );
+    performanceNote?.parentElement?.remove();
 
     document.querySelectorAll('#contact > div > div').forEach((block) => {
       const text = block.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
