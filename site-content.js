@@ -55,7 +55,7 @@
       displayTitleClose: 'Built with character.',
       title: 'I design clear, consistent digital experiences by combining UI design, visual systems and a strong graphic design background.',
       description: 'With 6+ years of experience in visual and digital design and 2+ years focused on UI/Web Design, I work across responsive interfaces, content hierarchy, reusable patterns and design delivery.',
-      skills: ['UI Design', 'Responsive Design', 'Visual Systems', 'UX Foundations'],
+      skills: ['UI Design', 'Responsive Design', 'Visual Systems'],
       primaryCta: 'View Selected Work',
       secondaryCta: 'About Me',
       cvCta: 'Download CV',
