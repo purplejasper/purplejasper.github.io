@@ -106,6 +106,25 @@ header nav > a[href="#contact"]:focus-visible {
   transition: transform .42s cubic-bezier(.22, 1, .36, 1);
   animation: badge-first-settle 1.05s cubic-bezier(.22, 1, .36, 1) both;
   pointer-events: auto;
+  perspective: 1600px;
+  -webkit-perspective: 1600px;
+}
+
+#top .badge-turntable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  transform: translateZ(0) rotateY(0deg);
+  transform-origin: 50% 22%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform .88s cubic-bezier(.16, 1, .3, 1);
+  will-change: transform;
+}
+
+#top .badge-assembly.is-flipped .badge-turntable {
+  transform: translateZ(0) rotateY(180deg);
 }
 
 #top .badge-assembly.is-responding {
@@ -220,7 +239,6 @@ header nav > a[href="#contact"]:focus-visible {
   pointer-events: none;
 }
 
-#top .badge-scene.is-flipped .badge-flipper { transform: translateZ(0) rotateY(180deg); }
 #top .badge-scene.is-flipped .badge-face--front { pointer-events: none; }
 #top .badge-scene.is-flipped .badge-face--back { pointer-events: auto; }
 
@@ -586,6 +604,15 @@ header nav > a[href="#contact"]:focus-visible {
   line-height: .93 !important;
 }
 #contact h2 .italic { color: var(--portfolio-lilac); }
+#contact h2 .contact-gradient {
+  display: inline;
+  color: transparent;
+  background: linear-gradient(100deg, #c998ff 3%, var(--portfolio-hot) 56%, #f39cff 96%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 12px 38px rgb(220 77 255 / .2));
+}
 #contact p { color: rgb(244 243 246 / .72) !important; }
 #contact > div > div { justify-content: center; }
 
@@ -618,6 +645,18 @@ footer .footer-linkedin:hover,
 footer .footer-linkedin:focus-visible {
   background: var(--portfolio-magenta) !important;
   border-color: var(--portfolio-magenta) !important;
+}
+
+footer .footer-back-to-top {
+  display: inline-grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border: 1px solid rgb(255 252 245 / .22);
+  border-radius: 999px;
+  color: rgb(255 252 245 / .82);
+  font-size: 1.05rem;
+  line-height: 1;
 }
 
 @media (max-width: 767px) {
@@ -662,7 +701,7 @@ footer .footer-linkedin:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   #top .badge-assembly,
   #top .badge-assembly.is-responding,
-  #top .badge-flipper,
+  #top .badge-turntable,
   #work .work-carousel-arrow {
     animation: none !important;
     transition-duration: .01ms !important;
@@ -1078,6 +1117,22 @@ footer > div {
     height: 1rem;
   }
 
+  footer .behance-mark {
+    display: inline-flex;
+    align-items: baseline;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .72rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: -.08em;
+    line-height: 1;
+  }
+
+  footer .behance-mark b,
+  footer .behance-mark i {
+    font: inherit;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     footer .footer-linkedin {
       transition: none;
@@ -1302,14 +1357,14 @@ footer > div {
   left: -26%;
   top: -35%;
   background: radial-gradient(circle, rgb(127 69 191 / .9) 0%, rgb(127 69 191 / .35) 38%, transparent 70%);
-  animation: contact-glow-left 12s ease-in-out infinite alternate;
+  animation: contact-glow-left 8s ease-in-out infinite alternate;
 }
 
 #contact::after {
   right: -28%;
   bottom: -46%;
   background: radial-gradient(circle, rgb(232 78 255 / .82) 0%, rgb(188 61 220 / .36) 42%, transparent 72%);
-  animation: contact-glow-right 15s ease-in-out infinite alternate;
+  animation: contact-glow-right 9.5s ease-in-out infinite alternate;
 }
 
 #contact > div {
@@ -1324,15 +1379,15 @@ footer > div {
 }
 
 @keyframes contact-glow-left {
-  0% { transform: translate3d(-5%, -4%, 0) scale(.9); opacity: .34; }
-  48% { transform: translate3d(34%, 22%, 0) scale(1.14); opacity: .56; }
-  100% { transform: translate3d(16%, 48%, 0) scale(.98); opacity: .43; }
+  0% { transform: translate3d(-12%, -9%, 0) scale(.84); opacity: .38; }
+  48% { transform: translate3d(46%, 31%, 0) scale(1.24); opacity: .68; }
+  100% { transform: translate3d(22%, 58%, 0) scale(1.02); opacity: .52; }
 }
 
 @keyframes contact-glow-right {
-  0% { transform: translate3d(8%, 10%, 0) scale(.92); opacity: .32; }
-  52% { transform: translate3d(-30%, -22%, 0) scale(1.18); opacity: .52; }
-  100% { transform: translate3d(-12%, -46%, 0) scale(1.02); opacity: .4; }
+  0% { transform: translate3d(16%, 18%, 0) scale(.86); opacity: .38; }
+  52% { transform: translate3d(-42%, -32%, 0) scale(1.28); opacity: .64; }
+  100% { transform: translate3d(-18%, -58%, 0) scale(1.06); opacity: .5; }
 }
 
 @media (max-width: 899px) {
@@ -1472,7 +1527,7 @@ footer > div {
   margin: 0 !important;
   color: #fff !important;
   font-size: clamp(3.6rem, 7.35vw, 8.2rem) !important;
-  line-height: .82 !important;
+  line-height: .94 !important;
   letter-spacing: -.068em !important;
   background: none !important;
   -webkit-text-fill-color: initial;
@@ -1483,7 +1538,7 @@ footer > div {
 
 .intro-showcase__copy h1 em {
   width: max-content;
-  padding-right: .08em;
+  padding: 0 .1em .1em 0;
   color: transparent;
   font-family: inherit;
   font-style: italic;
@@ -1637,12 +1692,14 @@ footer > div {
   gap: 1rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgb(233 216 248 / .18);
+  align-items: stretch;
+  grid-auto-rows: 160px;
 }
 
 .intro-showcase__footer article,
 .intro-showcase__footer ul {
-  min-height: 150px;
-  height: 100%;
+  min-height: 160px;
+  height: 160px;
   box-sizing: border-box;
   margin: 0 !important;
   padding: 1.25rem;
@@ -1662,6 +1719,7 @@ footer > div {
   align-content: center;
   grid-column: auto !important;
   align-self: stretch;
+  grid-row: 1;
   gap: .6rem;
 }
 
@@ -1727,7 +1785,7 @@ footer > div {
   .intro-showcase__composition { grid-template-columns: 1fr; padding-top: 3.5rem; }
   .intro-showcase__visual { width: min(88vw, 430px); margin-top: 1rem; }
   .intro-showcase__footer { grid-template-columns: 1fr 1fr; }
-  .intro-showcase__footer ul { grid-column: 1 / -1; }
+  .intro-showcase__footer ul { grid-column: 1 / -1; grid-row: auto; }
 }
 
 @media (max-width: 560px) {
