@@ -18,7 +18,7 @@
     },
 
     navigation: {
-      logo: 'Marica Mariniello - Designer',
+      logo: 'Marica Mariniello',
       work: 'Work',
       about: 'About',
       contact: "Let's talk"
@@ -71,13 +71,20 @@
     },
 
     work: {
-      title: 'Selected\nwork',
-      description: 'Four projects across UI design, implementation, visual systems and editorial illustration.',
+      title: 'Portfolio',
+      description: 'Five projects across UI design, implementation, visual systems and editorial illustration.',
       mockupLabel: 'Mockup coming soon',
       viewCaseStudy: 'View Case Study',
       projects: [
         {
           number: '01',
+          name: 'Arkipiù × Rallye Monte-Carlo 2026',
+          title: 'Event Visual System',
+          description: 'A sponsorship identity developed across vehicle livery, racewear and event communication, translating the Arkipiù brand into a coherent, high-impact system for the Rallye Monte-Carlo 2026.',
+          skills: ['Visual Direction', 'Livery Design', 'Apparel Design', 'Brand Applications']
+        },
+        {
+          number: '02',
           name: 'Arkipiù',
           title: 'Corporate Website Redesign',
           description: 'End-to-end redesign of a corporate real estate website across 12 pages, focused on clarifying brand positioning, improving content hierarchy and creating a more coherent responsive experience.',
@@ -90,21 +97,21 @@
           note: 'Website performance measured during the 12 months following the redesign.'
         },
         {
-          number: '02',
+          number: '03',
           name: 'Groupline Shop',
           title: 'Conversion-focused Landing Pages',
           description: 'Designed and implemented approximately 10 mobile-first landing pages across 6 products, supporting TikTok and social advertising campaigns.',
           skills: ['UI Design', 'Mobile-first', 'A/B Testing', 'Front-end Implementation']
         },
         {
-          number: '03',
-          name: 'Naili & Gatto Perry',
-          title: 'Editorial Illustration & Information Design',
-          description: 'End-to-end visual development of two editions of the institutional publication ‘Naili & Gatto Perry’ for INAIL.',
-          skills: ['Illustration', 'Character Design', 'Visual Storytelling', 'Information Design']
+          number: '04',
+          name: 'INAIL Campania × NWM Network',
+          title: 'Naili & Gatto Perry — Illustrated Safety Stories',
+          description: 'End-to-end character art and comic illustration for two editions of an educational publication, turning workplace health and safety into clear, engaging visual stories.',
+          skills: ['Illustration', 'Character Art', 'Comics', 'Concept Art']
         },
         {
-          number: '04',
+          number: '05',
           name: 'Brand & Digital Design',
           title: 'Visual Systems across Digital and Offline Touchpoints',
           description: 'During my experience with ItAres and NWM Network, I worked on brand identities, digital campaigns, social assets and marketing materials for different clients and e-commerce brands.',
@@ -269,40 +276,32 @@
 
     texts(document.querySelectorAll('#top > span'), content.hero.words);
 
-    const introduction = document.querySelector('#top + section');
-    if (introduction?.dataset.introEnhanced === 'true') {
+    const introduction = document.querySelector('#top .hero-intro-copy');
+    if (introduction) {
       text(introduction.querySelector('[data-intro="eyebrow"]'), content.introduction.eyebrow);
-      text(introduction.querySelector('[data-intro="visual-kicker"]'), content.introduction.visualKicker);
       text(introduction.querySelector('[data-intro="title-lead"]'), content.introduction.displayTitleLead);
       text(introduction.querySelector('[data-intro="title-accent"]'), content.introduction.displayTitleAccent);
-      text(introduction.querySelector('[data-intro="title-close"]'), content.introduction.displayTitleClose);
       text(introduction.querySelector('[data-intro="description"]'), content.introduction.description);
       text(introduction.querySelector('[data-intro="primary-cta"]'), content.introduction.primaryCta);
       text(introduction.querySelector('[data-intro="secondary-cta"]'), content.introduction.secondaryCta);
-      text(introduction.querySelector('[data-intro="visual-core"]'), content.introduction.visualCore);
-      text(introduction.querySelector('[data-intro="visual-orbit-top"]'), content.introduction.visualOrbitTop);
-      text(introduction.querySelector('[data-intro="visual-orbit-right"]'), content.introduction.visualOrbitRight);
-      text(introduction.querySelector('[data-intro="visual-orbit-bottom"]'), content.introduction.visualOrbitBottom);
-      text(introduction.querySelector('[data-intro="experience-value"]'), content.introduction.experienceValue);
-      text(introduction.querySelector('[data-intro="experience-label"]'), content.introduction.experienceLabel);
-      text(introduction.querySelector('[data-intro="interface-value"]'), content.introduction.interfaceValue);
-      text(introduction.querySelector('[data-intro="interface-label"]'), content.introduction.interfaceLabel);
-      texts(introduction.querySelectorAll('[data-intro-skill]'), content.introduction.skills);
-    } else if (introduction) {
-      const paragraphs = introduction.querySelectorAll('p');
-      text(paragraphs[0], content.introduction.eyebrow);
-      text(introduction.querySelector('h1'), content.introduction.title);
-      text(paragraphs[1], content.introduction.description);
-      texts(introduction.querySelectorAll('ul:first-of-type li'), content.introduction.skills);
-      texts(introduction.querySelectorAll('a'), [content.introduction.primaryCta, content.introduction.secondaryCta, content.introduction.cvCta]);
-      const tag = introduction.querySelector('img + span');
-      text(tag, content.introduction.experienceTag);
+    } else {
+      const originalIntroduction = document.querySelector('#top + section:not(#work)');
+      if (originalIntroduction) {
+        const paragraphs = originalIntroduction.querySelectorAll('p');
+        text(paragraphs[0], content.introduction.eyebrow);
+        text(originalIntroduction.querySelector('h1'), content.introduction.title);
+        text(paragraphs[1], content.introduction.description);
+        texts(originalIntroduction.querySelectorAll('ul:first-of-type li'), content.introduction.skills);
+        texts(originalIntroduction.querySelectorAll('a'), [content.introduction.primaryCta, content.introduction.secondaryCta, content.introduction.cvCta]);
+        const tag = originalIntroduction.querySelector('img + span');
+        text(tag, content.introduction.experienceTag);
+      }
     }
 
     const work = document.querySelector('#work');
     if (work) {
       const heading = work.querySelector('h2');
-      if (heading) heading.innerHTML = content.work.title.replace('\n', '<br>');
+      if (heading && heading.dataset.typeReveal !== 'true') heading.innerHTML = content.work.title.replace('\n', '<br>');
       const headerParagraph = heading?.parentElement?.querySelector('p');
       text(headerParagraph, content.work.description);
       work.querySelectorAll('.work-carousel-visual span, article > div:first-child span').forEach((label) => text(label, content.work.mockupLabel));
@@ -312,7 +311,8 @@
     const about = document.querySelector('#about');
     if (about) {
       text(about.querySelector('p'), content.about.eyebrow);
-      text(about.querySelector('h2'), content.about.title);
+      const aboutTitle = about.querySelector('h2');
+      if (aboutTitle?.dataset.revealWords !== 'true') text(aboutTitle, content.about.title);
       texts(about.querySelectorAll('div:last-child > p'), content.about.paragraphs);
     }
 
@@ -329,7 +329,12 @@
     if (approach) {
       const topParagraphs = approach.querySelectorAll(':scope > div > p');
       text(topParagraphs[0], content.approach.eyebrow);
-      text(approach.querySelector('h2'), content.approach.title);
+      const approachTitle = approach.querySelector('h2');
+      if (approachTitle) {
+        approachTitle.dataset.approachHeading = 'true';
+        approachTitle.setAttribute('aria-label', content.approach.title);
+        approachTitle.innerHTML = 'From visual systems<br><span class="approach-heading__second-line">to digital experiences</span>';
+      }
       text(topParagraphs[1], content.approach.description);
       Array.from(approach.querySelectorAll('h3')).forEach((heading, index) => {
         const principle = content.approach.principles[index];
@@ -337,30 +342,6 @@
         text(row?.querySelector('span'), principle?.number);
         text(heading, principle?.title);
         text(row?.querySelector('p'), principle?.description);
-      });
-    }
-
-    const experience = markSection('experience', 'Experience');
-    if (experience) {
-      const columns = experience.querySelectorAll(':scope > div > div');
-      const experienceColumn = columns[0];
-      const educationColumn = columns[1];
-      text(experienceColumn?.querySelector(':scope > p'), content.experience.eyebrow);
-      Array.from(experienceColumn?.querySelectorAll('li') || []).forEach((item, index) => {
-        const role = content.experience.roles[index];
-        const paragraphs = item.querySelectorAll('p');
-        texts(paragraphs, [role?.title, role?.company, role?.period]);
-      });
-
-      const educationParagraphs = educationColumn?.querySelectorAll(':scope > p');
-      text(educationParagraphs?.[0], content.education.eyebrow);
-      text(educationParagraphs?.[1], content.education.description);
-      const educationLists = educationColumn?.querySelectorAll(':scope > ul');
-      Array.from(educationLists?.[0]?.querySelectorAll('li') || []).forEach((item, index) => {
-        texts(item.querySelectorAll('p'), [content.education.courses[index]?.title, content.education.courses[index]?.detail]);
-      });
-      Array.from(educationLists?.[1]?.querySelectorAll('li') || []).forEach((item, index) => {
-        texts(item.querySelectorAll('p'), [content.education.studies[index]?.title, content.education.studies[index]?.detail, content.education.studies[index]?.period]);
       });
     }
 
@@ -381,7 +362,7 @@
     const contact = document.querySelector('#contact');
     if (contact) {
       const contactTitle = contact.querySelector('h2');
-      if (contactTitle) {
+      if (contactTitle && contactTitle.dataset.kineticReady !== 'true' && contactTitle.dataset.gradientReady !== 'true') {
         const prefix = content.contact.title.replace(content.contact.highlightedWord, '').trimEnd();
         contactTitle.innerHTML = `${prefix} <span class="italic">${content.contact.highlightedWord}</span>`;
       }

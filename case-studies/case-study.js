@@ -1,22 +1,56 @@
 const studies = {
+  'rallye-monte-carlo': {
+    index: '01', client: 'Arkipiù × Rallye Monte-Carlo 2026', title: 'Event Visual System',
+    intro: 'A sponsorship identity carried from the rally car to racewear and event communication, translating the Arkipiù brand into a coherent system for an international motorsport setting.',
+    tags: ['Visual Direction', 'Livery Design', 'Apparel Design', 'Brand Applications'],
+    challenge: 'Turn a corporate identity into a recognisable event system.',
+    challengeText: 'The project required one visual language to work across very different surfaces and scales: a moving vehicle, technical apparel and communication assets. The core challenge was to preserve brand recognition while meeting the practical constraints of each application.',
+    steps: [
+      ['01', 'Concept & direction', 'Defined the visual direction around the existing Arkipiù identity, balancing visibility, motion and event context.'],
+      ['02', 'Vehicle & racewear', 'Extended the system across the car livery and driver suits, adapting graphic proportions to each technical template.'],
+      ['03', 'Event communication', 'Applied the same visual language to invitation and digital materials, then prepared production-ready artwork with suppliers.']
+    ],
+    visual: 'Built for\nmotion.',
+    visualHeading: 'One identity, scaled across the complete event experience.',
+    heroImage: '/assets/rallye-monte-carlo/rallye-night.webp',
+    heroAlt: 'Arkipiù branded rally car racing at night during the Rallye Monte-Carlo',
+    media: [
+      { src: '/assets/rallye-monte-carlo/rallye-night.webp', alt: 'Arkipiù vehicle livery in motion during a night stage', caption: 'Vehicle livery in motion during the Rallye Monte-Carlo', layout: 'wide' },
+      { src: '/assets/rallye-monte-carlo/rallye-detail.webp', alt: 'Close-up of the Arkipiù rally car bonnet and sponsor graphics', caption: 'Livery detail and sponsor visibility', layout: 'standard' },
+      { src: '/assets/rallye-monte-carlo/rallye-racewear.webp', alt: 'Driver team in branded racewear beside the Arkipiù rally car', caption: 'Racewear and vehicle system with the driver team', layout: 'portrait' },
+      { src: '/assets/rallye-monte-carlo/rallye-invitation.webp', alt: 'Rallye Monte-Carlo event invitation designed in the Arkipiù visual system', caption: 'Event invitation and communication application', layout: 'contain' }
+    ],
+    results: [['1', 'vehicle livery system'], ['2', 'racewear applications'], ['Multi-format', 'event communication']],
+    note: 'Selected public-facing outputs are shown. Commercial terms, internal approvals and production details are intentionally omitted.',
+    next: 'arkipiu', nextTitle: 'Arkipiù Website'
+  },
   'arkipiu': {
-    index: '01', client: 'Arkipiù', title: 'Corporate Website Redesign',
+    index: '02', client: 'Arkipiù', title: 'Corporate Website Redesign',
     intro: 'An end-to-end redesign across 12 pages to clarify the brand, strengthen content hierarchy and create a more coherent responsive experience.',
     tags: ['UI Design', 'Information Architecture', 'Responsive Design', 'Design QA'],
-    challenge: 'A clearer corporate experience across content, interface and devices.',
-    challengeText: 'The project reorganised an existing real estate website around clearer page priorities, more visible calls to action and a visual system that could remain consistent as the site expanded.',
+    challenge: 'From perception gap to experience.',
+    challengeText: 'Client feedback revealed an ambiguous brand perception: Arkipiù was sometimes perceived as a construction company rather than a real estate developer. The website also showed inconsistencies in navigation, content hierarchy and responsive behaviour.',
     steps: [
-      ['01', 'Structure', 'Reviewed page architecture and content hierarchy across the existing website.'],
-      ['02', 'Interface system', 'Defined repeatable patterns for typography, sections, calls to action and responsive behaviour.'],
-      ['03', 'Delivery', 'Supported implementation through cross-device checks, asset optimisation and Design QA.']
+      ['01', 'Discover', 'Website audit, client feedback, target research and competitor analysis.'],
+      ['02', 'Define', 'Three target personas — Investor, Architect and Business Partner — shaped the priorities and key findings.'],
+      ['03', 'Ideate & structure', 'Positioning became clearer messaging, hierarchy became a new structure, and low-visibility CTAs became stronger paths.'],
+      ['04', 'Design & prototype', 'Translated the new structure into responsive components, refined calls to action and introduced missing content such as the ESG page.'],
+      ['05', 'Test & iterate', 'Completed three major website iterations through internal feedback, cross-device QA and content and UI refinement.']
     ],
     visual: 'Clearer.\nStronger.\nResponsive.',
+    visualHeading: 'A responsive interface system built for clearer paths and stronger brand perception.',
+    heroImage: '/assets/arkipiu/website-redesign-hero.png',
+    heroAlt: 'Arkipiù website redesign shown on desktop and mobile devices',
+    media: [
+      { src: '/assets/arkipiu/contact-form-system.png', alt: 'Responsive Arkipiù contact form component', caption: 'Reusable contact form and CTA system', layout: 'contain' },
+      { src: '/assets/arkipiu/esg-responsive-page.png', alt: 'Arkipiù ESG page displayed on laptop and mobile', caption: 'New ESG page across desktop and mobile', layout: 'contain' }
+    ],
     results: [['12', 'pages redesigned'], ['+89%', 'unique visitors'], ['+111%', 'organic Google sessions YoY']],
-    note: 'Website performance measured during the 12 months following the redesign.',
+    note: 'Source: Wix Analytics 2024–2025. Website performance measured year over year following the redesign.',
     next: 'groupline-shop', nextTitle: 'Groupline Shop'
   },
   'groupline-shop': {
-    index: '02', client: 'Groupline Shop', title: 'Conversion-focused Landing Pages',
+    index: '03', client: 'Groupline Shop', title: 'Conversion-focused Landing Pages',
     intro: 'A reusable mobile-first landing page system designed for TikTok and social advertising campaigns across six products.',
     tags: ['UI Design', 'Mobile-first', 'A/B Testing', 'Front-end Implementation'],
     challenge: 'Turn campaign traffic into focused product journeys.',
@@ -32,23 +66,32 @@ const studies = {
     next: 'naili-gatto-perry', nextTitle: 'Naili & Gatto Perry'
   },
   'naili-gatto-perry': {
-    index: '03', client: 'Naili & Gatto Perry', title: 'Editorial Illustration & Information Design',
-    intro: 'Character design, illustration and visual storytelling developed across two editions of an institutional publication for INAIL.',
-    tags: ['Illustration', 'Character Design', 'Visual Storytelling', 'Information Design'],
-    challenge: 'Make institutional information approachable through character-led storytelling.',
-    challengeText: 'The project translated complex themes into an accessible visual language, keeping characters, scenes and information consistent across the complete publication.',
+    index: '04', client: 'INAIL Campania × NWM Network', title: 'Naili & Gatto Perry — Illustrated Safety Stories',
+    intro: 'Illustration and character art for the first and second editions of an educational comic, created within INAIL Campania’s Sicuri e Connessi project in collaboration with NWM Network.',
+    tags: ['Illustration', 'Character Art', 'Comics', 'Concept Art'],
+    challenge: 'Turn workplace health and safety into stories people want to follow.',
+    challengeText: 'The project needed to explain important prevention themes without feeling technical or distant. A clear character-led world made the information easier to understand, remember and share.',
     steps: [
-      ['01', 'Characters', 'Developed the main characters and a recognisable illustration language.'],
-      ['02', 'Narrative system', 'Defined recurring compositions, expressions and visual cues for continuity.'],
-      ['03', 'Complete delivery', 'Produced the full comic and supporting information design across two editions.']
+      ['01', 'Character world', 'Designed Naili, Perry and the supporting cast, defining their expressions, personalities and a consistent illustration style.'],
+      ['02', 'Stories & pages', 'Developed panels end to end, balancing composition, pacing and narrative continuity across both editions.'],
+      ['03', 'Accessible communication', 'Built an educational visual language that presents workplace health and safety in a simple, clear and engaging way.']
     ],
     visual: 'Stories\nwith clarity.',
-    results: [['2', 'editions'], ['End-to-end', 'visual development'], ['Complete', 'illustrated publication']],
-    note: 'Developed with NWM Network for INAIL.',
+    visualHeading: 'A character-led visual language for education, clarity and engagement.',
+    heroImage: '/assets/naili-gatto-perry/naili-cover-hd.png',
+    heroAlt: 'Illustrated cover of Naili and Gatto Perry for the Sicuri e Connessi project',
+    media: [
+      { src: '/assets/naili-gatto-perry/naili-page.webp', alt: 'Illustrated internal comic page from Naili and Gatto Perry', caption: 'Illustrated page from the publication', layout: 'portrait' },
+      { src: '/assets/naili-gatto-perry/naili-cover-hd.png', alt: 'Cover illustration for Naili and Gatto Perry', caption: 'Cover artwork for the publication', layout: 'portrait' }
+    ],
+    results: [['2', 'illustrated editions'], ['End-to-end', 'character and page design'], ['Educational', 'visual storytelling']],
+    note: 'Developed for INAIL Campania with NWM Network as part of the Sicuri e Connessi prevention project.',
+    officialUrl: 'https://www.inail.it/portale/it/inail-comunica/pubblicazioni/catalogo-generale/catalogo-generale-dettaglio.2024.04.naili-gatto-perry-seconda-edizione-.html',
+    officialLabel: 'View the official INAIL publication ↗',
     next: 'brand-digital-design', nextTitle: 'Brand & Digital Design'
   },
   'brand-digital-design': {
-    index: '04', client: 'Selected work', title: 'Brand & Digital Design',
+    index: '05', client: 'Selected work', title: 'Brand & Digital Design',
     intro: 'Visual systems and campaign assets designed across digital and offline touchpoints for different brands and e-commerce environments.',
     tags: ['Brand Identity', 'Digital Design', 'Social', 'Advertising', 'Print'],
     challenge: 'Create recognisable visual systems that remain coherent across formats.',
@@ -61,24 +104,34 @@ const studies = {
     visual: 'One system.\nMany formats.',
     results: [['Digital', 'campaign assets'], ['Social', 'content systems'], ['Print', 'brand applications']],
     note: 'Selected work developed during experiences with ItAres and NWM Network.',
-    next: 'arkipiu', nextTitle: 'Arkipiù'
+    next: 'rallye-monte-carlo', nextTitle: 'Rallye Monte-Carlo 2026'
   }
 };
 
 const slug = location.pathname.split('/').filter(Boolean).pop();
 const study = studies[slug] || studies.arkipiu;
+document.body.classList.toggle('case-study--media', Boolean(study.media));
+document.body.classList.toggle('case-study--rally', slug === 'rallye-monte-carlo');
+document.body.classList.toggle('case-study--naili', slug === 'naili-gatto-perry');
+document.body.classList.toggle('case-study--arkipiu', slug === 'arkipiu');
 document.title = `${study.title} — Marica Mariniello`;
 document.querySelector('#case-study').innerHTML = `
-  <nav class="case-nav" aria-label="Case study navigation">
-    <a class="case-nav__mark" href="/">MM✦</a>
-    <a class="case-nav__back" href="/#work">Back to work</a>
+  <nav class="case-nav" aria-label="Primary navigation">
+    <a class="case-nav__brand" href="/">Marica Mariniello</a>
+    <div class="case-nav__links">
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
+      <a class="case-nav__contact" href="/#contact">Let's talk</a>
+    </div>
   </nav>
   <header class="case-hero">
-    <div>
+    ${study.heroImage ? `<img class="case-hero__image" src="${study.heroImage}" alt="${study.heroAlt}" decoding="async">` : ''}
+    <div class="case-hero__content">
       <p class="case-hero__eyebrow">${study.index} — ${study.client}</p>
       <h1>${study.title}</h1>
       <p class="case-hero__intro">${study.intro}</p>
       <div class="case-meta">${study.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
+      ${study.officialUrl ? `<a class="case-source" href="${study.officialUrl}" target="_blank" rel="noopener noreferrer">${study.officialLabel}</a>` : ''}
     </div>
   </header>
   <section class="case-section case-section--paper">
@@ -86,13 +139,17 @@ document.querySelector('#case-study').innerHTML = `
     <h2>${study.challenge}</h2>
     <p class="case-section__lead">${study.challengeText}</p>
     <div class="case-grid">${study.steps.map(([number, title, body]) => `
-      <article class="case-card"><span class="case-card__number">${number}</span><h3>${title}</h3><p>${body}</p></article>
+      <article class="case-card"><span class="case-card__number">${String(number).padStart(2, '0')}</span><h3>${title}</h3><p>${body}</p></article>
     `).join('')}</div>
   </section>
   <section class="case-section case-section--ink">
     <p class="case-section__eyebrow">Visual direction</p>
-    <h2>A flexible system with a clear point of view.</h2>
-    <div class="case-visual" data-label="${study.visual.replaceAll('"', '&quot;')}"></div>
+    <h2>${study.visualHeading || 'A flexible system with a clear point of view.'}</h2>
+    ${study.media ? `<div class="case-gallery">${study.media.map((item, index) => `
+      <figure class="case-gallery__item case-gallery__item--${index + 1}${item.layout ? ` case-gallery__item--${item.layout}` : ''}">
+        <img src="${item.src}" alt="${item.alt}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
+        <figcaption>${item.caption}</figcaption>
+      </figure>`).join('')}</div>` : `<div class="case-visual" data-label="${study.visual.replaceAll('"', '&quot;')}"></div>`}
   </section>
   <section class="case-section case-section--ink">
     <p class="case-section__eyebrow">Output</p>
