@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '52';
+  const styleVersion = '55';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -663,22 +663,54 @@
     }
 
     const icons = [
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4.5 16s4.2-7 11.5-7 11.5 7 11.5 7-4.2 7-11.5 7S4.5 16 4.5 16Z"/><circle cx="16" cy="16" r="3.5"/><path d="M16 4V2.5M7.4 7.4 6.3 6.3M24.6 7.4l1.1-1.1"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="6" cy="8" r="2.7"/><rect x="13" y="5.3" width="6" height="5.4" rx="1"/><circle cx="26" cy="8" r="2.7"/><rect x="5" y="21" width="6" height="6" rx="1"/><rect x="21" y="21" width="6" height="6" rx="1"/><path d="M8.7 8h4.2M19.1 8h4.2M16 10.8v4.7M8 20.8c.5-4 3.5-6.4 8-6.4s7.5 2.4 8 6.4"/></svg>',
       '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="19" height="17" rx="2.5"/><path d="M4 11h19M8 8.5h.1M11 8.5h.1M14 8.5h.1"/><rect x="20" y="14" width="8" height="13" rx="2"/><path d="M23 24h2"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 7 7-3 12H12L9 11l7-7Z"/><circle cx="16" cy="14" r="2.5"/><path d="M16 4v7.5M12 23v4h8v-4"/></svg>'
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 10 5-10 5L6 9l10-5Z"/><path d="m6 15 10 5 10-5M6 21l10 5 10-5"/><path d="M26 4v4M24 6h4"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 7 7-3 12H12L9 11l7-7Z"/><circle cx="16" cy="14" r="2.5"/><path d="M16 4v7.5M12 23v4h8v-4"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 11h18l-1.5 15h-15L7 11Z"/><path d="M11 11c0-3 2-5 5-5s5 2 5 5M12 18l3 3 6-7"/></svg>'
     ];
+
+    const description = approachHeading.nextElementSibling;
+    if (description && !section.querySelector('.approach-about-link')) {
+      const aboutLink = document.createElement('a');
+      aboutLink.className = 'approach-about-link';
+      aboutLink.href = '/#about';
+      aboutLink.textContent = 'About me';
+      description.insertAdjacentElement('afterend', aboutLink);
+    }
+
+    const expertise = window.PORTFOLIO_CONTENT?.approach?.principles || [];
 
     Array.from(section.querySelectorAll('h3')).slice(0, 4).forEach((heading, index) => {
       const row = heading.parentElement;
       const marker = row?.querySelector(':scope > span');
       if (!marker) return;
+      row.classList.add('expertise-card');
       marker.dataset.approachIcon = 'true';
       marker.className = 'approach-icon';
       if (!marker.querySelector('svg')) marker.innerHTML = icons[index];
       marker.setAttribute('aria-hidden', 'true');
+      if (!row.querySelector('.expertise-card__link')) {
+        const link = document.createElement('a');
+        link.className = 'expertise-card__link';
+        link.href = expertise[index]?.href || '/#about';
+        link.setAttribute('aria-label', `View work related to ${expertise[index]?.title || heading.textContent}`);
+        row.append(link);
+      }
     });
     return true;
+  };
+
+  const enhanceArkipiuCover = () => {
+    const slide = Array.from(document.querySelectorAll('#work .work-carousel-slide, #work article')).find((item) =>
+      /Corporate Website Redesign|Arkipiù Website/i.test(item.textContent)
+    );
+    const visual = slide?.querySelector('.work-carousel-visual, :scope > div:first-child');
+    if (!visual || visual.dataset.arkipiuCover === 'true') return;
+    visual.dataset.arkipiuCover = 'true';
+    visual.classList.add('arkipiu-project-cover');
+    visual.innerHTML = `
+      <img src="/assets/arkipiu/website-redesign-hero.png" alt="Arkipiù website redesign displayed on desktop and mobile" loading="lazy" decoding="async">
+      <strong class="arkipiu-project-cover__label">Corporate Website Redesign</strong>`;
   };
 
   const setupCustomCursor = () => {
@@ -989,6 +1021,7 @@
     reorderAboutBeforeWork();
     enhanceHeroBadge();
     ensureRallyProject();
+    enhanceArkipiuCover();
     const nailiSlide = Array.from(document.querySelectorAll('#work .work-carousel-slide, #work article')).find((slide) =>
       /Naili|INAIL Campania/i.test(slide.textContent)
     );

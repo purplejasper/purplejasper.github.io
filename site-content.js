@@ -142,14 +142,14 @@
     },
 
     approach: {
-      eyebrow: 'Design approach',
+      eyebrow: 'Core expertise',
       title: 'From visual systems to digital experiences',
-      description: 'My approach combines the precision of visual design with the logic of interface design.',
+      description: 'I connect visual direction and interface design across digital products, brands and conversion-focused communication.',
       principles: [
-        { number: '01', title: 'Clarity', description: 'Creating clear hierarchies and reducing visual noise.' },
-        { number: '02', title: 'Consistency', description: 'Building reusable patterns and coherent interface systems.' },
-        { number: '03', title: 'Responsiveness', description: 'Designing experiences that adapt effectively across devices.' },
-        { number: '04', title: 'Delivery', description: 'Considering implementation, handoff and QA as part of the design process.' }
+        { number: '01', title: 'UX/UI Design', description: 'Responsive interfaces, information architecture, user flows and reusable UI systems.', href: '/case-studies/arkipiu/' },
+        { number: '02', title: 'Digital Design', description: 'Visual systems and communication assets designed consistently across digital touchpoints.', href: '/case-studies/brand-digital-design/' },
+        { number: '03', title: 'Brand Identity', description: 'Distinctive identities, art direction and flexible brand applications for digital and print.', href: '/case-studies/brand-digital-design/' },
+        { number: '04', title: 'E-commerce & Conversion Assets', description: 'Product page visuals, campaign graphics, ads, banners and marketplace content designed to support conversion.', href: '/case-studies/groupline-shop/' }
       ]
     },
 

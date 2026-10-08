@@ -917,6 +917,43 @@ header nav > a[href='#contact']:focus-visible {
   line-height: .95;
 }
 
+#work .arkipiu-project-cover {
+  background:
+    radial-gradient(circle at 78% 24%, rgb(255 105 0 / .2), transparent 34%),
+    radial-gradient(circle at 18% 82%, rgb(145 83 202 / .34), transparent 38%),
+    linear-gradient(145deg, #100819, #241032 70%) !important;
+}
+
+#work .arkipiu-project-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 35%, rgb(8 5 12 / .9));
+}
+
+#work .arkipiu-project-cover img {
+  z-index: 0;
+  padding: clamp(1rem, 2.5vw, 2.25rem);
+  object-fit: contain;
+  object-position: center 40%;
+}
+
+#work .arkipiu-project-cover__label {
+  position: absolute;
+  z-index: 2;
+  left: clamp(1.25rem, 3vw, 2.5rem);
+  bottom: clamp(1.25rem, 3vw, 2.5rem);
+  max-width: 12ch;
+  color: #fff;
+  font-family: 'Bricolage Grotesque', Manrope, sans-serif;
+  font-size: clamp(1.6rem, 3.6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: .95;
+}
+
 #work .naili-project-cover {
   cursor: pointer;
   background: #120a18 !important;
@@ -1278,11 +1315,55 @@ section[data-content-section='approach'] .text-cream\/70 {
 }
 
 section[data-content-section='approach'] .group {
+  position: relative;
   margin-inline: clamp(.25rem, 1vw, .75rem);
   padding-inline: clamp(1rem, 2.8vw, 2.25rem) !important;
   border-color: rgb(247 243 250 / .12) !important;
   border-radius: 1.15rem;
   transition: background-color .3s ease, border-color .3s ease;
+}
+
+.approach-about-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 1.4rem;
+  padding: .72rem 1.05rem;
+  border: 1px solid rgb(222 181 239 / .34);
+  border-radius: 999px;
+  color: #f5dcff !important;
+  background: rgb(115 59 155 / .2);
+  text-decoration: none;
+  font-size: .84rem;
+  font-weight: 700;
+  transition: color .25s ease, background-color .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.approach-about-link:hover,
+.approach-about-link:focus-visible {
+  color: #1a0c22 !important;
+  border-color: var(--portfolio-lilac);
+  background: var(--portfolio-lilac);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.expertise-card > :not(.expertise-card__link) {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.expertise-card__link {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.expertise-card__link:focus-visible {
+  outline: 3px solid var(--portfolio-lilac);
+  outline-offset: 3px;
 }
 
 section[data-content-section='approach'] .group:hover,
