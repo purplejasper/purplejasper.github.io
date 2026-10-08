@@ -988,26 +988,24 @@ header nav > a[href='#contact']:focus-visible {
   line-height: .95;
 }
 
-#work .brand-project-cover {
-  display: flex;
-  align-items: flex-end;
-  padding: clamp(1.5rem, 3vw, 2.75rem);
-  background:
-    radial-gradient(circle at 22% 18%, rgb(229 174 247 / .3), transparent 34%),
-    radial-gradient(circle at 82% 76%, rgb(154 92 216 / .26), transparent 38%),
-    linear-gradient(145deg, #4e2f70, #21142f 72%) !important;
+#work .buildit-project-cover {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: #111418 !important;
 }
 
-#work .brand-project-cover__label {
-  position: relative;
-  z-index: 2;
-  max-width: 12ch;
-  color: #fff;
-  font-family: 'Bricolage Grotesque', Manrope, sans-serif;
-  font-size: clamp(2.2rem, 4.8vw, 4.8rem);
-  font-weight: 800;
-  letter-spacing: -.045em;
-  line-height: .92;
+#work .buildit-project-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform .55s cubic-bezier(.2, .8, .2, 1), filter .55s ease;
+}
+
+#work .work-carousel-slide.is-active .buildit-project-cover:hover img {
+  transform: scale(1.025);
+  filter: brightness(1.05);
 }
 
 #work .work-carousel-visual { cursor: pointer; }

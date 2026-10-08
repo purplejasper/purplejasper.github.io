@@ -88,22 +88,30 @@ const studies = {
     note: 'Developed for INAIL Campania with NWM Network as part of the Sicuri e Connessi prevention project.',
     officialUrl: 'https://www.inail.it/portale/it/inail-comunica/pubblicazioni/catalogo-generale/catalogo-generale-dettaglio.2024.04.naili-gatto-perry-seconda-edizione-.html',
     officialLabel: 'View the official INAIL publication ↗',
-    next: 'brand-digital-design', nextTitle: 'Brand & Digital Design'
+    next: 'brand-digital-design', nextTitle: 'BUILDIT Visual Identity'
   },
   'brand-digital-design': {
-    index: '05', client: 'Selected work', title: 'Brand & Digital Design',
-    intro: 'Visual systems and campaign assets designed across digital and offline touchpoints for different brands and e-commerce environments.',
-    tags: ['Brand Identity', 'Digital Design', 'Social', 'Advertising', 'Print'],
-    challenge: 'Create recognisable visual systems that remain coherent across formats.',
-    challengeText: 'The work ranged from identity and campaign direction to social assets, marketing materials and e-commerce visuals, always adapting the system to the needs of each channel.',
+    index: '05', client: 'BUILDIT', title: 'Visual Identity',
+    intro: 'A visual identity created to express innovation, reliability and a forward-looking approach within the construction sector.',
+    tags: ['Logo Design', 'Identity System', 'Brand Identity'],
+    challenge: 'Build a distinctive identity for a forward-looking construction brand.',
+    challengeText: 'The identity needed to feel solid and dependable while communicating a modern, innovative outlook. The result combines a compact architectural mark, a controlled colour system and flexible applications across physical and digital touchpoints.',
     steps: [
-      ['01', 'Visual direction', 'Translated positioning into typography, colour, layout and image choices.'],
-      ['02', 'Channel adaptation', 'Extended the system across social, advertising, print and digital content.'],
-      ['03', 'Consistency', 'Built reusable rules and formats to support faster, coherent production.']
+      ['01', 'Identity direction', 'Translated the brand values into a bold, precise visual language rooted in construction and progress.'],
+      ['02', 'Primary mark', 'Developed a compact monogram and wordmark designed to remain recognisable across different sizes and surfaces.'],
+      ['03', 'Palette & applications', 'Extended the system through a deep blue, white, vivid green and charcoal palette across stationery, apparel and digital assets.']
     ],
-    visual: 'One system.\nMany formats.',
-    results: [['Digital', 'campaign assets'], ['Social', 'content systems'], ['Print', 'brand applications']],
-    note: 'Selected work developed during experiences with ItAres and NWM Network.',
+    visual: 'Built to\nstand out.',
+    visualHeading: 'One clear identity, designed to work across every brand application.',
+    heroImage: '/assets/buildit/buildit-cover.webp',
+    heroAlt: 'BUILDIT visual identity presentation with a branded construction helmet',
+    media: [
+      { src: '/assets/buildit/buildit-primary-mark.webp', alt: 'BUILDIT primary identity mark displayed over an architectural city background', caption: 'Primary identity mark', layout: 'wide' },
+      { src: '/assets/buildit/buildit-palette.webp', alt: 'BUILDIT colour palette and visual direction', caption: 'Palette and visual direction', layout: 'wide' },
+      { src: '/assets/buildit/buildit-applications.webp', alt: 'Selected BUILDIT brand applications across stationery, apparel and digital assets', caption: 'Selected brand applications', layout: 'wide' }
+    ],
+    results: [['1', 'distinctive identity system'], ['4', 'core brand colours'], ['Multi-format', 'brand applications']],
+    note: 'Selected identity work from the BUILDIT brand system.',
     next: 'rallye-monte-carlo', nextTitle: 'Rallye Monte-Carlo 2026'
   }
 };
@@ -114,6 +122,7 @@ document.body.classList.toggle('case-study--media', Boolean(study.media));
 document.body.classList.toggle('case-study--rally', slug === 'rallye-monte-carlo');
 document.body.classList.toggle('case-study--naili', slug === 'naili-gatto-perry');
 document.body.classList.toggle('case-study--arkipiu', slug === 'arkipiu');
+document.body.classList.toggle('case-study--buildit', slug === 'brand-digital-design');
 document.title = `${study.title} — Marica Mariniello`;
 document.querySelector('#case-study').innerHTML = `
   <nav class="case-nav" aria-label="Primary navigation">

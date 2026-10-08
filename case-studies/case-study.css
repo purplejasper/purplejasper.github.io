@@ -168,6 +168,31 @@ a { color: inherit; }
   filter: drop-shadow(0 34px 60px rgb(0 0 0 / .48));
 }
 
+.case-study--buildit .case-hero {
+  min-height: 100svh;
+  background: #101317;
+}
+
+.case-study--buildit .case-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(12 15 19 / .96) 0%, rgb(12 15 19 / .78) 40%, rgb(12 15 19 / .08) 72%);
+}
+
+.case-study--buildit .case-hero__content { max-width: 680px; }
+.case-study--buildit .case-hero h1 { font-size: clamp(4rem, 9vw, 8.5rem); }
+.case-study--buildit .case-hero__eyebrow,
+.case-study--buildit .case-section__eyebrow { color: #65df12; }
+.case-study--buildit .case-hero__image {
+  left: auto;
+  right: 0;
+  width: min(72vw, 1180px);
+  object-fit: cover;
+  object-position: center;
+}
+
 .case-hero__eyebrow,
 .case-section__eyebrow {
   margin: 0 0 1.5rem;
@@ -478,6 +503,26 @@ a { color: inherit; }
   object-fit: contain;
 }
 
+.case-study--buildit .case-gallery {
+  grid-template-columns: 1fr;
+}
+
+.case-study--buildit .case-gallery__item,
+.case-study--buildit .case-gallery__item--1,
+.case-study--buildit .case-gallery__item--2,
+.case-study--buildit .case-gallery__item--3 {
+  grid-column: 1;
+  aspect-ratio: 16 / 9;
+  background: #111418;
+}
+
+.case-study--buildit .case-gallery__item img {
+  object-fit: contain;
+}
+
+.case-study--buildit .case-card__number,
+.case-study--buildit .case-result strong { color: #65df12; }
+
 .case-gallery__item figcaption {
   position: absolute;
   z-index: 2;
@@ -590,6 +635,20 @@ a { color: inherit; }
   .case-study--arkipiu .case-gallery__item,
   .case-study--arkipiu .case-gallery__item--1,
   .case-study--arkipiu .case-gallery__item--2 { aspect-ratio: 1 / 1; }
+  .case-study--buildit .case-hero::after {
+    background: linear-gradient(180deg, rgb(12 15 19 / .1) 8%, rgb(12 15 19 / .85) 56%, #0c0f13 100%);
+  }
+  .case-study--buildit .case-hero__image {
+    top: 5.5rem;
+    width: 100%;
+    height: 52%;
+    object-fit: contain;
+  }
+  .case-study--buildit .case-hero__content { padding-top: 44vh; }
+  .case-study--buildit .case-gallery__item,
+  .case-study--buildit .case-gallery__item--1,
+  .case-study--buildit .case-gallery__item--2,
+  .case-study--buildit .case-gallery__item--3 { aspect-ratio: 16 / 9; }
   .case-card { min-height: 260px; }
   .case-card__number { font-size: clamp(4.5rem, 25vw, 7rem); }
   .case-card h3 { margin-top: auto; }

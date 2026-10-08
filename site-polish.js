@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '55';
+  const styleVersion = '56';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -1000,19 +1000,18 @@
     }, { passive: true });
   };
 
-  const removeRepeatedBrandArtwork = () => {
-    const brandSlide = Array.from(document.querySelectorAll('#work .work-carousel-slide, #work article')).find((slide) =>
-      /Brand & Digital Design|Visual Systems across Digital/i.test(slide.textContent)
+  const enhanceBuilditCover = () => {
+    const builditSlide = Array.from(document.querySelectorAll('#work .work-carousel-slide, #work article')).find((slide) =>
+      /BUILDIT|Visual Identity/i.test(slide.textContent)
     );
-    const visual = brandSlide?.querySelector('.work-carousel-visual, :scope > div:first-child');
+    const visual = builditSlide?.querySelector('.work-carousel-visual, :scope > div:first-child');
     if (!visual) return;
+    if (visual.dataset.realArtwork === 'true' && visual.querySelector('img[src*="/assets/buildit/"]')) return;
 
-    const repeatedArtwork = visual.querySelector('img');
-    if (!repeatedArtwork && !visual.classList.contains('naili-project-cover')) return;
-    visual.classList.remove('naili-project-cover', 'rally-project-cover');
-    visual.removeAttribute('data-real-artwork');
-    visual.classList.add('brand-project-cover');
-    visual.innerHTML = '<strong class="brand-project-cover__label">Brand &amp; Digital Design</strong>';
+    visual.classList.remove('naili-project-cover', 'rally-project-cover', 'brand-project-cover');
+    visual.dataset.realArtwork = 'true';
+    visual.classList.add('buildit-project-cover');
+    visual.innerHTML = '<img src="/assets/buildit/buildit-cover.webp" alt="BUILDIT visual identity presentation with branded construction helmet" loading="lazy" decoding="async">';
   };
 
   const apply = () => {
@@ -1033,7 +1032,7 @@
         <img src="/assets/naili-gatto-perry/naili-cover-hd.png" alt="Cover illustration for Naili &amp; Gatto Perry, created for the Sicuri e Connessi project" loading="lazy" decoding="async">
         <strong class="naili-project-cover__label">Naili &amp; Gatto Perry</strong>`;
     }
-    removeRepeatedBrandArtwork();
+    enhanceBuilditCover();
     enhanceCarousel();
     enhanceCaseStudyLinks();
     enhanceInfiniteCarousel();

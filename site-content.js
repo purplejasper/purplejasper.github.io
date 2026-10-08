@@ -112,10 +112,10 @@
         },
         {
           number: '05',
-          name: 'Brand & Digital Design',
-          title: 'Visual Systems across Digital and Offline Touchpoints',
-          description: 'During my experience with ItAres and NWM Network, I worked on brand identities, digital campaigns, social assets and marketing materials for different clients and e-commerce brands.',
-          skills: ['Brand Identity', 'Digital Design', 'Social', 'Advertising', 'Print', 'Corporate Communication']
+          name: 'BUILDIT',
+          title: 'Visual Identity',
+          description: 'A visual identity designed to express innovation, reliability and a forward-looking approach within the construction sector.',
+          skills: ['Logo Design', 'Identity System', 'Brand Identity']
         }
       ]
     },
