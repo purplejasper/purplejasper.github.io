@@ -80,26 +80,30 @@ const studies = {
   },
   'brand-digital-design': {
     index: '04', client: 'BUILDIT', title: 'Brand & Visual Identity',
-    intro: 'A visual identity created to express innovation, reliability and a forward-looking approach within the construction sector.',
-    tags: ['Logo Design', 'Identity System', 'Brand Identity'],
-    challenge: 'Build a distinctive identity for a forward-looking construction brand.',
-    challengeText: 'The identity needed to feel solid and dependable while communicating a modern, innovative outlook. The result combines a compact architectural mark, a controlled colour system and flexible applications across physical and digital touchpoints.',
+    intro: 'A complete identity system for a modern, sustainable construction company, developed from logo strategy and colour through physical and digital applications.',
+    tags: ['Logo Design', 'Visual Identity', 'Brand Applications'],
+    challenge: 'Make sustainability and construction feel solid, modern and recognisable.',
+    challengeText: 'BUILDIT combines construction expertise, innovation and environmental responsibility. The identity needed to communicate authority and durability without losing the progressive, sustainable character of the brand.',
     steps: [
-      ['01', 'Identity direction', 'Translated the brand values into a bold, precise visual language rooted in construction and progress.'],
-      ['02', 'Primary mark', 'Developed a compact monogram and wordmark designed to remain recognisable across different sizes and surfaces.'],
-      ['03', 'Palette & applications', 'Extended the system through a deep blue, white, vivid green and charcoal palette across stationery, apparel and digital assets.']
+      ['01', 'Brand direction', 'Defined five core ideas — sustainability, construction, innovation, authority and green — to guide every visual decision.'],
+      ['02', 'Symbol & logotype', 'Combined a strong architectural B with a condensed wordmark, creating a compact logo system that remains clear across sizes and surfaces.'],
+      ['03', 'System & applications', 'Built the identity around deep blue, white, charcoal and vivid green, then extended it across stationery, workwear, equipment and digital touchpoints.']
     ],
-    visual: 'Built to\nstand out.',
-    visualHeading: 'One clear identity, designed to work across every brand application.',
-    heroImage: '/assets/buildit/buildit-cover.webp',
-    heroAlt: 'BUILDIT visual identity presentation with a branded construction helmet',
+    visual: 'Built for\nthe future.',
+    visualHeading: 'A clear visual system connecting construction, innovation and sustainability.',
+    heroImage: '/assets/buildit/buildit-helmet.webp',
+    heroAlt: 'BUILDIT identity applied to a construction helmet',
     media: [
-      { src: '/assets/buildit/buildit-primary-mark.webp', alt: 'BUILDIT primary identity mark displayed over an architectural city background', caption: 'Primary identity mark', layout: 'wide' },
-      { src: '/assets/buildit/buildit-palette.webp', alt: 'BUILDIT colour palette and visual direction', caption: 'Palette and visual direction', layout: 'wide' },
-      { src: '/assets/buildit/buildit-applications.webp', alt: 'Selected BUILDIT brand applications across stationery, apparel and digital assets', caption: 'Selected brand applications', layout: 'wide' }
+      { src: '/assets/buildit/buildit-identity-system.webp', alt: 'BUILDIT identity concept combining a structural B with an architectural form', caption: 'Identity concept and symbol construction', layout: 'wide' },
+      { src: '/assets/buildit/buildit-colours.webp', alt: 'BUILDIT colour palette with deep blue, white, charcoal and vivid green', caption: 'Core colour system', layout: 'standard' },
+      { src: '/assets/buildit/buildit-logotype.webp', alt: 'BUILDIT logotype combining the symbol with a condensed wordmark', caption: 'Primary logotype', layout: 'standard' },
+      { src: '/assets/buildit/buildit-paper-logo.webp', alt: 'BUILDIT embossed logo applied to textured paper', caption: 'Logo detail and material application', layout: 'wide' },
+      { src: '/assets/buildit/buildit-card.webp', alt: 'BUILDIT stationery system with branded business cards, letterhead and writing tools', caption: 'Stationery and corporate applications', layout: 'wide' },
+      { src: '/assets/buildit/buildit-backpack.webp', alt: 'BUILDIT logo applied to a professional backpack', caption: 'Workwear and branded equipment', layout: 'standard' },
+      { src: '/assets/buildit/buildit-app.webp', alt: 'BUILDIT app icon displayed beside a smartphone', caption: 'Digital application and app icon', layout: 'standard' }
     ],
-    results: [['1', 'distinctive identity system'], ['4', 'core brand colours'], ['Multi-format', 'brand applications']],
-    note: 'Selected identity work from the BUILDIT brand system.',
+    results: [['1', 'coherent identity system'], ['4', 'core brand colours'], ['Physical + digital', 'brand applications']],
+    note: 'The selected outputs show how the same visual language moves consistently from the core mark to real-world and digital touchpoints.',
     next: 'rallye-monte-carlo', nextTitle: 'Rallye Monte-Carlo 2026'
   }
 };

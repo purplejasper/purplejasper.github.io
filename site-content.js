@@ -107,8 +107,8 @@
           number: '04',
           name: 'BUILDIT',
           title: 'Brand & Visual Identity',
-          description: 'A visual identity designed to express innovation, reliability and a forward-looking approach within the construction sector.',
-          skills: ['Logo Design', 'Identity System', 'Brand Identity']
+          description: 'A complete identity system for a modern, sustainable construction company, developed from logo strategy and colour through physical and digital brand applications.',
+          skills: ['Logo Design', 'Visual Identity', 'Brand Applications']
         }
       ]
     },

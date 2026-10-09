@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '64';
+  const styleVersion = '65';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -817,8 +817,8 @@
       },
       {
         className: 'buildit-project-cover',
-        src: '/assets/buildit/buildit-cover.webp',
-        alt: 'BUILDIT visual identity presentation with branded construction helmet'
+        src: '/assets/buildit/buildit-card.webp',
+        alt: 'BUILDIT stationery system with branded business cards, letterhead and writing tools'
       }
     ];
     const coverClasses = covers.map(({ className }) => className);
