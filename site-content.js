@@ -72,7 +72,7 @@
 
     work: {
       title: 'Portfolio',
-      description: 'Five projects across UI design, implementation, visual systems and editorial illustration.',
+      description: 'Four projects across UI design, visual systems and editorial illustration.',
       mockupLabel: 'Mockup coming soon',
       viewCaseStudy: 'View Case Study',
       projects: [
@@ -98,22 +98,15 @@
         },
         {
           number: '03',
-          name: 'Groupline Shop',
-          title: 'Conversion-focused Landing Pages',
-          description: 'Designed and implemented approximately 10 mobile-first landing pages across 6 products, supporting TikTok and social advertising campaigns.',
-          skills: ['UI Design', 'Mobile-first', 'A/B Testing', 'Front-end Implementation']
-        },
-        {
-          number: '04',
           name: 'INAIL Campania × NWM Network',
           title: 'Naili & Gatto Perry — Illustrated Safety Stories',
           description: 'End-to-end character art and comic illustration for two editions of an educational publication, turning workplace health and safety into clear, engaging visual stories.',
           skills: ['Illustration', 'Character Art', 'Comics', 'Concept Art']
         },
         {
-          number: '05',
+          number: '04',
           name: 'BUILDIT',
-          title: 'Visual Identity',
+          title: 'Brand & Visual Identity',
           description: 'A visual identity designed to express innovation, reliability and a forward-looking approach within the construction sector.',
           skills: ['Logo Design', 'Identity System', 'Brand Identity']
         }
@@ -149,7 +142,7 @@
         { number: '01', title: 'UX/UI Design', description: 'Responsive interfaces, information architecture, user flows and reusable UI systems.', href: '/case-studies/arkipiu/' },
         { number: '02', title: 'Digital Design', description: 'Visual systems and communication assets designed consistently across digital touchpoints.', href: '/case-studies/brand-digital-design/' },
         { number: '03', title: 'Brand Identity', description: 'Distinctive identities, art direction and flexible brand applications for digital and print.', href: '/case-studies/brand-digital-design/' },
-        { number: '04', title: 'Editorial & Typographic Design', description: 'Editorial layouts, brochures, posters and presentation systems shaped through typography, grids and clear visual hierarchy.', href: '/case-studies/naili-gatto-perry/' }
+        { number: '04', title: 'Editorial Design', description: 'Editorial layouts, brochures, posters and presentation systems shaped through typography, grids and clear visual hierarchy.', href: '/case-studies/naili-gatto-perry/' }
       ]
     },
 
@@ -305,7 +298,7 @@
       const headerParagraph = heading?.parentElement?.querySelector('p');
       text(headerParagraph, content.work.description);
       work.querySelectorAll('.work-carousel-visual span, article > div:first-child span').forEach((label) => text(label, content.work.mockupLabel));
-      Array.from(work.querySelectorAll('article')).forEach((article, index) => applyProject(article, content.work.projects[index]));
+      Array.from(work.querySelectorAll('article:not([data-carousel-clone])')).forEach((article, index) => applyProject(article, content.work.projects[index]));
     }
 
     const about = document.querySelector('#about');
@@ -333,7 +326,7 @@
       if (approachTitle) {
         approachTitle.dataset.approachHeading = 'true';
         approachTitle.setAttribute('aria-label', content.approach.title);
-        approachTitle.innerHTML = 'From visual systems<br><span class="approach-heading__second-line">to digital experiences</span>';
+        approachTitle.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line">to digital experiences</span>';
       }
       text(topParagraphs[1], content.approach.description);
       Array.from(approach.querySelectorAll('h3')).forEach((heading, index) => {

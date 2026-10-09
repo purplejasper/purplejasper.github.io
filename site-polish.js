@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '58';
+  const styleVersion = '60';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -11,7 +11,6 @@
   const caseStudies = [
     '/case-studies/rallye-monte-carlo/',
     '/case-studies/arkipiu/',
-    '/case-studies/groupline-shop/',
     '/case-studies/naili-gatto-perry/',
     '/case-studies/brand-digital-design/'
   ];
@@ -88,6 +87,12 @@
     document.querySelectorAll('#contact > div > div').forEach((block) => {
       const text = block.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
       if (text.startsWith('name') && text.includes('email')) block.remove();
+    });
+  };
+
+  const removeGrouplineProject = () => {
+    Array.from(document.querySelectorAll('#work article')).forEach((article) => {
+      if (/Groupline Shop|Conversion-focused Landing Pages/i.test(article.textContent)) article.remove();
     });
   };
 
@@ -381,36 +386,81 @@
     if (originals.length < 2) return false;
     viewport.dataset.infiniteReady = 'true';
 
+    const previousClone = originals.at(-1).cloneNode(true);
+    previousClone.dataset.carouselClone = 'true';
+    previousClone.dataset.carouselCloneIndex = String(originals.length - 1);
+    previousClone.setAttribute('aria-hidden', 'true');
+    previousClone.classList.remove('is-carousel-active');
+    previousClone.querySelectorAll('a, button').forEach((control) => { control.tabIndex = -1; });
+
+    const nextClone = originals[0].cloneNode(true);
+    nextClone.dataset.carouselClone = 'true';
+    nextClone.dataset.carouselCloneIndex = '0';
+    nextClone.setAttribute('aria-hidden', 'true');
+    nextClone.classList.remove('is-carousel-active');
+    nextClone.querySelectorAll('a, button').forEach((control) => { control.tabIndex = -1; });
+
+    track.prepend(previousClone);
+    track.append(nextClone);
+    const slides = Array.from(track.querySelectorAll('.work-carousel-slide'));
+
     const centerSlide = (slide, behavior = 'smooth') => {
       const left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+      const isInstant = behavior === 'auto';
+      if (isInstant) viewport.classList.add('is-loop-jumping');
       viewport.scrollTo({ left, behavior });
+      if (isInstant) window.requestAnimationFrame(() => viewport.classList.remove('is-loop-jumping'));
     };
 
     let activeIndex = 0;
     let scrollFrame = 0;
+    let settleTimer = 0;
 
-    const syncActive = () => {
-      scrollFrame = 0;
+    const logicalIndex = (slide) => slide.dataset.carouselClone === 'true'
+      ? Number(slide.dataset.carouselCloneIndex)
+      : originals.indexOf(slide);
+
+    const closestSlide = () => {
       const center = viewport.scrollLeft + viewport.clientWidth / 2;
-      const closest = originals.reduce((best, slide) => {
+      return slides.reduce((best, slide) => {
         const distance = Math.abs((slide.offsetLeft + slide.offsetWidth / 2) - center);
         return !best || distance < best.distance ? { slide, distance } : best;
       }, null)?.slide;
+    };
+
+    const syncActive = () => {
+      scrollFrame = 0;
+      const closest = closestSlide();
       if (!closest) return;
-      activeIndex = Math.max(0, originals.indexOf(closest));
+      activeIndex = Math.max(0, logicalIndex(closest));
       originals.forEach((slide, index) => slide.setAttribute('aria-hidden', String(index !== activeIndex)));
-      originals.forEach((slide, index) => {
-        slide.classList.toggle('is-carousel-active', index === activeIndex);
+      slides.forEach((slide) => {
+        const isPhysicalActive = slide === closest;
+        slide.classList.toggle('is-carousel-active', isPhysicalActive);
         const visualLink = slide.querySelector('.work-carousel-visual-hit');
-        if (visualLink) visualLink.tabIndex = index === activeIndex ? 0 : -1;
+        if (visualLink) visualLink.tabIndex = isPhysicalActive && slide.dataset.carouselClone !== 'true' ? 0 : -1;
       });
       dots.forEach((dot, index) => dot.setAttribute('aria-current', String(index === activeIndex)));
     };
 
+    const settleLoop = () => {
+      window.clearTimeout(settleTimer);
+      const closest = closestSlide();
+      if (!closest || closest.dataset.carouselClone !== 'true') {
+        syncActive();
+        return;
+      }
+      const targetIndex = logicalIndex(closest);
+      centerSlide(originals[targetIndex], 'auto');
+      syncActive();
+    };
+
     viewport.addEventListener('scroll', () => {
-      if (scrollFrame) return;
-      scrollFrame = window.requestAnimationFrame(syncActive);
+      if (!scrollFrame) scrollFrame = window.requestAnimationFrame(syncActive);
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settleLoop, 140);
     }, { passive: true });
+    if ('onscrollend' in viewport) viewport.addEventListener('scrollend', settleLoop, { passive: true });
 
     const keepArrowsEnabled = () => {
       [previous, next].forEach((button) => {
@@ -423,29 +473,23 @@
     [previous, next].forEach((button) => controlObserver.observe(button, { attributes: true, attributeFilter: ['disabled', 'aria-disabled'] }));
 
     const navigate = (nextIndex) => {
-      const wrapped = Math.abs(nextIndex - activeIndex) > 1;
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!wrapped || reducedMotion) {
-        centerSlide(originals[nextIndex], reducedMotion ? 'auto' : 'smooth');
-        return;
-      }
-      viewport.classList.add('is-wrapping');
-      window.setTimeout(() => {
-        centerSlide(originals[nextIndex], 'auto');
-        syncActive();
-        window.requestAnimationFrame(() => viewport.classList.remove('is-wrapping'));
-      }, 180);
+      const behavior = reducedMotion ? 'auto' : 'smooth';
+      if (nextIndex < 0) centerSlide(previousClone, behavior);
+      else if (nextIndex >= originals.length) centerSlide(nextClone, behavior);
+      else centerSlide(originals[nextIndex], behavior);
+      if (reducedMotion) settleLoop();
     };
 
     previous.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopImmediatePropagation();
-      navigate((activeIndex - 1 + originals.length) % originals.length);
+      navigate(activeIndex - 1);
     }, true);
     next.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopImmediatePropagation();
-      navigate((activeIndex + 1) % originals.length);
+      navigate(activeIndex + 1);
     }, true);
     dots.forEach((dot, index) => dot.addEventListener('click', (event) => {
       event.preventDefault();
@@ -481,7 +525,7 @@
       if (!dragged) return;
       suppressClick = true;
       window.setTimeout(() => { suppressClick = false; }, 0);
-      const slides = Array.from(track.querySelectorAll('.work-carousel-slide:not([data-carousel-clone])'));
+      const slides = Array.from(track.querySelectorAll('.work-carousel-slide'));
       const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
       const closest = slides.reduce((best, slide) => {
         const distance = Math.abs((slide.offsetLeft + slide.offsetWidth / 2) - viewportCenter);
@@ -658,8 +702,8 @@
 
     approachHeading.dataset.approachHeading = 'true';
     approachHeading.setAttribute('aria-label', 'From visual systems to digital experiences');
-    if (!approachHeading.querySelector('.approach-heading__second-line')) {
-      approachHeading.innerHTML = 'From visual systems<br><span class="approach-heading__second-line">to digital experiences</span>';
+    if (!approachHeading.querySelector('.approach-heading__first-line')) {
+      approachHeading.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line">to digital experiences</span>';
     }
 
     const icons = [
@@ -697,6 +741,24 @@
         row.append(link);
       }
     });
+    return true;
+  };
+
+  const enhanceApproachScrollReveal = () => {
+    const heading = document.querySelector('[data-approach-heading="true"]');
+    if (!heading || heading.dataset.scrollRevealReady === 'true') return false;
+    heading.dataset.scrollRevealReady = 'true';
+    heading.classList.add('approach-heading--scroll');
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      heading.classList.add('is-visible');
+      return true;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => heading.classList.toggle('is-visible', entry.isIntersecting));
+    }, { threshold: .32, rootMargin: '0px 0px -8% 0px' });
+    observer.observe(heading);
     return true;
   };
 
@@ -1014,8 +1076,52 @@
     visual.innerHTML = '<img src="/assets/buildit/buildit-cover.webp" alt="BUILDIT visual identity presentation with branded construction helmet" loading="lazy" decoding="async">';
   };
 
+  const enableGentlePageScroll = () => {
+    const root = document.documentElement;
+    if (root.dataset.gentleScroll === 'true') return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    if (reducedMotion.matches || !finePointer.matches) return;
+
+    root.dataset.gentleScroll = 'true';
+    let position = window.scrollY;
+    let target = position;
+    let frame = 0;
+    let writing = false;
+
+    const clampTarget = (value) => Math.max(0, Math.min(value, document.documentElement.scrollHeight - window.innerHeight));
+    const animate = () => {
+      const distance = target - position;
+      position += distance * .14;
+      if (Math.abs(distance) < .55) position = target;
+      writing = true;
+      window.scrollTo(0, position);
+      writing = false;
+      if (position === target) {
+        frame = 0;
+        return;
+      }
+      frame = window.requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('wheel', (event) => {
+      if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      event.preventDefault();
+      if (!frame) position = target = window.scrollY;
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+      target = clampTarget(target + event.deltaY * unit * .82);
+      if (!frame) frame = window.requestAnimationFrame(animate);
+    }, { passive: false });
+
+    window.addEventListener('scroll', () => {
+      if (frame || writing) return;
+      position = target = window.scrollY;
+    }, { passive: true });
+  };
+
   const apply = () => {
     removeRequestedSections();
+    removeGrouplineProject();
     enhanceIntroduction();
     reorderAboutBeforeWork();
     enhanceHeroBadge();
@@ -1038,6 +1144,7 @@
     enhanceInfiniteCarousel();
     enhanceMouseDragCarousel();
     enhanceApproachIcons();
+    enhanceApproachScrollReveal();
     enhanceEditorialMotion();
 
     const contactTitle = document.querySelector('#contact h2');
@@ -1050,6 +1157,7 @@
     }
     enhanceContactTitleKinetics();
     enhanceContactBackground();
+    enableGentlePageScroll();
 
     const behance = document.querySelector('footer [data-behance-footer]');
     if (behance && !behance.querySelector('.behance-mark')) {
@@ -1067,6 +1175,7 @@
     document.documentElement.classList.remove('portfolio-booting');
   };
 
+  removeGrouplineProject();
   ensureRallyProject();
 
   const start = () => {

@@ -49,26 +49,10 @@ const studies = {
     ],
     results: [['12', 'pages redesigned'], ['+89%', 'unique visitors'], ['+111%', 'organic Google sessions YoY']],
     note: 'Source: Wix Analytics 2024–2025. Website performance measured year over year following the redesign.',
-    next: 'groupline-shop', nextTitle: 'Groupline Shop'
-  },
-  'groupline-shop': {
-    index: '03', client: 'Groupline Shop', title: 'Conversion-focused Landing Pages',
-    intro: 'A reusable mobile-first landing page system designed for TikTok and social advertising campaigns across six products.',
-    tags: ['UI Design', 'Mobile-first', 'A/B Testing', 'Front-end Implementation'],
-    challenge: 'Turn campaign traffic into focused product journeys.',
-    challengeText: 'The work balanced fast production with a consistent visual hierarchy, keeping product benefits, proof points and calls to action clear on smaller screens.',
-    steps: [
-      ['01', 'Reusable patterns', 'Built a repeatable page structure that could adapt to different products and campaign angles.'],
-      ['02', 'Mobile priority', 'Designed the information flow around short attention spans and thumb-friendly interaction.'],
-      ['03', 'Iteration', 'Compared CTA and layout solutions and refined the implementation across browsers.']
-    ],
-    visual: 'Campaigns\nthat move.',
-    results: [['≈10', 'landing pages'], ['6', 'products'], ['Mobile', 'first delivery']],
-    note: 'Created for paid social and TikTok campaign traffic.',
     next: 'naili-gatto-perry', nextTitle: 'Naili & Gatto Perry'
   },
   'naili-gatto-perry': {
-    index: '04', client: 'INAIL Campania × NWM Network', title: 'Naili & Gatto Perry — Illustrated Safety Stories',
+    index: '03', client: 'INAIL Campania × NWM Network', title: 'Naili & Gatto Perry — Illustrated Safety Stories',
     intro: 'Illustration and character art for the first and second editions of an educational comic, created within INAIL Campania’s Sicuri e Connessi project in collaboration with NWM Network.',
     tags: ['Illustration', 'Character Art', 'Comics', 'Concept Art'],
     challenge: 'Turn workplace health and safety into stories people want to follow.',
@@ -80,11 +64,13 @@ const studies = {
     ],
     visual: 'Stories\nwith clarity.',
     visualHeading: 'A character-led visual language for education, clarity and engagement.',
-    heroImage: '/assets/naili-gatto-perry/naili-cover-hd.png',
-    heroAlt: 'Illustrated cover of Naili and Gatto Perry for the Sicuri e Connessi project',
+    heroImage: '/assets/naili-gatto-perry/naili-aircraft-scene.webp',
+    heroAlt: 'Naili and Gatto Perry in front of an aircraft during a safety training scene',
     media: [
       { src: '/assets/naili-gatto-perry/naili-page.webp', alt: 'Illustrated internal comic page from Naili and Gatto Perry', caption: 'Illustrated page from the publication', layout: 'portrait' },
-      { src: '/assets/naili-gatto-perry/naili-cover-hd.png', alt: 'Cover illustration for Naili and Gatto Perry', caption: 'Cover artwork for the publication', layout: 'portrait' }
+      { src: '/assets/naili-gatto-perry/naili-cover-hd.png', alt: 'Cover illustration for Naili and Gatto Perry', caption: 'Cover artwork for the publication', layout: 'portrait' },
+      { src: '/assets/naili-gatto-perry/naili-aircraft-scene.webp', alt: 'Naili and Gatto Perry in front of an aircraft during a safety training scene', caption: 'Character-led safety illustration', layout: 'wide' },
+      { src: '/assets/naili-gatto-perry/naili-comic-page-02.webp', alt: 'Comic page showing Naili travelling to Naples by plane', caption: 'Narrative page and panel composition', layout: 'portrait' }
     ],
     results: [['2', 'illustrated editions'], ['End-to-end', 'character and page design'], ['Educational', 'visual storytelling']],
     note: 'Developed for INAIL Campania with NWM Network as part of the Sicuri e Connessi prevention project.',
@@ -93,7 +79,7 @@ const studies = {
     next: 'brand-digital-design', nextTitle: 'BUILDIT Visual Identity'
   },
   'brand-digital-design': {
-    index: '05', client: 'BUILDIT', title: 'Visual Identity',
+    index: '04', client: 'BUILDIT', title: 'Brand & Visual Identity',
     intro: 'A visual identity created to express innovation, reliability and a forward-looking approach within the construction sector.',
     tags: ['Logo Design', 'Identity System', 'Brand Identity'],
     challenge: 'Build a distinctive identity for a forward-looking construction brand.',
@@ -173,3 +159,48 @@ document.querySelector('#case-study').innerHTML = `
   </a>
   <footer class="case-footer"><span>© 2026 Marica Mariniello</span><a href="mailto:mariniello.marica@gmail.com">Get in touch</a></footer>
 `;
+
+const enableGentlePageScroll = () => {
+  const root = document.documentElement;
+  if (root.dataset.gentleScroll === 'true') return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  if (reducedMotion.matches || !finePointer.matches) return;
+
+  root.dataset.gentleScroll = 'true';
+  let position = window.scrollY;
+  let target = position;
+  let frame = 0;
+  let writing = false;
+
+  const clampTarget = (value) => Math.max(0, Math.min(value, document.documentElement.scrollHeight - window.innerHeight));
+  const animate = () => {
+    const distance = target - position;
+    position += distance * .14;
+    if (Math.abs(distance) < .55) position = target;
+    writing = true;
+    window.scrollTo(0, position);
+    writing = false;
+    if (position === target) {
+      frame = 0;
+      return;
+    }
+    frame = window.requestAnimationFrame(animate);
+  };
+
+  window.addEventListener('wheel', (event) => {
+    if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+    event.preventDefault();
+    if (!frame) position = target = window.scrollY;
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+    target = clampTarget(target + event.deltaY * unit * .82);
+    if (!frame) frame = window.requestAnimationFrame(animate);
+  }, { passive: false });
+
+  window.addEventListener('scroll', () => {
+    if (frame || writing) return;
+    position = target = window.scrollY;
+  }, { passive: true });
+};
+
+enableGentlePageScroll();

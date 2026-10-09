@@ -443,9 +443,7 @@ a { color: inherit; }
 
 .case-study--naili .case-hero {
   min-height: 100svh;
-  background:
-    radial-gradient(circle at 77% 24%, rgb(204 84 213 / .3), transparent 36%),
-    linear-gradient(140deg, #0a0610, #261032 58%, #14091d);
+  background: #09070b;
 }
 
 .case-study--naili .case-hero::after {
@@ -453,32 +451,52 @@ a { color: inherit; }
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, rgb(8 5 11 / .97) 0%, rgb(8 5 11 / .82) 48%, rgb(8 5 11 / .1) 76%);
+  background:
+    linear-gradient(90deg, rgb(8 5 11 / .94) 0%, rgb(8 5 11 / .76) 42%, rgb(8 5 11 / .12) 78%),
+    linear-gradient(180deg, rgb(8 5 11 / .08), rgb(8 5 11 / .82));
 }
 
 .case-study--naili .case-hero__content { max-width: 720px; }
 .case-study--naili .case-hero h1 { max-width: 780px; font-size: clamp(3.45rem, 8.2vw, 8rem); }
 .case-study--naili .case-hero__image {
-  left: auto;
-  right: 2.5vw;
-  width: min(43vw, 660px);
-  height: calc(100% - 8rem);
-  top: 6rem;
-  bottom: auto;
-  object-fit: contain;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   object-position: center;
-  filter: drop-shadow(0 30px 50px rgb(0 0 0 / .42));
+  filter: saturate(.92) brightness(.9);
 }
 
 .case-study--naili .case-gallery {
   align-items: start;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 900px;
+  max-width: 1100px;
 }
 
 .case-study--naili .case-gallery__item {
   grid-column: auto;
   aspect-ratio: 1100 / 1555;
+}
+
+.case-study--naili .case-gallery__item--3 {
+  grid-column: 1 / -1;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.case-study--naili .case-gallery__item--3 img {
+  object-position: center;
+}
+
+.case-study--naili .case-gallery__item--4 {
+  grid-column: 1 / -1;
+  justify-self: end;
+  width: min(72%, 720px);
+  aspect-ratio: 1246 / 1756;
+}
+
+.case-study--naili .case-gallery__item--4 img {
+  object-position: center top;
 }
 
 .case-study--arkipiu .case-gallery {
@@ -613,17 +631,27 @@ a { color: inherit; }
     padding-bottom: 3rem;
   }
   .case-study--naili .case-hero::after {
-    background: linear-gradient(180deg, rgb(8 5 11 / .14) 0%, rgb(8 5 11 / .88) 52%, rgb(8 5 11 / .98) 100%);
+    background: linear-gradient(180deg, rgb(8 5 11 / .12) 8%, rgb(8 5 11 / .68) 52%, rgb(8 5 11 / .98) 100%);
   }
   .case-study--naili .case-hero__image {
-    top: 5.5rem;
-    right: 5%;
-    width: 90%;
-    height: 51%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% center;
   }
-  .case-study--naili .case-hero__content { padding-top: 45vh; }
+  .case-study--naili .case-hero__content { padding-top: 42vh; }
   .case-study--naili .case-gallery { grid-template-columns: 1fr; }
   .case-study--naili .case-gallery__item { aspect-ratio: 1100 / 1555; }
+  .case-study--naili .case-gallery__item--3 {
+    grid-column: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .case-study--naili .case-gallery__item--4 {
+    grid-column: auto;
+    width: 100%;
+    aspect-ratio: 1246 / 1756;
+  }
   .case-study--arkipiu .case-hero::after {
     background: linear-gradient(180deg, rgb(8 5 11 / .1) 10%, rgb(8 5 11 / .86) 56%, rgb(8 5 11 / .98) 100%);
   }
