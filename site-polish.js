@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '63';
+  const styleVersion = '64';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -793,17 +793,49 @@
     return true;
   };
 
-  const enhanceArkipiuCover = () => {
-    const slide = Array.from(document.querySelectorAll('#work .work-carousel-slide, #work article')).find((item) =>
-      /Corporate Website Redesign|Arkipiù Website/i.test(item.textContent)
-    );
-    const visual = slide?.querySelector('.work-carousel-visual, :scope > div:first-child');
-    if (!visual || visual.dataset.arkipiuCover === 'true') return;
-    visual.dataset.arkipiuCover = 'true';
-    visual.classList.add('arkipiu-project-cover');
-    visual.innerHTML = `
-      <img src="/assets/arkipiu/contact-page-full.webp" alt="Arkipiù contact page redesign with lead form and orange visual system" loading="lazy" decoding="async">
-      <strong class="arkipiu-project-cover__label">Corporate Website Redesign</strong>`;
+  const ensureProjectCovers = () => {
+    const slides = Array.from(document.querySelectorAll('#work article:not([data-carousel-clone])'));
+    const covers = [
+      {
+        className: 'rally-project-cover',
+        src: '/assets/rallye-monte-carlo/rallye-night.webp',
+        alt: 'Arkipiù branded rally car racing at night during the Rallye Monte-Carlo',
+        label: 'Rallye Monte-Carlo 2026',
+        eager: true
+      },
+      {
+        className: 'arkipiu-project-cover',
+        src: '/assets/arkipiu/contact-page-full.webp',
+        alt: 'Arkipiù contact page redesign with lead form and orange visual system',
+        label: 'Corporate Website Redesign'
+      },
+      {
+        className: 'naili-project-cover',
+        src: '/assets/naili-gatto-perry/naili-cover-2x.webp',
+        alt: 'Cover illustration for Naili & Gatto Perry, created for the Sicuri e Connessi project',
+        label: 'Naili &amp; Gatto Perry'
+      },
+      {
+        className: 'buildit-project-cover',
+        src: '/assets/buildit/buildit-cover.webp',
+        alt: 'BUILDIT visual identity presentation with branded construction helmet'
+      }
+    ];
+    const coverClasses = covers.map(({ className }) => className);
+
+    slides.slice(0, covers.length).forEach((slide, index) => {
+      const visual = slide.querySelector('.work-carousel-visual, :scope > div:first-child');
+      const cover = covers[index];
+      if (!visual || !cover) return;
+
+      visual.classList.remove(...coverClasses, 'brand-project-cover');
+      visual.classList.add(cover.className);
+      visual.dataset.realArtwork = 'true';
+      const labelClass = `${cover.className}__label`;
+      visual.innerHTML = `
+        <img src="${cover.src}" alt="${cover.alt}" loading="${cover.eager ? 'eager' : 'lazy'}" decoding="async">
+        ${cover.label ? `<strong class="${labelClass}">${cover.label}</strong>` : ''}`;
+    });
   };
 
   const setupCustomCursor = () => {
@@ -1069,8 +1101,9 @@
         <span class="contact-graphic__blob contact-graphic__blob--one"></span>
         <span class="contact-graphic__blob contact-graphic__blob--two"></span>
         <span class="contact-graphic__blob contact-graphic__blob--three"></span>
-        <span class="contact-graphic__ribbon contact-graphic__ribbon--one"></span>
-        <span class="contact-graphic__ribbon contact-graphic__ribbon--two"></span>
+        <span class="contact-graphic__aurora contact-graphic__aurora--one"></span>
+        <span class="contact-graphic__aurora contact-graphic__aurora--two"></span>
+        <span class="contact-graphic__orbit"></span>
         <span class="contact-graphic__veil"></span>
       </div>`);
 
@@ -1095,20 +1128,6 @@
     }, { passive: true });
   };
 
-  const enhanceBuilditCover = () => {
-    const builditSlide = Array.from(document.querySelectorAll('#work .work-carousel-slide, #work article')).find((slide) =>
-      /BUILDIT|Visual Identity/i.test(slide.textContent)
-    );
-    const visual = builditSlide?.querySelector('.work-carousel-visual, :scope > div:first-child');
-    if (!visual) return;
-    if (visual.dataset.realArtwork === 'true' && visual.querySelector('img[src*="/assets/buildit/"]')) return;
-
-    visual.classList.remove('naili-project-cover', 'rally-project-cover', 'brand-project-cover');
-    visual.dataset.realArtwork = 'true';
-    visual.classList.add('buildit-project-cover');
-    visual.innerHTML = '<img src="/assets/buildit/buildit-cover.webp" alt="BUILDIT visual identity presentation with branded construction helmet" loading="lazy" decoding="async">';
-  };
-
   const enableSoftWheelScroll = () => {
     const root = document.documentElement;
     if (root.dataset.softWheelScroll === 'true') return;
@@ -1124,7 +1143,7 @@
     const limit = (value) => Math.max(0, Math.min(value, document.documentElement.scrollHeight - window.innerHeight));
     const animate = () => {
       const distance = target - position;
-      position += distance * .52;
+      position += distance * .82;
       if (Math.abs(distance) < .7) position = target;
       writing = true;
       window.scrollTo(0, position);
@@ -1138,10 +1157,11 @@
 
     window.addEventListener('wheel', (event) => {
       if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (event.deltaMode === 0 && Math.abs(event.deltaY) < 40) return;
       event.preventDefault();
       if (!frame) position = target = window.scrollY;
       const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-      target = limit(target + event.deltaY * unit * .94);
+      target = limit(target + event.deltaY * unit * .98);
       if (!frame) frame = window.requestAnimationFrame(animate);
     }, { passive: false });
 
@@ -1159,19 +1179,7 @@
     reorderAboutBeforeWork();
     enhanceHeroBadge();
     ensureRallyProject();
-    enhanceArkipiuCover();
-    const nailiSlide = Array.from(document.querySelectorAll('#work .work-carousel-slide, #work article')).find((slide) =>
-      /Naili|INAIL Campania/i.test(slide.textContent)
-    );
-    const nailiVisual = nailiSlide?.querySelector('.work-carousel-visual, :scope > div:first-child');
-    if (nailiVisual && nailiVisual.dataset.realArtwork !== 'true') {
-      nailiVisual.dataset.realArtwork = 'true';
-      nailiVisual.classList.add('naili-project-cover');
-      nailiVisual.innerHTML = `
-        <img src="/assets/naili-gatto-perry/naili-cover-2x.webp" alt="Cover illustration for Naili &amp; Gatto Perry, created for the Sicuri e Connessi project" loading="lazy" decoding="async">
-        <strong class="naili-project-cover__label">Naili &amp; Gatto Perry</strong>`;
-    }
-    enhanceBuilditCover();
+    ensureProjectCovers();
     enhanceCarousel();
     enhanceCaseStudyLinks();
     enhanceInfiniteCarousel();

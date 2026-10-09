@@ -1611,30 +1611,52 @@ section[data-content-section='experience'] { display: none !important; }
   animation: contact-blob-three 11s ease-in-out infinite alternate;
 }
 
-.contact-graphic__ribbon {
+.contact-graphic__aurora {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(112vw, 1500px);
-  height: clamp(4rem, 9vw, 8rem);
-  border: 1px solid rgb(203 154 221 / .12);
+  border-radius: 46% 54% 62% 38% / 58% 37% 63% 42%;
+  filter: blur(34px) saturate(1.08);
+  mix-blend-mode: screen;
+  will-change: transform, border-radius;
+}
+
+.contact-graphic__aurora--one {
+  left: -18%;
+  top: 6%;
+  width: min(78vw, 980px);
+  height: min(48vw, 590px);
+  opacity: .4;
+  background:
+    radial-gradient(circle at 72% 38%, rgb(204 131 222 / .42), transparent 25%),
+    radial-gradient(circle at 38% 62%, rgb(98 73 166 / .46), transparent 46%);
+  animation: contact-aurora-one 13s cubic-bezier(.45, 0, .22, 1) infinite alternate;
+}
+
+.contact-graphic__aurora--two {
+  right: -20%;
+  bottom: -10%;
+  width: min(70vw, 900px);
+  height: min(46vw, 570px);
+  opacity: .34;
+  background:
+    radial-gradient(circle at 28% 34%, rgb(120 84 183 / .48), transparent 30%),
+    radial-gradient(circle at 64% 64%, rgb(178 101 184 / .34), transparent 47%);
+  animation: contact-aurora-two 16s cubic-bezier(.45, 0, .22, 1) infinite alternate;
+}
+
+.contact-graphic__orbit {
+  position: absolute;
+  right: -10%;
+  top: 11%;
+  width: min(48vw, 620px);
+  aspect-ratio: 1;
+  border: 1px solid rgb(214 169 228 / .12);
   border-radius: 50%;
-  background: linear-gradient(90deg, transparent 4%, rgb(123 79 151 / .08) 35%, rgb(185 119 194 / .14) 52%, rgb(79 70 139 / .06) 70%, transparent 96%);
-  filter: blur(2px);
-  opacity: .72;
-  transform-origin: 50% 50%;
-}
-
-.contact-graphic__ribbon--one {
-  transform: translate(-50%, -50%) rotate(-13deg) skewX(-12deg);
-  animation: contact-ribbon-one 13s ease-in-out infinite alternate;
-}
-
-.contact-graphic__ribbon--two {
-  height: clamp(2.5rem, 5vw, 5rem);
-  opacity: .48;
-  transform: translate(-50%, -50%) rotate(19deg) skewX(10deg);
-  animation: contact-ribbon-two 17s ease-in-out infinite alternate;
+  box-shadow:
+    inset 0 0 80px rgb(159 103 183 / .05),
+    0 0 100px rgb(92 68 145 / .08);
+  opacity: .62;
+  transform: translate3d(0, 0, 0);
+  animation: contact-orbit-pulse 9s ease-in-out infinite alternate;
 }
 
 .contact-graphic__veil {
@@ -1667,12 +1689,25 @@ section[data-content-section='experience'] { display: none !important; }
   to { border-radius: 63% 37% 44% 56% / 52% 63% 37% 48%; transform: translate3d(-12%, 9%, 0) scale(1.14); }
 }
 
-@keyframes contact-ribbon-one {
-  to { transform: translate(-48%, -58%) rotate(-4deg) skewX(7deg) scaleX(1.05); }
+@keyframes contact-aurora-one {
+  to {
+    border-radius: 62% 38% 41% 59% / 42% 63% 37% 58%;
+    transform: translate3d(16%, 12%, 0) rotate(8deg) scale(1.12);
+  }
 }
 
-@keyframes contact-ribbon-two {
-  to { transform: translate(-53%, -42%) rotate(27deg) skewX(-5deg) scaleX(.96); }
+@keyframes contact-aurora-two {
+  to {
+    border-radius: 38% 62% 56% 44% / 61% 42% 58% 39%;
+    transform: translate3d(-15%, -9%, 0) rotate(-9deg) scale(1.1);
+  }
+}
+
+@keyframes contact-orbit-pulse {
+  to {
+    opacity: .34;
+    transform: translate3d(-3%, 2%, 0) scale(1.08);
+  }
 }
 
 #contact > div:not(.contact-graphic) {
@@ -2209,23 +2244,43 @@ footer a:focus-visible { color: #e0b4ee !important; }
 }
 
 #work .work-carousel-visual {
-  transition: transform .5s cubic-bezier(.16, 1, .3, 1), box-shadow .4s ease, filter .4s ease !important;
+  transform: none !important;
+  transition: box-shadow .4s ease, filter .4s ease !important;
+}
+
+#work .work-carousel-visual img,
+#work .work-carousel-visual picture,
+#work .work-carousel-visual video,
+#work .work-carousel-visual > div:not(.work-carousel-visual-hit) {
+  transform-origin: center;
+  transition: transform .58s cubic-bezier(.16, 1, .3, 1), filter .4s ease !important;
+  will-change: transform;
 }
 
 @media (hover: hover) and (pointer: fine) {
   #work .work-carousel-visual:hover {
     filter: brightness(1.04) saturate(1.05);
     box-shadow: 0 22px 48px rgb(0 0 0 / .34), 0 0 0 1px rgb(209 143 239 / .24);
-    transform: translateY(-6px) !important;
+    transform: none !important;
   }
 
-  #work .work-carousel-visual:hover > div {
-    transform: scale(1.035) !important;
+  #work .work-carousel-visual:hover img,
+  #work .work-carousel-visual:hover picture,
+  #work .work-carousel-visual:hover video,
+  #work .work-carousel-visual:hover > div:not(.work-carousel-visual-hit) {
+    transform: scale(1.055) !important;
   }
 }
 
 #work .work-carousel-visual:active {
-  transform: translateY(-2px) scale(.985) !important;
+  transform: none !important;
+}
+
+#work .work-carousel-visual:active img,
+#work .work-carousel-visual:active picture,
+#work .work-carousel-visual:active video,
+#work .work-carousel-visual:active > div:not(.work-carousel-visual-hit) {
+  transform: scale(1.035) !important;
 }
 
 @media (hover: none), (pointer: coarse) {
@@ -2245,6 +2300,8 @@ footer a:focus-visible { color: #e0b4ee !important; }
   .contact-graphic,
   .contact-graphic__wash,
   .contact-graphic__blob,
+  .contact-graphic__aurora,
+  .contact-graphic__orbit,
   #contact::before {
     animation: none !important;
     transition: none !important;

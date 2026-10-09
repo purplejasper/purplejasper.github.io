@@ -175,7 +175,7 @@ const enableSoftWheelScroll = () => {
   const limit = (value) => Math.max(0, Math.min(value, document.documentElement.scrollHeight - window.innerHeight));
   const animate = () => {
     const distance = target - position;
-    position += distance * .52;
+    position += distance * .82;
     if (Math.abs(distance) < .7) position = target;
     writing = true;
     window.scrollTo(0, position);
@@ -189,10 +189,11 @@ const enableSoftWheelScroll = () => {
 
   window.addEventListener('wheel', (event) => {
     if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+    if (event.deltaMode === 0 && Math.abs(event.deltaY) < 40) return;
     event.preventDefault();
     if (!frame) position = target = window.scrollY;
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-    target = limit(target + event.deltaY * unit * .94);
+    target = limit(target + event.deltaY * unit * .98);
     if (!frame) frame = window.requestAnimationFrame(animate);
   }, { passive: false });
 
