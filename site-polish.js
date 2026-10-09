@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '56';
+  const styleVersion = '58';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -666,7 +666,7 @@
       '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="19" height="17" rx="2.5"/><path d="M4 11h19M8 8.5h.1M11 8.5h.1M14 8.5h.1"/><rect x="20" y="14" width="8" height="13" rx="2"/><path d="M23 24h2"/></svg>',
       '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 10 5-10 5L6 9l10-5Z"/><path d="m6 15 10 5 10-5M6 21l10 5 10-5"/><path d="M26 4v4M24 6h4"/></svg>',
       '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 7 7-3 12H12L9 11l7-7Z"/><circle cx="16" cy="14" r="2.5"/><path d="M16 4v7.5M12 23v4h8v-4"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 11h18l-1.5 15h-15L7 11Z"/><path d="M11 11c0-3 2-5 5-5s5 2 5 5M12 18l3 3 6-7"/></svg>'
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="7" y="4" width="18" height="24" rx="2.5"/><path d="M11 9h10M11 14h10M11 19h7M11 24h9"/></svg>'
     ];
 
     const description = approachHeading.nextElementSibling;
@@ -709,7 +709,7 @@
     visual.dataset.arkipiuCover = 'true';
     visual.classList.add('arkipiu-project-cover');
     visual.innerHTML = `
-      <img src="/assets/arkipiu/website-redesign-hero.png" alt="Arkipiù website redesign displayed on desktop and mobile" loading="lazy" decoding="async">
+      <img src="/assets/arkipiu/contact-page-full.webp" alt="Arkipiù contact page redesign with lead form and orange visual system" loading="lazy" decoding="async">
       <strong class="arkipiu-project-cover__label">Corporate Website Redesign</strong>`;
   };
 

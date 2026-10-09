@@ -40,10 +40,11 @@ const studies = {
     ],
     visual: 'Clearer.\nStronger.\nResponsive.',
     visualHeading: 'A responsive interface system built for clearer paths and stronger brand perception.',
-    heroImage: '/assets/arkipiu/website-redesign-hero.png',
-    heroAlt: 'Arkipiù website redesign shown on desktop and mobile devices',
+    heroImage: '/assets/arkipiu/contact-page-full.webp',
+    heroAlt: 'Arkipiù contact page redesign with lead form and orange visual system',
     media: [
-      { src: '/assets/arkipiu/contact-form-system.png', alt: 'Responsive Arkipiù contact form component', caption: 'Reusable contact form and CTA system', layout: 'contain' },
+      { src: '/assets/arkipiu/contact-page-full.webp', alt: 'Full Arkipiù contact page with lead form and contact information', caption: 'Contact page and lead form system', layout: 'wide' },
+      { src: '/assets/arkipiu/areas-of-intervention.webp', alt: 'Arkipiù areas of intervention presented as a responsive card system', caption: 'Areas of intervention content system', layout: 'contain' },
       { src: '/assets/arkipiu/esg-responsive-page.png', alt: 'Arkipiù ESG page displayed on laptop and mobile', caption: 'New ESG page across desktop and mobile', layout: 'contain' }
     ],
     results: [['12', 'pages redesigned'], ['+89%', 'unique visitors'], ['+111%', 'organic Google sessions YoY']],

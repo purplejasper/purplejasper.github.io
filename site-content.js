@@ -144,12 +144,12 @@
     approach: {
       eyebrow: 'Core expertise',
       title: 'From visual systems to digital experiences',
-      description: 'I connect visual direction and interface design across digital products, brands and conversion-focused communication.',
+      description: 'I connect visual direction and interface design across digital products, brand identities and editorial communication.',
       principles: [
         { number: '01', title: 'UX/UI Design', description: 'Responsive interfaces, information architecture, user flows and reusable UI systems.', href: '/case-studies/arkipiu/' },
         { number: '02', title: 'Digital Design', description: 'Visual systems and communication assets designed consistently across digital touchpoints.', href: '/case-studies/brand-digital-design/' },
         { number: '03', title: 'Brand Identity', description: 'Distinctive identities, art direction and flexible brand applications for digital and print.', href: '/case-studies/brand-digital-design/' },
-        { number: '04', title: 'E-commerce & Conversion Assets', description: 'Product page visuals, campaign graphics, ads, banners and marketplace content designed to support conversion.', href: '/case-studies/groupline-shop/' }
+        { number: '04', title: 'Editorial & Typographic Design', description: 'Editorial layouts, brochures, posters and presentation systems shaped through typography, grids and clear visual hierarchy.', href: '/case-studies/naili-gatto-perry/' }
       ]
     },
 

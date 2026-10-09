@@ -935,9 +935,9 @@ header nav > a[href='#contact']:focus-visible {
 
 #work .arkipiu-project-cover img {
   z-index: 0;
-  padding: clamp(1rem, 2.5vw, 2.25rem);
-  object-fit: contain;
-  object-position: center 40%;
+  padding: 0;
+  object-fit: cover;
+  object-position: 72% center;
 }
 
 #work .arkipiu-project-cover__label {
