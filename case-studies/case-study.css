@@ -304,7 +304,7 @@ a { color: inherit; }
 }
 .case-card__number {
   display: block;
-  color: var(--violet);
+  color: #dcb6f1;
   font-size: clamp(5.25rem, 8.2vw, 8rem);
   font-weight: 800;
   letter-spacing: -.09em;
@@ -327,7 +327,6 @@ a { color: inherit; }
 }
 
 .case-study--arkipiu .case-card__number {
-  color: #ff6817;
   font-size: clamp(4rem, 5.8vw, 6.5rem);
 }
 
@@ -520,7 +519,6 @@ a { color: inherit; }
   object-fit: contain;
 }
 
-.case-study--buildit .case-card__number,
 .case-study--buildit .case-result strong { color: #65df12; }
 
 .case-gallery__item figcaption {

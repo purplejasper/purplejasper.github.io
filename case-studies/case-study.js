@@ -2,7 +2,7 @@ const studies = {
   'rallye-monte-carlo': {
     index: '01', client: 'Arkipiù × Rallye Monte-Carlo 2026', title: 'Event Visual System',
     intro: 'A sponsorship identity carried from the rally car to racewear and event communication, translating the Arkipiù brand into a coherent system for an international motorsport setting.',
-    tags: ['Visual Direction', 'Livery Design', 'Apparel Design', 'Brand Applications'],
+    tags: ['Visual Direction', 'Livery Design', 'Brand Applications'],
     challenge: 'Turn a corporate identity into a recognisable event system.',
     challengeText: 'The project required one visual language to work across very different surfaces and scales: a moving vehicle, technical apparel and communication assets. The core challenge was to preserve brand recognition while meeting the practical constraints of each application.',
     steps: [
@@ -18,7 +18,8 @@ const studies = {
       { src: '/assets/rallye-monte-carlo/rallye-night.webp', alt: 'Arkipiù vehicle livery in motion during a night stage', caption: 'Vehicle livery in motion during the Rallye Monte-Carlo', layout: 'wide' },
       { src: '/assets/rallye-monte-carlo/rallye-detail.webp', alt: 'Close-up of the Arkipiù rally car bonnet and sponsor graphics', caption: 'Livery detail and sponsor visibility', layout: 'standard' },
       { src: '/assets/rallye-monte-carlo/rallye-racewear.webp', alt: 'Driver team in branded racewear beside the Arkipiù rally car', caption: 'Racewear and vehicle system with the driver team', layout: 'portrait' },
-      { src: '/assets/rallye-monte-carlo/rallye-invitation.webp', alt: 'Rallye Monte-Carlo event invitation designed in the Arkipiù visual system', caption: 'Event invitation and communication application', layout: 'contain' }
+      { src: '/assets/rallye-monte-carlo/rallye-invitation.webp', alt: 'Rallye Monte-Carlo event invitation designed in the Arkipiù visual system', caption: 'Event invitation and communication application', layout: 'contain' },
+      { src: '/assets/rallye-monte-carlo/rallye-award-ceremony.webp', alt: 'Arkipiù rally car and driver team during the award ceremony at the Rallye Monte-Carlo 2026', caption: 'Award ceremony at the Rallye Monte-Carlo 2026', layout: 'wide' }
     ],
     results: [['1', 'vehicle livery system'], ['2', 'racewear applications'], ['Multi-format', 'event communication']],
     note: 'Selected public-facing outputs are shown. Commercial terms, internal approvals and production details are intentionally omitted.',

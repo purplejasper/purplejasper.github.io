@@ -81,7 +81,7 @@
           name: 'Arkipiù × Rallye Monte-Carlo 2026',
           title: 'Event Visual System',
           description: 'A sponsorship identity developed across vehicle livery, racewear and event communication, translating the Arkipiù brand into a coherent, high-impact system for the Rallye Monte-Carlo 2026.',
-          skills: ['Visual Direction', 'Livery Design', 'Apparel Design', 'Brand Applications']
+          skills: ['Visual Direction', 'Livery Design', 'Brand Applications']
         },
         {
           number: '02',
