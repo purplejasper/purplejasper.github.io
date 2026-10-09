@@ -100,6 +100,9 @@ header nav > a {
 }
 
 header nav > a:first-of-type {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
   min-width: 0;
   margin-right: auto;
   padding: .5rem 1rem .5rem 0 !important;
@@ -108,6 +111,22 @@ header nav > a:first-of-type {
   text-overflow: ellipsis;
   letter-spacing: 0 !important;
   text-transform: none !important;
+}
+
+.header-eggplant,
+header nav > a:first-of-type::after {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  transform: rotate(-7deg);
+  filter: drop-shadow(0 4px 8px rgb(111 55 151 / .28));
+}
+
+header nav > a:first-of-type::after {
+  content: '';
+  display: block;
+  background: url('/favicon.svg?v=52') center / contain no-repeat;
 }
 
 header nav > span { display: none; }
@@ -641,8 +660,8 @@ header nav > a[href='#contact']:focus-visible {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #cf69d7;
-  box-shadow: 0 0 0 3px rgb(207 105 215 / .15);
+  background: #74c96d;
+  box-shadow: 0 0 0 3px rgb(116 201 109 / .18), 0 0 12px rgb(116 201 109 / .38);
 }
 
 #top .badge-id-column {
@@ -1301,6 +1320,14 @@ section[data-content-section='approach'] {
   border-bottom: 1px solid rgb(247 243 250 / .09);
 }
 
+#about,
+#work,
+section[data-content-section='approach'],
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 section[data-content-section='approach'] > div {
   border-color: rgb(247 243 250 / .13) !important;
 }
@@ -1326,6 +1353,19 @@ section[data-content-section='approach'] h3 { color: #fff !important; }
     opacity .72s ease,
     filter .9s cubic-bezier(.16, 1, .3, 1),
     transform 1s cubic-bezier(.16, 1, .3, 1);
+}
+
+.approach-heading__prefix {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+.approach-heading__gradient {
+  color: #b465df;
+  background: linear-gradient(100deg, #d7b4ff 0%, #9e4ddb 38%, #c45ed7 69%, #7445c5 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .approach-heading--scroll .approach-heading__first-line {
@@ -1358,6 +1398,32 @@ section[data-content-section='approach'] p,
 section[data-content-section='approach'] .text-cream\/65,
 section[data-content-section='approach'] .text-cream\/70 {
   color: rgb(247 243 250 / .68) !important;
+}
+
+.approach-description--scroll {
+  opacity: 0;
+  filter: blur(7px);
+  transform: translate3d(0, 1.35rem, 0);
+  will-change: opacity, filter, transform;
+  transition:
+    opacity .65s ease .44s,
+    filter .78s cubic-bezier(.16, 1, .3, 1) .44s,
+    transform .86s cubic-bezier(.16, 1, .3, 1) .44s;
+}
+
+.approach-description--scroll.is-visible {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .approach-description--scroll {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
 }
 
 section[data-content-section='approach'] .group {
@@ -1458,9 +1524,9 @@ section[data-content-section='experience'] { display: none !important; }
   overflow: hidden;
   color: var(--portfolio-paper) !important;
   background:
-    radial-gradient(ellipse at 78% 24%, rgb(127 52 164 / .18), transparent 38%),
-    radial-gradient(ellipse at 17% 82%, rgb(71 58 158 / .12), transparent 42%),
-    linear-gradient(142deg, #050308 0%, #0d0613 52%, #16091f 100%) !important;
+    radial-gradient(ellipse at 78% 24%, rgb(104 64 129 / .13), transparent 40%),
+    radial-gradient(ellipse at 17% 82%, rgb(62 54 116 / .1), transparent 44%),
+    linear-gradient(142deg, #030205 0%, #09060d 54%, #110b17 100%) !important;
   border-top: 1px solid rgb(247 243 250 / .1);
 }
 
@@ -1471,9 +1537,9 @@ section[data-content-section='experience'] { display: none !important; }
   z-index: -2;
   pointer-events: none;
   background:
-    conic-gradient(from 218deg at 52% 48%, transparent 0 13%, rgb(142 54 198 / .16) 22%, transparent 36% 57%, rgb(82 65 188 / .13) 69%, transparent 84%),
-    radial-gradient(ellipse at 24% 64%, rgb(176 62 194 / .14), transparent 48%);
-  filter: blur(68px) saturate(1.2);
+    conic-gradient(from 218deg at 52% 48%, transparent 0 13%, rgb(119 73 147 / .12) 22%, transparent 36% 57%, rgb(69 62 132 / .1) 69%, transparent 84%),
+    radial-gradient(ellipse at 24% 64%, rgb(127 72 143 / .11), transparent 48%);
+  filter: blur(72px) saturate(.82);
   transform: rotate(-8deg) scale(1.08);
   animation: contact-abstract-drift 16s ease-in-out infinite alternate;
 }
@@ -1485,8 +1551,8 @@ section[data-content-section='experience'] { display: none !important; }
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 440px 270px at var(--contact-pointer-x) var(--contact-pointer-y), rgb(174 75 219 / .22), transparent 72%),
-    radial-gradient(ellipse at 80% 18%, rgb(89 55 159 / .14), transparent 48%);
+    radial-gradient(ellipse 440px 270px at var(--contact-pointer-x) var(--contact-pointer-y), rgb(141 82 166 / .16), transparent 72%),
+    radial-gradient(ellipse at 80% 18%, rgb(75 62 124 / .1), transparent 48%);
 }
 
 .contact-graphic {
@@ -1503,9 +1569,9 @@ section[data-content-section='experience'] { display: none !important; }
   position: absolute;
   inset: -22%;
   background:
-    radial-gradient(ellipse at 34% 44%, rgb(205 86 220 / .21), transparent 34%),
-    radial-gradient(ellipse at 70% 58%, rgb(111 72 208 / .22), transparent 36%);
-  filter: blur(44px);
+    radial-gradient(ellipse at 34% 44%, rgb(139 78 151 / .14), transparent 34%),
+    radial-gradient(ellipse at 70% 58%, rgb(82 70 153 / .15), transparent 36%);
+  filter: blur(52px) saturate(.82);
   animation: contact-wash 10s ease-in-out infinite alternate;
 }
 
@@ -1514,7 +1580,7 @@ section[data-content-section='experience'] { display: none !important; }
   border-radius: 43% 57% 62% 38% / 58% 36% 64% 42%;
   filter: blur(24px);
   mix-blend-mode: screen;
-  opacity: .44;
+  opacity: .28;
 }
 
 .contact-graphic__blob--one {
@@ -1522,7 +1588,7 @@ section[data-content-section='experience'] { display: none !important; }
   left: -6%;
   width: min(62vw, 780px);
   aspect-ratio: 1.18;
-  background: linear-gradient(135deg, rgb(194 65 213 / .34), rgb(108 58 190 / .08));
+  background: linear-gradient(135deg, rgb(148 77 163 / .26), rgb(91 67 139 / .06));
   animation: contact-blob-one 14s ease-in-out infinite alternate;
 }
 
@@ -1531,7 +1597,7 @@ section[data-content-section='experience'] { display: none !important; }
   bottom: -24%;
   width: min(68vw, 860px);
   aspect-ratio: 1.25;
-  background: linear-gradient(145deg, rgb(103 76 220 / .08), rgb(172 68 211 / .3));
+  background: linear-gradient(145deg, rgb(78 72 150 / .06), rgb(135 77 157 / .22));
   animation: contact-blob-two 17s ease-in-out infinite alternate;
 }
 
@@ -1540,9 +1606,35 @@ section[data-content-section='experience'] { display: none !important; }
   left: 36%;
   width: min(38vw, 520px);
   aspect-ratio: 1;
-  background: radial-gradient(circle at 35% 30%, rgb(231 159 244 / .22), rgb(115 60 186 / .04) 68%);
+  background: radial-gradient(circle at 35% 30%, rgb(176 128 187 / .17), rgb(87 66 133 / .03) 68%);
   filter: blur(22px);
   animation: contact-blob-three 11s ease-in-out infinite alternate;
+}
+
+.contact-graphic__ribbon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(112vw, 1500px);
+  height: clamp(4rem, 9vw, 8rem);
+  border: 1px solid rgb(203 154 221 / .12);
+  border-radius: 50%;
+  background: linear-gradient(90deg, transparent 4%, rgb(123 79 151 / .08) 35%, rgb(185 119 194 / .14) 52%, rgb(79 70 139 / .06) 70%, transparent 96%);
+  filter: blur(2px);
+  opacity: .72;
+  transform-origin: 50% 50%;
+}
+
+.contact-graphic__ribbon--one {
+  transform: translate(-50%, -50%) rotate(-13deg) skewX(-12deg);
+  animation: contact-ribbon-one 13s ease-in-out infinite alternate;
+}
+
+.contact-graphic__ribbon--two {
+  height: clamp(2.5rem, 5vw, 5rem);
+  opacity: .48;
+  transform: translate(-50%, -50%) rotate(19deg) skewX(10deg);
+  animation: contact-ribbon-two 17s ease-in-out infinite alternate;
 }
 
 .contact-graphic__veil {
@@ -1573,6 +1665,14 @@ section[data-content-section='experience'] { display: none !important; }
 
 @keyframes contact-blob-three {
   to { border-radius: 63% 37% 44% 56% / 52% 63% 37% 48%; transform: translate3d(-12%, 9%, 0) scale(1.14); }
+}
+
+@keyframes contact-ribbon-one {
+  to { transform: translate(-48%, -58%) rotate(-4deg) skewX(7deg) scaleX(1.05); }
+}
+
+@keyframes contact-ribbon-two {
+  to { transform: translate(-53%, -42%) rotate(27deg) skewX(-5deg) scaleX(.96); }
 }
 
 #contact > div:not(.contact-graphic) {

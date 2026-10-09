@@ -326,7 +326,7 @@
       if (approachTitle) {
         approachTitle.dataset.approachHeading = 'true';
         approachTitle.setAttribute('aria-label', content.approach.title);
-        approachTitle.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line">to digital experiences</span>';
+        approachTitle.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line"><span class="approach-heading__prefix">to </span><span class="approach-heading__gradient">digital experiences</span></span>';
       }
       text(topParagraphs[1], content.approach.description);
       Array.from(approach.querySelectorAll('h3')).forEach((heading, index) => {

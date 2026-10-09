@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '61';
+  const styleVersion = '63';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -93,6 +93,25 @@
   const removeGrouplineProject = () => {
     Array.from(document.querySelectorAll('#work article')).forEach((article) => {
       if (/Groupline Shop|Conversion-focused Landing Pages/i.test(article.textContent)) article.remove();
+    });
+  };
+
+  const projectKey = (article) => {
+    const copy = article.textContent.replace(/\s+/g, ' ').toLowerCase();
+    if (copy.includes('rallye monte-carlo')) return 'rally';
+    if (copy.includes('corporate website redesign')) return 'arkipiu';
+    if (copy.includes('naili') || copy.includes('gatto perry')) return 'naili';
+    if (copy.includes('buildit') || copy.includes('brand & visual identity')) return 'buildit';
+    return article.querySelector('h3')?.textContent.trim().toLowerCase() || copy.slice(0, 80);
+  };
+
+  const deduplicateWorkProjects = () => {
+    const articles = Array.from(document.querySelectorAll('#work article:not([data-carousel-clone])'));
+    const seen = new Set();
+    articles.forEach((article) => {
+      const key = projectKey(article);
+      if (seen.has(key)) article.remove();
+      else seen.add(key);
     });
   };
 
@@ -458,7 +477,7 @@
     viewport.addEventListener('scroll', () => {
       if (!scrollFrame) scrollFrame = window.requestAnimationFrame(syncActive);
       window.clearTimeout(settleTimer);
-      settleTimer = window.setTimeout(settleLoop, 140);
+      settleTimer = window.setTimeout(settleLoop, 48);
     }, { passive: true });
     if ('onscrollend' in viewport) viewport.addEventListener('scrollend', settleLoop, { passive: true });
 
@@ -502,6 +521,20 @@
       syncActive();
     });
     return true;
+  };
+
+  const syncCarouselClones = () => {
+    const track = document.querySelector('#work .work-carousel-track');
+    if (!track) return;
+    const originals = Array.from(track.querySelectorAll('.work-carousel-slide:not([data-carousel-clone])'));
+    track.querySelectorAll('.work-carousel-slide[data-carousel-clone]').forEach((clone) => {
+      const original = originals[Number(clone.dataset.carouselCloneIndex)];
+      if (!original) return;
+      const replica = original.cloneNode(true);
+      replica.querySelectorAll('a, button').forEach((control) => { control.tabIndex = -1; });
+      const markup = replica.innerHTML;
+      if (clone.innerHTML !== markup) clone.innerHTML = markup;
+    });
   };
 
   const enhanceMouseDragCarousel = () => {
@@ -702,25 +735,18 @@
 
     approachHeading.dataset.approachHeading = 'true';
     approachHeading.setAttribute('aria-label', 'From visual systems to digital experiences');
-    if (!approachHeading.querySelector('.approach-heading__first-line')) {
-      approachHeading.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line">to digital experiences</span>';
+    if (!approachHeading.querySelector('.approach-heading__gradient')) {
+      approachHeading.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line"><span class="approach-heading__prefix">to </span><span class="approach-heading__gradient">digital experiences</span></span>';
     }
 
     const icons = [
       '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="19" height="17" rx="2.5"/><path d="M4 11h19M8 8.5h.1M11 8.5h.1M14 8.5h.1"/><rect x="20" y="14" width="8" height="13" rx="2"/><path d="M23 24h2"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 10 5-10 5L6 9l10-5Z"/><path d="m6 15 10 5 10-5M6 21l10 5 10-5"/><path d="M26 4v4M24 6h4"/></svg>',
-      '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 4 7 7-3 12H12L9 11l7-7Z"/><circle cx="16" cy="14" r="2.5"/><path d="M16 4v7.5M12 23v4h8v-4"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="5" width="24" height="17" rx="2.5"/><path d="M11 27h10M16 22v5"/><path d="m12 9 8 5-4 1.2-1.5 4.3L12 9Z"/><circle cx="24.5" cy="9.5" r="1.5"/></svg>',
+      '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="22" height="18" rx="3"/><circle cx="12" cy="14" r="4"/><path d="m18 18 4-8 4 8Z"/><path d="M8 27h5M15 27h4M21 27h3"/></svg>',
       '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="7" y="4" width="18" height="24" rx="2.5"/><path d="M11 9h10M11 14h10M11 19h7M11 24h9"/></svg>'
     ];
 
-    const description = approachHeading.nextElementSibling;
-    if (description && !section.querySelector('.approach-about-link')) {
-      const aboutLink = document.createElement('a');
-      aboutLink.className = 'approach-about-link';
-      aboutLink.href = '/#about';
-      aboutLink.textContent = 'About me';
-      description.insertAdjacentElement('afterend', aboutLink);
-    }
+    section.querySelector('.approach-about-link')?.remove();
 
     const expertise = window.PORTFOLIO_CONTENT?.approach?.principles || [];
 
@@ -755,8 +781,13 @@
       return true;
     }
 
+    const description = heading.nextElementSibling;
+    description?.classList.add('approach-description--scroll');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => heading.classList.toggle('is-visible', entry.isIntersecting));
+      entries.forEach((entry) => {
+        heading.classList.toggle('is-visible', entry.isIntersecting);
+        description?.classList.toggle('is-visible', entry.isIntersecting);
+      });
     }, { threshold: .32, rootMargin: '0px 0px -8% 0px' });
     observer.observe(heading);
     return true;
@@ -1038,6 +1069,8 @@
         <span class="contact-graphic__blob contact-graphic__blob--one"></span>
         <span class="contact-graphic__blob contact-graphic__blob--two"></span>
         <span class="contact-graphic__blob contact-graphic__blob--three"></span>
+        <span class="contact-graphic__ribbon contact-graphic__ribbon--one"></span>
+        <span class="contact-graphic__ribbon contact-graphic__ribbon--two"></span>
         <span class="contact-graphic__veil"></span>
       </div>`);
 
@@ -1076,9 +1109,52 @@
     visual.innerHTML = '<img src="/assets/buildit/buildit-cover.webp" alt="BUILDIT visual identity presentation with branded construction helmet" loading="lazy" decoding="async">';
   };
 
+  const enableSoftWheelScroll = () => {
+    const root = document.documentElement;
+    if (root.dataset.softWheelScroll === 'true') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    root.dataset.softWheelScroll = 'true';
+    let position = window.scrollY;
+    let target = position;
+    let frame = 0;
+    let writing = false;
+
+    const limit = (value) => Math.max(0, Math.min(value, document.documentElement.scrollHeight - window.innerHeight));
+    const animate = () => {
+      const distance = target - position;
+      position += distance * .52;
+      if (Math.abs(distance) < .7) position = target;
+      writing = true;
+      window.scrollTo(0, position);
+      writing = false;
+      if (position === target) {
+        frame = 0;
+        return;
+      }
+      frame = window.requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('wheel', (event) => {
+      if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      event.preventDefault();
+      if (!frame) position = target = window.scrollY;
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+      target = limit(target + event.deltaY * unit * .94);
+      if (!frame) frame = window.requestAnimationFrame(animate);
+    }, { passive: false });
+
+    window.addEventListener('scroll', () => {
+      if (frame || writing) return;
+      position = target = window.scrollY;
+    }, { passive: true });
+  };
+
   const apply = () => {
     removeRequestedSections();
     removeGrouplineProject();
+    deduplicateWorkProjects();
     enhanceIntroduction();
     reorderAboutBeforeWork();
     enhanceHeroBadge();
@@ -1092,13 +1168,14 @@
       nailiVisual.dataset.realArtwork = 'true';
       nailiVisual.classList.add('naili-project-cover');
       nailiVisual.innerHTML = `
-        <img src="/assets/naili-gatto-perry/naili-cover-hd.png" alt="Cover illustration for Naili &amp; Gatto Perry, created for the Sicuri e Connessi project" loading="lazy" decoding="async">
+        <img src="/assets/naili-gatto-perry/naili-cover-2x.webp" alt="Cover illustration for Naili &amp; Gatto Perry, created for the Sicuri e Connessi project" loading="lazy" decoding="async">
         <strong class="naili-project-cover__label">Naili &amp; Gatto Perry</strong>`;
     }
     enhanceBuilditCover();
     enhanceCarousel();
     enhanceCaseStudyLinks();
     enhanceInfiniteCarousel();
+    syncCarouselClones();
     enhanceMouseDragCarousel();
     enhanceApproachIcons();
     enhanceApproachScrollReveal();
@@ -1114,6 +1191,7 @@
     }
     enhanceContactTitleKinetics();
     enhanceContactBackground();
+    enableSoftWheelScroll();
     const behance = document.querySelector('footer [data-behance-footer]');
     if (behance && !behance.querySelector('.behance-mark')) {
       behance.innerHTML = '<span class="behance-mark" aria-hidden="true"><b>B</b><i>ē</i></span>';

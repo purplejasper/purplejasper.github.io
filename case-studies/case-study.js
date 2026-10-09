@@ -68,7 +68,7 @@ const studies = {
     heroAlt: 'Naili and Gatto Perry in front of an aircraft during a safety training scene',
     media: [
       { src: '/assets/naili-gatto-perry/naili-page.webp', alt: 'Illustrated internal comic page from Naili and Gatto Perry', caption: 'Illustrated page from the publication', layout: 'portrait' },
-      { src: '/assets/naili-gatto-perry/naili-cover-hd.png', alt: 'Cover illustration for Naili and Gatto Perry', caption: 'Cover artwork for the publication', layout: 'portrait' },
+      { src: '/assets/naili-gatto-perry/naili-cover-2x.webp', alt: 'Cover illustration for Naili and Gatto Perry', caption: 'Cover artwork for the publication', layout: 'portrait' },
       { src: '/assets/naili-gatto-perry/naili-aircraft-scene.webp', alt: 'Naili and Gatto Perry in front of an aircraft during a safety training scene', caption: 'Character-led safety illustration', layout: 'wide' },
       { src: '/assets/naili-gatto-perry/naili-comic-page-02.webp', alt: 'Comic page showing Naili travelling to Naples by plane', caption: 'Narrative page and panel composition', layout: 'portrait' }
     ],
@@ -122,7 +122,7 @@ document.querySelector('#case-study').innerHTML = `
     </div>
   </nav>
   <header class="case-hero">
-    ${study.heroImage ? `<img class="case-hero__image" src="${study.heroImage}" alt="${study.heroAlt}" decoding="async">` : ''}
+    ${study.heroImage ? `<img class="case-hero__image" src="${study.heroImage}" alt="${study.heroAlt}" loading="eager" fetchpriority="high" decoding="async">` : ''}
     <div class="case-hero__content">
       <p class="case-hero__eyebrow">${study.index} — ${study.client}</p>
       <h1>${study.title}</h1>
@@ -144,7 +144,7 @@ document.querySelector('#case-study').innerHTML = `
     <h2>${study.visualHeading || 'A flexible system with a clear point of view.'}</h2>
     ${study.media ? `<div class="case-gallery">${study.media.map((item, index) => `
       <figure class="case-gallery__item case-gallery__item--${index + 1}${item.layout ? ` case-gallery__item--${item.layout}` : ''}">
-        <img src="${item.src}" alt="${item.alt}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
+        <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async">
         <figcaption>${item.caption}</figcaption>
       </figure>`).join('')}</div>` : `<div class="case-visual" data-label="${study.visual.replaceAll('"', '&quot;')}"></div>`}
   </section>
@@ -159,3 +159,47 @@ document.querySelector('#case-study').innerHTML = `
   </a>
   <footer class="case-footer"><span>© 2026 Marica Mariniello</span><a href="mailto:mariniello.marica@gmail.com">Get in touch</a></footer>
 `;
+
+const enableSoftWheelScroll = () => {
+  const page = document.documentElement;
+  if (page.dataset.softWheelScroll === 'true') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  page.dataset.softWheelScroll = 'true';
+  let position = window.scrollY;
+  let target = position;
+  let frame = 0;
+  let writing = false;
+
+  const limit = (value) => Math.max(0, Math.min(value, document.documentElement.scrollHeight - window.innerHeight));
+  const animate = () => {
+    const distance = target - position;
+    position += distance * .52;
+    if (Math.abs(distance) < .7) position = target;
+    writing = true;
+    window.scrollTo(0, position);
+    writing = false;
+    if (position === target) {
+      frame = 0;
+      return;
+    }
+    frame = window.requestAnimationFrame(animate);
+  };
+
+  window.addEventListener('wheel', (event) => {
+    if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+    event.preventDefault();
+    if (!frame) position = target = window.scrollY;
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+    target = limit(target + event.deltaY * unit * .94);
+    if (!frame) frame = window.requestAnimationFrame(animate);
+  }, { passive: false });
+
+  window.addEventListener('scroll', () => {
+    if (frame || writing) return;
+    position = target = window.scrollY;
+  }, { passive: true });
+};
+
+enableSoftWheelScroll();
