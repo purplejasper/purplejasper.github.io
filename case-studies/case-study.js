@@ -70,7 +70,8 @@ const studies = {
       { src: '/assets/naili-gatto-perry/naili-page.webp', alt: 'Illustrated internal comic page from Naili and Gatto Perry', caption: 'Illustrated page from the publication', layout: 'portrait' },
       { src: '/assets/naili-gatto-perry/naili-cover-2x.webp', alt: 'Cover illustration for Naili and Gatto Perry', caption: 'Cover artwork for the publication', layout: 'portrait' },
       { src: '/assets/naili-gatto-perry/naili-aircraft-scene.webp', alt: 'Naili and Gatto Perry in front of an aircraft during a safety training scene', caption: 'Character-led safety illustration', layout: 'wide' },
-      { src: '/assets/naili-gatto-perry/naili-comic-page-02.webp', alt: 'Comic page showing Naili travelling to Naples by plane', caption: 'Narrative page and panel composition', layout: 'portrait' }
+      { src: '/assets/naili-gatto-perry/naili-comic-page-02.webp', alt: 'Comic page showing Naili travelling to Naples by plane', caption: 'Narrative page and panel composition', layout: 'portrait' },
+      { src: '/assets/naili-gatto-perry/naili-comic-page-03.webp', alt: 'Comic page showing digital communication and workplace safety scenes', caption: 'Digital communication and workplace safety', layout: 'portrait' }
     ],
     results: [['2', 'illustrated editions'], ['End-to-end', 'character and page design'], ['Educational', 'visual storytelling']],
     note: 'Developed for INAIL Campania with NWM Network as part of the Sicuri e Connessi prevention project.',
