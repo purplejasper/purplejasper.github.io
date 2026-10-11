@@ -185,7 +185,7 @@ a { color: inherit; }
 .case-study--buildit .case-hero__content { max-width: 680px; }
 .case-study--buildit .case-hero h1 { font-size: clamp(4rem, 9vw, 8.5rem); }
 .case-study--buildit .case-hero__eyebrow,
-.case-study--buildit .case-section__eyebrow { color: #65df12; }
+.case-study--buildit .case-section__eyebrow { color: var(--lilac); }
 .case-study--buildit .case-hero__image {
   left: auto;
   right: 0;
@@ -570,7 +570,7 @@ a { color: inherit; }
   object-fit: cover;
 }
 
-.case-study--buildit .case-result strong { color: #65df12; }
+.case-study--buildit .case-result strong { color: var(--lilac); }
 
 .case-gallery__item figcaption {
   position: absolute;
