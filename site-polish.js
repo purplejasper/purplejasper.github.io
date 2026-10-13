@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '65';
+  const styleVersion = '71';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -1128,49 +1128,6 @@
     }, { passive: true });
   };
 
-  const enableSoftWheelScroll = () => {
-    const root = document.documentElement;
-    if (root.dataset.softWheelScroll === 'true') return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
-    root.dataset.softWheelScroll = 'true';
-    let position = window.scrollY;
-    let target = position;
-    let frame = 0;
-    let writing = false;
-
-    const limit = (value) => Math.max(0, Math.min(value, document.documentElement.scrollHeight - window.innerHeight));
-    const animate = () => {
-      const distance = target - position;
-      position += distance * .82;
-      if (Math.abs(distance) < .7) position = target;
-      writing = true;
-      window.scrollTo(0, position);
-      writing = false;
-      if (position === target) {
-        frame = 0;
-        return;
-      }
-      frame = window.requestAnimationFrame(animate);
-    };
-
-    window.addEventListener('wheel', (event) => {
-      if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-      if (event.deltaMode === 0 && Math.abs(event.deltaY) < 40) return;
-      event.preventDefault();
-      if (!frame) position = target = window.scrollY;
-      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-      target = limit(target + event.deltaY * unit * .98);
-      if (!frame) frame = window.requestAnimationFrame(animate);
-    }, { passive: false });
-
-    window.addEventListener('scroll', () => {
-      if (frame || writing) return;
-      position = target = window.scrollY;
-    }, { passive: true });
-  };
-
   const apply = () => {
     removeRequestedSections();
     removeGrouplineProject();
@@ -1199,7 +1156,6 @@
     }
     enhanceContactTitleKinetics();
     enhanceContactBackground();
-    enableSoftWheelScroll();
     const behance = document.querySelector('footer [data-behance-footer]');
     if (behance && !behance.querySelector('.behance-mark')) {
       behance.innerHTML = '<span class="behance-mark" aria-hidden="true"><b>B</b><i>ē</i></span>';
