@@ -933,6 +933,40 @@ header nav > a[href='#contact']:focus-visible {
   line-height: .95;
 }
 
+#work .investment-project-cover {
+  background: #f4f0ed !important;
+}
+
+#work .investment-project-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 42%, rgb(244 240 237 / .08) 58%, rgb(244 240 237 / .94) 100%),
+    linear-gradient(90deg, rgb(244 240 237 / .2), transparent 46%);
+}
+
+#work .investment-project-cover img {
+  object-fit: cover;
+  object-position: right center;
+}
+
+#work .investment-project-cover__label {
+  position: absolute;
+  z-index: 2;
+  left: clamp(1.25rem, 3vw, 2.5rem);
+  bottom: clamp(1.25rem, 3vw, 2.5rem);
+  max-width: 11ch;
+  color: #171119;
+  font-family: 'Bricolage Grotesque', Manrope, sans-serif;
+  font-size: clamp(1.55rem, 3.25vw, 3.55rem);
+  font-weight: 800;
+  letter-spacing: -.05em;
+  line-height: .92;
+}
+
 #work .arkipiu-project-cover {
   background:
     radial-gradient(circle at 78% 24%, rgb(255 105 0 / .2), transparent 34%),

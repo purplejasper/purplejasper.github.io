@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '79';
+  const styleVersion = '81';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -10,6 +10,7 @@
 
   const caseStudies = [
     '/case-studies/rallye-monte-carlo/',
+    '/case-studies/investment-screening-assistant/',
     '/case-studies/arkipiu/',
     '/case-studies/naili-gatto-perry/',
     '/case-studies/brand-digital-design/'
@@ -91,7 +92,9 @@
   };
 
   const removeGrouplineProject = () => {
-    Array.from(document.querySelectorAll('#work article')).forEach((article) => {
+    const articles = Array.from(document.querySelectorAll('#work article:not([data-carousel-clone])'));
+    if (articles.length <= 4) return;
+    articles.forEach((article) => {
       if (/Groupline Shop|Conversion-focused Landing Pages/i.test(article.textContent)) article.remove();
     });
   };
@@ -99,6 +102,7 @@
   const projectKey = (article) => {
     const copy = article.textContent.replace(/\s+/g, ' ').toLowerCase();
     if (copy.includes('rallye monte-carlo')) return 'rally';
+    if (copy.includes('investment screening') || copy.includes('real estate decision support')) return 'investment';
     if (copy.includes('corporate website redesign')) return 'arkipiu';
     if (copy.includes('naili') || copy.includes('gatto perry')) return 'naili';
     if (copy.includes('buildit') || copy.includes('brand & visual identity')) return 'buildit';
@@ -118,17 +122,15 @@
   const ensureRallyProject = () => {
     const section = document.querySelector('#work');
     const container = section?.firstElementChild;
-    if (!container || section.querySelector('[data-rally-project]')) return false;
+    if (!container) return false;
 
-    const source = Array.from(container.children).find((node) => node.tagName === 'ARTICLE');
-    if (!source || container.dataset.carouselReady === 'true') return false;
+    if (section.querySelector('[data-rally-project]')) return false;
+    const source = section.querySelector('article:not([data-carousel-clone])');
+    if (!source) return false;
 
     const project = window.PORTFOLIO_CONTENT?.work?.projects?.[0] || {};
-    const slide = source.cloneNode(true);
+    const slide = source;
     slide.dataset.rallyProject = 'true';
-    slide.removeAttribute('aria-hidden');
-    slide.removeAttribute('aria-label');
-    slide.removeAttribute('role');
     slide.style.cssText = '';
 
     const visual = slide.children[0];
@@ -153,7 +155,71 @@
       });
     }
 
-    source.before(slide);
+    return true;
+  };
+
+  const ensureInvestmentProject = () => {
+    const section = document.querySelector('#work');
+    const container = section?.firstElementChild;
+    const rally = section?.querySelector('[data-rally-project]');
+    if (!container || !rally) return false;
+
+    const project = window.PORTFOLIO_CONTENT?.work?.investmentProject || {};
+    if (section.querySelector('[data-investment-project]')) return false;
+    const source = Array.from(section.querySelectorAll('article:not([data-carousel-clone])'))
+      .find((node) => node !== rally);
+    if (!source) return false;
+    const slide = source.cloneNode(true);
+    slide.dataset.investmentProject = 'true';
+    rally.after(slide);
+
+    slide.style.cssText = '';
+
+    const visual = slide.children[0];
+    const copy = slide.children[1];
+    if (visual) {
+      visual.className = `${visual.className} investment-project-cover`.trim();
+      visual.innerHTML = `
+        <img src="/assets/investment-screening/investment-screening-overview.webp" alt="Investment Screening Assistant mobile interface shown across three smartphone mockups" loading="eager" decoding="async">
+        <strong class="investment-project-cover__label">Investment Screening Assistant</strong>`;
+    }
+
+    copy?.querySelector('.grid-cols-3')?.remove();
+    if (copy) {
+      const label = copy.querySelector('p:first-child');
+      const title = copy.querySelector('h3');
+      const description = title?.nextElementSibling;
+      if (label) label.textContent = `${project.number || '02'} — ${project.name || 'Investment Screening Assistant'}`;
+      if (title) title.textContent = project.title || 'Real Estate Decision Support';
+      if (description) description.textContent = project.description || '';
+      Array.from(copy.querySelectorAll('ul li')).forEach((item, index) => {
+        const skill = project.skills?.[index];
+        item.textContent = skill || '';
+        item.hidden = !skill;
+      });
+    }
+
+    const originals = Array.from(section.querySelectorAll('article:not([data-carousel-clone])'));
+    const isCarousel = Boolean(section.querySelector('.work-carousel-track'));
+    if (isCarousel) {
+      originals.forEach((item, index) => {
+        item.classList.add('work-carousel-slide');
+        item.setAttribute('role', 'group');
+        item.setAttribute('aria-roledescription', 'slide');
+        item.setAttribute('aria-label', `${index + 1} of ${originals.length}`);
+        item.children[0]?.classList.add('work-carousel-visual');
+        item.children[1]?.classList.add('work-carousel-copy');
+      });
+
+      const dots = section.querySelector('.work-carousel-dots');
+      while (dots && dots.children.length < originals.length) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'work-carousel-dot';
+        dot.setAttribute('aria-label', `${window.PORTFOLIO_CONTENT?.carousel?.showProjectAriaLabel || 'Show project'} ${dots.children.length + 1}`);
+        dots.append(dot);
+      }
+    }
     return true;
   };
 
@@ -864,6 +930,13 @@
         eager: true
       },
       {
+        className: 'investment-project-cover',
+        src: '/assets/investment-screening/investment-screening-overview.webp',
+        alt: 'Investment Screening Assistant mobile interface shown across three smartphone mockups',
+        label: 'Investment Screening Assistant',
+        eager: true
+      },
+      {
         className: 'arkipiu-project-cover',
         src: '/assets/arkipiu/contact-page-full.webp',
         alt: 'Arkipiù contact page redesign with lead form and orange visual system',
@@ -1196,6 +1269,7 @@
     reorderAboutBeforeWork();
     enhanceHeroBadge();
     ensureRallyProject();
+    ensureInvestmentProject();
     ensureProjectCovers();
     enhanceCarousel();
     enhanceCaseStudyLinks();

@@ -72,9 +72,16 @@
 
     work: {
       title: 'Portfolio',
-      description: 'Four projects across UI design, visual systems and editorial illustration.',
+      description: 'Five projects across product design, UI design, visual systems and editorial illustration.',
       mockupLabel: 'Mockup coming soon',
       viewCaseStudy: 'View Case Study',
+      investmentProject: {
+        number: '02',
+        name: 'Investment Screening Assistant',
+        title: 'Real Estate Decision Support',
+        description: 'A mobile concept for Italian real estate professionals that turns market, area and urban-planning data into one clear screening flow, with contextual AI supporting professional judgement.',
+        skills: ['Product Design', 'UX Research', 'Data Visualization', 'AI UX']
+      },
       projects: [
         {
           number: '01',
@@ -84,7 +91,7 @@
           skills: ['Visual Direction', 'Livery Design', 'Brand Applications']
         },
         {
-          number: '02',
+          number: '03',
           name: 'Arkipiù',
           title: 'Corporate Website Redesign',
           description: 'End-to-end redesign of a corporate real estate website across 12 pages, focused on clarifying brand positioning, improving content hierarchy and creating a more coherent responsive experience.',
@@ -97,14 +104,14 @@
           note: 'Website performance measured during the 12 months following the redesign.'
         },
         {
-          number: '03',
+          number: '04',
           name: 'INAIL Campania × NWM Network',
           title: 'Naili & Gatto Perry — Illustrated Safety Stories',
           description: 'End-to-end character art and comic illustration for two editions of an educational publication, turning workplace health and safety into clear, engaging visual stories.',
           skills: ['Illustration', 'Character Art', 'Comics', 'Concept Art']
         },
         {
-          number: '04',
+          number: '05',
           name: 'BUILDIT',
           title: 'Brand & Visual Identity',
           description: 'A complete identity system for a modern, sustainable construction company, developed from logo strategy and colour through physical and digital brand applications.',
@@ -298,7 +305,8 @@
       const headerParagraph = heading?.parentElement?.querySelector('p');
       text(headerParagraph, content.work.description);
       work.querySelectorAll('.work-carousel-visual span, article > div:first-child span').forEach((label) => text(label, content.work.mockupLabel));
-      Array.from(work.querySelectorAll('article:not([data-carousel-clone])')).forEach((article, index) => applyProject(article, content.work.projects[index]));
+      Array.from(work.querySelectorAll('article:not([data-carousel-clone]):not([data-investment-project])'))
+        .forEach((article, index) => applyProject(article, content.work.projects[index]));
     }
 
     const about = document.querySelector('#about');

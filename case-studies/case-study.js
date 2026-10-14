@@ -23,10 +23,31 @@ const studies = {
     ],
     results: [['1', 'vehicle livery system'], ['2', 'racewear applications'], ['Multi-format', 'event communication']],
     note: 'Selected public-facing outputs are shown. Commercial terms, internal approvals and production details are intentionally omitted.',
+    next: 'investment-screening-assistant', nextTitle: 'Investment Screening Assistant'
+  },
+  'investment-screening-assistant': {
+    index: '02', client: 'Independent Product Concept · PropTech', title: 'Investment Screening Assistant',
+    intro: 'A high-fidelity mobile concept that helps Italian real estate professionals turn fragmented market, territorial and urban-planning data into a clearer first investment screening.',
+    tags: ['Product Design', 'UX Research', 'Data Visualization', 'AI UX'],
+    challenge: 'Can this opportunity justify a deeper feasibility analysis?',
+    challengeText: 'Preliminary real estate screening often means comparing market values, comparable properties, area conditions, permitted uses, planning rules and constraints across different sources. The design challenge was to organise that complexity into a progressive, scannable mobile experience without presenting an early indicator as a substitute for professional analysis.',
+    steps: [
+      ['01', 'Research & direction', 'Studied asset-screening workflows, PropTech products and territorial platforms, then tested the prototype with two real estate professionals to refine the information priorities.'],
+      ['02', 'Structured screening flow', 'Designed a clear journey from Dashboard and New Analysis to Overview, Market & Area, Urban Planning and the contextual AI Assistant.'],
+      ['03', 'Decision-ready overview', 'Brought the preliminary indicator, market benchmark, opportunities, checks and suggested use scenario into one immediately scannable summary.'],
+      ['04', 'AI as a supporting layer', 'Kept AI inside the structured product as contextual support for constraints, benchmarks and follow-up questions, with sources and data reliability kept visible.'],
+      ['05', 'Iteration & accessibility', 'Shifted the concept from scores alone toward planning compatibility, constraints and explainability, while refining hierarchy, contrast, touch targets and semantic states.']
+    ],
+    visual: 'Market.\nArea.\nPlanning.\nAI.',
+    visualHeading: 'One structured workflow, with professional judgement kept in control.',
+    heroImage: '/assets/investment-screening/investment-screening-overview.webp',
+    heroAlt: 'Investment Screening Assistant concept shown across three mobile interface mockups',
+    results: [['1', 'structured screening workflow'], ['3', 'decision layers: market, area and planning'], ['Contextual AI', 'supporting professional judgement']],
+    note: 'The outcome is a high-fidelity mobile prototype shaped through qualitative feedback from two real estate professionals. It explores how data visualisation, urban-planning information and conversational AI can coexist without removing professional control.',
     next: 'arkipiu', nextTitle: 'Arkipiù Website'
   },
   'arkipiu': {
-    index: '02', client: 'Arkipiù', title: 'Corporate Website Redesign',
+    index: '03', client: 'Arkipiù', title: 'Corporate Website Redesign',
     intro: 'An end-to-end redesign across 12 pages to clarify the brand, strengthen content hierarchy and create a more coherent responsive experience.',
     tags: ['UI Design', 'Information Architecture', 'Responsive Design', 'Design QA'],
     challenge: 'From perception gap to experience.',
@@ -52,7 +73,7 @@ const studies = {
     next: 'naili-gatto-perry', nextTitle: 'Naili & Gatto Perry'
   },
   'naili-gatto-perry': {
-    index: '03', client: 'INAIL Campania × NWM Network', title: 'Naili & Gatto Perry — Illustrated Safety Stories',
+    index: '04', client: 'INAIL Campania × NWM Network', title: 'Naili & Gatto Perry — Illustrated Safety Stories',
     intro: 'Illustration and character art for the first and second editions of an educational comic, created within INAIL Campania’s Sicuri e Connessi project in collaboration with NWM Network.',
     tags: ['Illustration', 'Character Art', 'Comics', 'Concept Art'],
     challenge: 'Turn workplace health and safety into stories people want to follow.',
@@ -80,7 +101,7 @@ const studies = {
     next: 'brand-digital-design', nextTitle: 'BUILDIT Visual Identity'
   },
   'brand-digital-design': {
-    index: '04', client: 'BUILDIT', title: 'Brand & Visual Identity',
+    index: '05', client: 'BUILDIT', title: 'Brand & Visual Identity',
     intro: 'A complete identity system for a modern, sustainable construction company, developed from logo strategy and colour through physical and digital applications.',
     tags: ['Logo Design', 'Visual Identity', 'Brand Applications'],
     challenge: 'Make sustainability and construction feel solid, modern and recognisable.',
@@ -113,6 +134,7 @@ const slug = location.pathname.split('/').filter(Boolean).pop();
 const study = studies[slug] || studies.arkipiu;
 document.body.classList.toggle('case-study--media', Boolean(study.media));
 document.body.classList.toggle('case-study--rally', slug === 'rallye-monte-carlo');
+document.body.classList.toggle('case-study--investment', slug === 'investment-screening-assistant');
 document.body.classList.toggle('case-study--naili', slug === 'naili-gatto-perry');
 document.body.classList.toggle('case-study--arkipiu', slug === 'arkipiu');
 document.body.classList.toggle('case-study--buildit', slug === 'brand-digital-design');
