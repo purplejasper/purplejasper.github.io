@@ -36,16 +36,18 @@
     const setupCarousel = () => {
       const section = document.querySelector('#work');
       const container = section && section.firstElementChild;
-      if (!container) return;
+      if (!container) return false;
       if (section.querySelector('.work-carousel-viewport')) {
         container.dataset.carouselReady = 'true';
-        return;
+        document.documentElement.dataset.portfolioCarouselReady = 'true';
+        return true;
       }
       delete container.dataset.carouselReady;
+      delete document.documentElement.dataset.portfolioCarouselReady;
 
       const slides = Array.from(container.children).filter((node) => node.tagName === 'ARTICLE');
       const header = container.firstElementChild;
-      if (!header || slides.length < 2) return;
+      if (!header || slides.length < 2) return false;
 
       container.dataset.carouselReady = 'true';
       header.classList.add('work-carousel-header');
@@ -265,23 +267,48 @@
 
       update(0);
       renderDepth();
+      document.documentElement.dataset.portfolioCarouselReady = 'true';
+      document.dispatchEvent(new CustomEvent('portfolio:carousel-ready'));
+      return true;
     };
 
-    const keepCarouselMounted = () => {
-      let attempts = 0;
-      const synchronize = () => {
-        setupCarousel();
-        attempts += 1;
-        if (attempts < 32) window.setTimeout(synchronize, 250);
+    window.__setupPortfolioCarousel = setupCarousel;
+
+    if (!window.__whenPortfolioHydrated) {
+      const hydrationCallbacks = [];
+      let watchingHydration = false;
+
+      window.__whenPortfolioHydrated = (callback) => {
+        if (window.__portfolioHydrationComplete === true) {
+          window.queueMicrotask(callback);
+          return;
+        }
+
+        hydrationCallbacks.push(callback);
+        if (watchingHydration) return;
+        watchingHydration = true;
+
+        let checks = 0;
+        const checkHydration = () => {
+          const hydrationPending = typeof window.$_TSR !== 'undefined';
+          if (!hydrationPending || checks >= 240) {
+            window.__portfolioHydrationComplete = true;
+            hydrationCallbacks.splice(0).forEach((queuedCallback) => queuedCallback());
+            return;
+          }
+          checks += 1;
+          window.setTimeout(checkHydration, 50);
+        };
+
+        checkHydration();
       };
-      synchronize();
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => window.setTimeout(keepCarouselMounted, 100), { once: true });
-    } else {
-      window.setTimeout(keepCarouselMounted, 100);
     }
+
+    window.__whenPortfolioHydrated(() => {
+      window.setTimeout(() => {
+        if (!document.querySelector('#work .work-carousel-viewport')) setupCarousel();
+      }, 600);
+    });
   })();
 </script>
 
@@ -341,11 +368,14 @@
       }
     };
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => window.requestAnimationFrame(applyProfileDetails), { once: true });
+    const scheduleProfileDetails = () => window.requestAnimationFrame(applyProfileDetails);
+    if (window.__whenPortfolioHydrated) {
+      window.__whenPortfolioHydrated(scheduleProfileDetails);
+    } else if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', scheduleProfileDetails, { once: true });
     } else {
-      window.requestAnimationFrame(applyProfileDetails);
+      scheduleProfileDetails();
     }
   })();
 </script>
-<script src="/site-polish.js?v=74"></script></body></html>
+<script src="/site-polish.js?v=75"></script></body></html>
