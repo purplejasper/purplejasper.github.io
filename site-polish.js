@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '73';
+  const styleVersion = '75';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -642,6 +642,28 @@
       workTitle.innerHTML = words.map((word, index) => `<span style="--word-index:${index}">${escapeHTML(word)}</span>`).join(' ');
     }
 
+    if (workTitle && workTitle.dataset.workRevealBound !== 'true') {
+      workTitle.dataset.workRevealBound = 'true';
+      const revealWorkTitleIfVisible = () => {
+        if (!workTitle.isConnected || workTitle.classList.contains('is-visible')) return true;
+        const rect = workTitle.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight * .94 && rect.bottom > 0;
+        if (isVisible) workTitle.classList.add('is-visible');
+        return isVisible;
+      };
+
+      if (!revealWorkTitleIfVisible() && 'IntersectionObserver' in window) {
+        const workTitleObserver = new IntersectionObserver((entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          workTitle.classList.add('is-visible');
+          workTitleObserver.disconnect();
+        }, { threshold: .08, rootMargin: '0px 0px -3% 0px' });
+        workTitleObserver.observe(workTitle);
+      } else if (!('IntersectionObserver' in window)) {
+        workTitle.classList.add('is-visible');
+      }
+    }
+
     const about = document.querySelector('#about');
     if (about && about.dataset.editorialReady !== 'true') {
       about.dataset.editorialReady = 'true';
@@ -1200,49 +1222,79 @@
     setupCustomCursor();
   };
 
-  removeGrouplineProject();
-  ensureRallyProject();
-
   const start = () => {
     const applyAfterHydration = () => {
-      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
-        apply();
+      let queuedApply = 0;
+      let stabilizing = false;
 
-        let queuedApply = 0;
-        const observer = new MutationObserver(() => {
-          window.clearTimeout(queuedApply);
-          queuedApply = window.setTimeout(apply, 80);
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-
-        let attempts = 0;
-        const retry = window.setInterval(() => {
+      const stabilizePortfolio = () => {
+        if (stabilizing) return;
+        stabilizing = true;
+        window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
           apply();
-          attempts += 1;
-          if (attempts >= 24) {
-            window.clearInterval(retry);
-            observer.disconnect();
+          window.__setupPortfolioCarousel?.();
+          apply();
+
+          if (document.querySelector('#work .work-carousel-stage .work-carousel-viewport')) {
+            document.documentElement.dataset.portfolioCarouselReady = 'true';
           }
-        }, 250);
-      }));
-    };
+          stabilizing = false;
+        }));
+      };
 
-    applyAfterHydration();
+      stabilizePortfolio();
 
-    const revealPortfolio = () => {
-      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
-        apply();
-        if (window.__portfolioReadyFallback) {
-          window.clearTimeout(window.__portfolioReadyFallback);
-          delete window.__portfolioReadyFallback;
+      const observer = new MutationObserver(() => {
+        window.clearTimeout(queuedApply);
+        queuedApply = window.setTimeout(stabilizePortfolio, 60);
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      let attempts = 0;
+      const retry = window.setInterval(() => {
+        stabilizePortfolio();
+        attempts += 1;
+        if (attempts >= 48) {
+          window.clearInterval(retry);
+          observer.disconnect();
         }
-        document.documentElement.classList.add('portfolio-ready');
-        document.documentElement.classList.remove('portfolio-booting');
-      }));
+      }, 250);
+
+      const revealPortfolio = (attempt = 0, stableChecks = 0) => {
+        window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+          const carouselReady = document.querySelector('#work .work-carousel-stage .work-carousel-viewport');
+          const hydrationComplete = window.__portfolioHydrationComplete === true;
+          const readySignal = document.documentElement.dataset.portfolioCarouselReady === 'true';
+          const nextStableChecks = carouselReady && hydrationComplete && readySignal ? stableChecks + 1 : 0;
+
+          if (nextStableChecks < 3 && attempt < 120) {
+            window.setTimeout(() => revealPortfolio(attempt + 1, nextStableChecks), 100);
+            return;
+          }
+
+          if (window.__portfolioReadyFallback) {
+            window.clearTimeout(window.__portfolioReadyFallback);
+            delete window.__portfolioReadyFallback;
+          }
+          document.documentElement.classList.add('portfolio-ready');
+          document.documentElement.classList.remove('portfolio-booting');
+        }));
+      };
+
+      revealPortfolio();
     };
 
-    if (document.readyState === 'complete') revealPortfolio();
-    else window.addEventListener('load', revealPortfolio, { once: true });
+    if (window.__whenPortfolioHydrated) {
+      window.__whenPortfolioHydrated(applyAfterHydration);
+    } else if (document.readyState === 'complete') {
+      window.__portfolioHydrationComplete = true;
+      applyAfterHydration();
+    } else {
+      window.addEventListener('load', () => {
+        window.__portfolioHydrationComplete = true;
+        applyAfterHydration();
+      }, { once: true });
+    }
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
