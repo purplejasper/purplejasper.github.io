@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '81';
+  const styleVersion = '82';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -151,7 +151,9 @@
       if (title) title.textContent = project.title || 'Event Visual System';
       if (description) description.textContent = project.description || '';
       Array.from(copy.querySelectorAll('ul li')).forEach((item, index) => {
-        item.textContent = project.skills?.[index] || '';
+        const skill = project.skills?.[index];
+        item.textContent = skill || '';
+        item.hidden = !skill;
       });
     }
 

@@ -249,7 +249,11 @@
     if (label) text(label, `${project.number} — ${project.name}`);
     text(title, project.title);
     text(title?.nextElementSibling, project.description);
-    texts(copy?.querySelectorAll('ul li'), project.skills);
+    Array.from(copy?.querySelectorAll('ul li') || []).forEach((item, index) => {
+      const skill = project.skills?.[index];
+      item.textContent = skill || '';
+      item.hidden = !skill;
+    });
 
     const stats = copy?.querySelectorAll('.grid-cols-3 > div');
     Array.from(stats || []).forEach((stat, index) => {

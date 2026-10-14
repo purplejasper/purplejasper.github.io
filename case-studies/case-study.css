@@ -34,12 +34,25 @@ a { color: inherit; }
 
 .case-nav a { text-decoration: none; }
 .case-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
   margin-right: auto;
   color: rgb(244 243 246 / .78);
   font-size: .875rem;
   font-weight: 500;
   line-height: 1.25rem;
   white-space: nowrap;
+}
+.case-nav__brand::after {
+  content: '';
+  display: block;
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: 0 0 auto;
+  background: url('/favicon.svg?v=83') center / contain no-repeat;
+  filter: drop-shadow(0 4px 8px rgb(111 55 151 / .28));
+  transform: rotate(-7deg);
 }
 .case-nav__links {
   display: flex;
@@ -86,6 +99,10 @@ a { color: inherit; }
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: .68rem;
+  }
+  .case-nav__brand::after {
+    width: 1.15rem;
+    height: 1.15rem;
   }
   .case-nav__links > a {
     padding: .5rem .62rem;
