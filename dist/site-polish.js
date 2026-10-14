@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '75';
+  const styleVersion = '78';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -1241,6 +1241,8 @@
           stabilizing = false;
         }));
       };
+
+      window.__stabilizePortfolio = stabilizePortfolio;
 
       stabilizePortfolio();
 
