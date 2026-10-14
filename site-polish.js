@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '71';
+  const styleVersion = '72';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -1169,7 +1169,6 @@
       backToTop.classList.add('footer-back-to-top');
     }
     setupCustomCursor();
-    document.documentElement.classList.remove('portfolio-booting');
   };
 
   removeGrouplineProject();
@@ -1200,6 +1199,21 @@
     };
 
     applyAfterHydration();
+
+    const revealPortfolio = () => {
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+        apply();
+        if (window.__portfolioReadyFallback) {
+          window.clearTimeout(window.__portfolioReadyFallback);
+          delete window.__portfolioReadyFallback;
+        }
+        document.documentElement.classList.add('portfolio-ready');
+        document.documentElement.classList.remove('portfolio-booting');
+      }));
+    };
+
+    if (document.readyState === 'complete') revealPortfolio();
+    else window.addEventListener('load', revealPortfolio, { once: true });
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
