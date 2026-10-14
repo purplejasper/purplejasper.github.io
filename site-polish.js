@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '72';
+  const styleVersion = '73';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -669,6 +669,35 @@
 
     const contact = document.querySelector('#contact');
     if (contact) contact.dataset.revealContact = 'true';
+
+    /* The framework can replace the contact node after the shared editorial
+       observer has already been created. Bind the current node separately so
+       its title never remains in the blurred pre-reveal state. */
+    if (contact && contact.dataset.contactRevealBound !== 'true') {
+      contact.dataset.contactRevealBound = 'true';
+
+      const revealContactIfVisible = () => {
+        if (!contact.isConnected || contact.classList.contains('is-visible')) return true;
+        const rect = contact.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight * .94
+          && rect.bottom > window.innerHeight * .06;
+        if (isVisible) contact.classList.add('is-visible');
+        return isVisible;
+      };
+
+      if (!revealContactIfVisible() && 'IntersectionObserver' in window) {
+        const contactObserver = new IntersectionObserver((entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          contact.classList.add('is-visible');
+          contactObserver.disconnect();
+        }, { threshold: .08, rootMargin: '0px 0px -3% 0px' });
+        contactObserver.observe(contact);
+      } else if (!('IntersectionObserver' in window)) {
+        contact.classList.add('is-visible');
+      }
+
+      window.requestAnimationFrame(revealContactIfVisible);
+    }
 
     if (document.documentElement.dataset.editorialObserver !== 'true') {
       document.documentElement.dataset.editorialObserver = 'true';
