@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '78';
+  const styleVersion = '79';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -398,11 +398,13 @@
     const track = viewport?.querySelector('.work-carousel-track');
     const previous = document.querySelector('#work [data-carousel-previous]');
     const next = document.querySelector('#work [data-carousel-next]');
-    const dots = Array.from(document.querySelectorAll('#work .work-carousel-dot'));
+    let dots = Array.from(document.querySelectorAll('#work .work-carousel-dot'));
     if (!viewport || !track || !previous || !next || viewport.dataset.infiniteReady === 'true') return false;
 
     const originals = Array.from(track.querySelectorAll('.work-carousel-slide:not([data-carousel-clone])'));
     if (originals.length < 2) return false;
+    dots.slice(originals.length).forEach((dot) => dot.remove());
+    dots = dots.slice(0, originals.length);
     viewport.dataset.infiniteReady = 'true';
 
     const previousClone = originals.at(-1).cloneNode(true);
@@ -434,6 +436,7 @@
     let activeIndex = 0;
     let scrollFrame = 0;
     let settleTimer = 0;
+    let navigationTimer = 0;
 
     const logicalIndex = (slide) => slide.dataset.carouselClone === 'true'
       ? Number(slide.dataset.carouselCloneIndex)
@@ -497,7 +500,13 @@
       if (nextIndex < 0) centerSlide(previousClone, behavior);
       else if (nextIndex >= originals.length) centerSlide(nextClone, behavior);
       else centerSlide(originals[nextIndex], behavior);
-      if (reducedMotion) settleLoop();
+
+      window.clearTimeout(navigationTimer);
+      const normalizedIndex = ((nextIndex % originals.length) + originals.length) % originals.length;
+      navigationTimer = window.setTimeout(() => {
+        centerSlide(originals[normalizedIndex], 'auto');
+        syncActive();
+      }, reducedMotion ? 0 : 1050);
     };
 
     previous.addEventListener('click', (event) => {
