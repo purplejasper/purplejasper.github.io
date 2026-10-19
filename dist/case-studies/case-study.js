@@ -186,3 +186,123 @@ document.querySelector('#case-study').innerHTML = `
   </a>
   <footer class="case-footer"><span>© 2026 Marica Mariniello</span><a href="mailto:mariniello.marica@gmail.com">Get in touch</a></footer>
 `;
+
+if (slug === 'investment-screening-assistant') {
+  const investmentVisual = '/assets/investment-screening/investment-screening-overview.webp';
+  document.querySelector('#case-study').innerHTML = `
+    <nav class="case-nav" aria-label="Primary navigation">
+      <a class="case-nav__brand" href="/">Marica Mariniello</a>
+      <div class="case-nav__links">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a class="case-nav__contact" href="/#contact">Let's talk</a>
+      </div>
+    </nav>
+
+    <article class="isa-case">
+      <header class="case-hero isa-cover">
+        <img class="case-hero__image" src="${investmentVisual}" alt="Investment Screening Assistant shown across the Home, New Analysis and Overview mobile screens" loading="eager" fetchpriority="high" decoding="async">
+        <div class="case-hero__content">
+          <p class="case-hero__eyebrow">02 — Independent Product Concept · PropTech</p>
+          <h1>Investment Screening Assistant</h1>
+          <p class="case-hero__intro">A mobile decision-support tool designed to make preliminary Real Estate screening clearer, faster and more structured.</p>
+          <div class="case-meta" aria-label="Project metadata"><span>Personal Project</span><span>Product Design</span><span>UX/UI</span><span>Mobile</span></div>
+        </div>
+      </header>
+
+      <section class="isa-section isa-section--challenge">
+        <div class="isa-shell isa-challenge">
+          <div>
+            <p class="isa-kicker">The challenge</p>
+            <h2>From fragmented data<br>to a clearer decision.</h2>
+            <p class="isa-lead">Early-stage screening requires professionals to compare market data, property information and urban-planning constraints across multiple sources.</p>
+          </div>
+          <div class="isa-question">
+            <span>Core question</span>
+            <blockquote>“Does this opportunity deserve a deeper feasibility analysis?”</blockquote>
+            <div class="isa-source-list" aria-label="Information considered in the screening"><span>Market data</span><span>Comparables</span><span>Area</span><span>Planning</span><span>Constraints</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="isa-section isa-section--direction">
+        <div class="isa-shell">
+          <p class="isa-kicker">Research → product direction</p>
+          <div class="isa-heading-row">
+            <h2>Three insights shaped the product.</h2>
+            <p>Domain Research · Competitor Analysis · Professional Feedback</p>
+          </div>
+          <div class="isa-decision-grid">
+            <article><span>01</span><p>Information lives across different sources.</p><strong>A centralised Overview</strong></article>
+            <article><span>02</span><p>Market data alone is not enough.</p><strong>Signals, risks and planning checks</strong></article>
+            <article><span>03</span><p>AI is most useful for deeper questions.</p><strong>A support layer, not the product</strong></article>
+          </div>
+          <aside class="isa-feedback">
+            <span>Professional feedback</span>
+            <p>Conversations with two Real Estate professionals shifted the concept from a score-led experience toward permitted uses, constraints, sources and information to verify.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="isa-section isa-section--experience">
+        <div class="isa-shell">
+          <p class="isa-kicker">Core experience</p>
+          <div class="isa-heading-row">
+            <h2>A short path from opportunity to first assessment.</h2>
+            <p>Overview acts as the decision hub, while Market and AI provide progressive detail.</p>
+          </div>
+          <div class="isa-mini-flow" aria-label="Home to New Analysis to Overview, then Market or AI Assistant">
+            <span>Home</span><i aria-hidden="true">→</i><span>New Analysis</span><i aria-hidden="true">→</i><strong>Overview</strong><i aria-hidden="true">→</i><span>Market / AI</span>
+          </div>
+          <div class="isa-screen-grid" aria-label="Completed interface screens">
+            <figure>
+              <div class="isa-screen isa-screen--home" role="img" aria-label="Home screen showing saved analyses and a new analysis action"></div>
+              <figcaption><span>01</span><strong>Home</strong><p>Start a screening or resume a previous opportunity.</p></figcaption>
+            </figure>
+            <figure>
+              <div class="isa-screen isa-screen--new" role="img" aria-label="New Analysis screen collecting the essential property data"></div>
+              <figcaption><span>02</span><strong>New Analysis</strong><p>Guided input, automatic calculations and early warnings.</p></figcaption>
+            </figure>
+            <figure>
+              <div class="isa-screen isa-screen--overview" role="img" aria-label="Overview screen presenting the preliminary investment assessment"></div>
+              <figcaption><span>03</span><strong>Overview</strong><p>Potential, benchmark, opportunities and checks in one hierarchy.</p></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="isa-section isa-section--next">
+        <div class="isa-shell">
+          <p class="isa-kicker">Screens in progress</p>
+          <div class="isa-heading-row">
+            <h2>Two screens will complete the experience.</h2>
+            <p>The placeholders are intentionally explicit, so they can be replaced without changing the case-study structure.</p>
+          </div>
+          <div class="isa-placeholder-grid">
+            <article class="isa-screen-placeholder">
+              <div><span>Screen placeholder</span><strong>Add final Market screen</strong><small>Benchmark · trend · comparables</small></div>
+              <h3>Market</h3>
+              <p>Detailed evidence behind the preliminary assessment.</p>
+            </article>
+            <article class="isa-screen-placeholder">
+              <div><span>Screen placeholder</span><strong>Add final AI Assistant screen</strong><small>Contextual questions · sources · reliability</small></div>
+              <h3>AI Assistant</h3>
+              <p>A contextual support layer for deeper investigation.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="isa-section isa-section--closing">
+        <div class="isa-shell">
+          <p class="isa-closing">A mobile decision-support concept that turns fragmented Real Estate information into a more structured and actionable first screening.</p>
+        </div>
+      </section>
+    </article>
+
+    <a class="case-next" href="/case-studies/arkipiu/">
+      <span><small>Next case study</small><strong>Arkipiù Website</strong></span><span class="case-next__arrow" aria-hidden="true">→</span>
+    </a>
+    <footer class="case-footer"><span>© 2026 Marica Mariniello</span><a href="mailto:mariniello.marica@gmail.com">Get in touch</a></footer>
+  `;
+}
