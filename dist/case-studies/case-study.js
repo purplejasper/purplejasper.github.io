@@ -254,17 +254,27 @@ if (slug === 'investment-screening-assistant') {
           <div class="isa-mini-flow" aria-label="Home to New Analysis to Overview, then Market or AI Assistant">
             <span>Home</span><i aria-hidden="true">→</i><span>New Analysis</span><i aria-hidden="true">→</i><strong>Overview</strong><i aria-hidden="true">→</i><span>Market / AI</span>
           </div>
+          <figure class="isa-home-feature">
+            <div class="isa-home-feature__visual">
+              <img src="/assets/investment-screening/home-mockup.webp" alt="Investment Screening Assistant Home screen displayed on a smartphone in a professional workspace" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <span>Home screen</span>
+              <h3>Start quickly. Pick up where you left off.</h3>
+              <p>The first view keeps the primary action prominent while making active and recent screenings easy to scan.</p>
+            </figcaption>
+          </figure>
           <div class="isa-screen-grid" aria-label="Completed interface screens">
             <figure>
-              <div class="isa-screen isa-screen--home" role="img" aria-label="Home screen showing saved analyses and a new analysis action"></div>
+              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/home-screen.webp" alt="Home screen showing saved analyses and a new analysis action" loading="lazy" decoding="async"></div>
               <figcaption><span>01</span><strong>Home</strong><p>Start a screening or resume a previous opportunity.</p></figcaption>
             </figure>
             <figure>
-              <div class="isa-screen isa-screen--new" role="img" aria-label="New Analysis screen collecting the essential property data"></div>
+              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/new-analysis-screen.webp" alt="New Analysis screen collecting the essential property data" loading="lazy" decoding="async"></div>
               <figcaption><span>02</span><strong>New Analysis</strong><p>Guided input, automatic calculations and early warnings.</p></figcaption>
             </figure>
             <figure>
-              <div class="isa-screen isa-screen--overview" role="img" aria-label="Overview screen presenting the preliminary investment assessment"></div>
+              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/overview-screen.webp" alt="Overview screen presenting the preliminary investment assessment" loading="lazy" decoding="async"></div>
               <figcaption><span>03</span><strong>Overview</strong><p>Potential, benchmark, opportunities and checks in one hierarchy.</p></figcaption>
             </figure>
           </div>
@@ -290,6 +300,22 @@ if (slug === 'investment-screening-assistant') {
               <p>A contextual support layer for deeper investigation.</p>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section class="isa-section isa-section--output">
+        <div class="isa-shell">
+          <p class="isa-kicker">Project output</p>
+          <div class="isa-heading-row">
+            <h2>A focused foundation for faster screening.</h2>
+            <p>The concept now covers the essential path from entering an opportunity to understanding its preliminary potential.</p>
+          </div>
+          <div class="isa-output-grid">
+            <article><strong>3</strong><span>completed core screens</span><p>Home, New Analysis and Overview establish the product's central journey.</p></article>
+            <article><strong>1</strong><span>decision hub</span><p>Overview brings benchmarks, positive signals and checks into one hierarchy.</p></article>
+            <article><strong>2</strong><span>next-stage screens</span><p>Market and AI Assistant remain clearly marked for the next iteration.</p></article>
+          </div>
+          <p class="isa-output-note">High-fidelity product concept shaped through domain research, competitor analysis and qualitative feedback from two Real Estate professionals.</p>
         </div>
       </section>
 
