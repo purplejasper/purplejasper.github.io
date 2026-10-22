@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '83';
+  const styleVersion = '87';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -19,6 +19,73 @@
   const escapeHTML = (value = '') => String(value).replace(/[&<>'"]/g, (character) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
   })[character]);
+
+  const currentLanguage = () => window.PORTFOLIO_LANGUAGE === 'it' ? 'it' : 'en';
+
+  const requestLanguage = (language) => {
+    const nextLanguage = language === 'it' ? 'it' : 'en';
+    if (typeof window.setPortfolioLanguage === 'function') {
+      window.setPortfolioLanguage(nextLanguage);
+      return;
+    }
+    try { window.localStorage.setItem('portfolio-language', nextLanguage); } catch {}
+    window.location.reload();
+  };
+
+  const enhanceLanguageSwitch = () => {
+    const nav = document.querySelector('header nav');
+    if (!nav) return false;
+
+    let control = nav.querySelector('[data-language-switch]');
+    if (!control) {
+      control = document.createElement('div');
+      control.className = 'language-switch';
+      control.dataset.languageSwitch = 'true';
+      control.setAttribute('role', 'group');
+      control.innerHTML = `
+        <span class="language-switch__thumb" aria-hidden="true"></span>
+        <button type="button" data-language="it">IT</button>
+        <button type="button" data-language="en">EN</button>`;
+
+      const contact = nav.querySelector('a[href="#contact"]');
+      nav.insertBefore(control, contact || null);
+
+      let startX = null;
+      let suppressClick = false;
+      control.addEventListener('pointerdown', (event) => {
+        startX = event.clientX;
+      }, { passive: true });
+      control.addEventListener('pointerup', (event) => {
+        if (startX === null) return;
+        const distance = event.clientX - startX;
+        startX = null;
+        if (Math.abs(distance) < 18) return;
+        suppressClick = true;
+        requestLanguage(distance > 0 ? 'en' : 'it');
+        window.setTimeout(() => { suppressClick = false; }, 300);
+      }, { passive: true });
+      control.addEventListener('pointercancel', () => { startX = null; }, { passive: true });
+      control.querySelectorAll('button').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (suppressClick) return;
+          requestLanguage(button.dataset.language);
+        });
+      });
+    }
+
+    const language = currentLanguage();
+    const labels = window.PORTFOLIO_CONTENT?.language || {};
+    control.dataset.language = language;
+    control.setAttribute('aria-label', labels.label || 'Choose site language');
+    control.querySelectorAll('button').forEach((button) => {
+      const active = button.dataset.language === language;
+      button.setAttribute('aria-pressed', String(active));
+      button.setAttribute('aria-label', button.dataset.language === 'it'
+        ? (labels.italian || 'Italiano')
+        : (labels.english || 'English'));
+    });
+    return true;
+  };
 
   const enhanceIntroduction = () => {
     const hero = document.querySelector('#top');
@@ -65,12 +132,13 @@
       const sectionKey = section.dataset.contentSection;
       const completeText = section.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
       const isExperience = sectionKey === 'experience'
-        || (completeText.startsWith('experience') && completeText.includes('education & continuous learning'));
-      if (label === 'capabilities' || label === 'tools' || isExperience) section.remove();
+        || ((completeText.startsWith('experience') || completeText.startsWith('esperienza'))
+          && (completeText.includes('education & continuous learning') || completeText.includes('formazione continua')));
+      if (['capabilities', 'competenze', 'tools', 'strumenti'].includes(label) || isExperience) section.remove();
     });
 
     document.querySelectorAll('a').forEach((link) => {
-      if (link.textContent.toLowerCase().includes('download cv')) link.remove();
+      if (/download cv|scarica (il )?cv/i.test(link.textContent)) link.remove();
     });
 
     document.querySelector('#contact h2 + p')?.remove();
@@ -81,13 +149,13 @@
     document.querySelectorAll('#work .work-carousel-visual p, #work article > div:first-child p').forEach((title) => title.remove());
 
     const performanceNote = Array.from(document.querySelectorAll('#work p')).find((paragraph) =>
-      paragraph.textContent.includes('Website performance measured')
+      /Website performance measured|Performance misurate/i.test(paragraph.textContent)
     );
     performanceNote?.parentElement?.remove();
 
     document.querySelectorAll('#contact > div > div').forEach((block) => {
       const text = block.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
-      if (text.startsWith('name') && text.includes('email')) block.remove();
+      if ((text.startsWith('name') || text.startsWith('nome')) && text.includes('email')) block.remove();
     });
   };
 
@@ -102,10 +170,10 @@
   const projectKey = (article) => {
     const copy = article.textContent.replace(/\s+/g, ' ').toLowerCase();
     if (copy.includes('rallye monte-carlo')) return 'rally';
-    if (copy.includes('investment screening') || copy.includes('real estate decision support')) return 'investment';
-    if (copy.includes('corporate website redesign')) return 'arkipiu';
+    if (copy.includes('investment screening') || copy.includes('real estate decision support') || copy.includes('supporto alle decisioni immobiliari')) return 'investment';
+    if (copy.includes('corporate website redesign') || copy.includes('redesign del sito corporate')) return 'arkipiu';
     if (copy.includes('naili') || copy.includes('gatto perry')) return 'naili';
-    if (copy.includes('buildit') || copy.includes('brand & visual identity')) return 'buildit';
+    if (copy.includes('buildit') || copy.includes('brand & visual identity') || copy.includes('identità visiva')) return 'buildit';
     return article.querySelector('h3')?.textContent.trim().toLowerCase() || copy.slice(0, 80);
   };
 
@@ -181,8 +249,15 @@
     const copy = slide.children[1];
     if (visual) {
       visual.className = `${visual.className} investment-project-cover`.trim();
+      const coverAlt = currentLanguage() === 'it'
+        ? 'Le schermate Home, Nuova analisi e Panoramica di Investment Screening Assistant in tre mockup smartphone'
+        : 'Investment Screening Assistant Home, New Analysis and Overview screens shown across three smartphone mockups';
       visual.innerHTML = `
-        <img src="/assets/investment-screening/investment-screening-overview.webp" alt="Investment Screening Assistant mobile interface shown across three smartphone mockups" loading="eager" decoding="async">
+        <div class="investment-cover-composition" role="img" aria-label="${coverAlt}">
+          <img class="investment-cover-phone investment-cover-phone--home" src="/assets/investment-screening/home-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+          <img class="investment-cover-phone investment-cover-phone--analysis" src="/assets/investment-screening/new-analysis-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+          <img class="investment-cover-phone investment-cover-phone--overview" src="/assets/investment-screening/overview-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+        </div>
         <strong class="investment-project-cover__label">Investment Screening Assistant</strong>`;
     }
 
@@ -383,7 +458,7 @@
     next.innerHTML = '<span aria-hidden="true">›</span>';
 
     document.querySelectorAll('#work .work-carousel-slide').forEach((slide, index) => {
-      const oldButton = Array.from(slide.querySelectorAll('button')).find((button) => button.textContent.includes('View Case Study'));
+      const oldButton = Array.from(slide.querySelectorAll('button')).find((button) => /View Case Study|Vedi il case study/i.test(button.textContent));
       if (oldButton && caseStudies[index]) {
         const link = document.createElement('a');
         link.href = caseStudies[index];
@@ -406,7 +481,7 @@
           visual.append(visualLink);
         }
         visualLink.href = link.href;
-        visualLink.setAttribute('aria-label', `Open ${slide.querySelector('h3')?.textContent.trim() || 'case study'}`);
+        visualLink.setAttribute('aria-label', `${window.PORTFOLIO_CONTENT?.carousel?.openCaseStudyAriaLabel || 'Open case study'}: ${slide.querySelector('h3')?.textContent.trim() || 'case study'}`);
         visualLink.tabIndex = slide.getAttribute('aria-hidden') === 'false' ? 0 : -1;
       }
 
@@ -431,7 +506,7 @@
 
       let link = slide.querySelector('a[data-case-study-link]');
       if (!link) {
-        const button = Array.from(slide.querySelectorAll('button')).find((item) => item.textContent.includes('View Case Study'));
+        const button = Array.from(slide.querySelectorAll('button')).find((item) => /View Case Study|Vedi il case study/i.test(item.textContent));
         if (button) {
           link = document.createElement('a');
           link.className = `${button.className} work-case-cta`;
@@ -456,7 +531,7 @@
         visual.append(visualLink);
       }
       visualLink.href = href;
-      visualLink.setAttribute('aria-label', `Open ${slide.querySelector('h3')?.textContent.trim() || 'case study'}`);
+      visualLink.setAttribute('aria-label', `${window.PORTFOLIO_CONTENT?.carousel?.openCaseStudyAriaLabel || 'Open case study'}: ${slide.querySelector('h3')?.textContent.trim() || 'case study'}`);
       visualLink.tabIndex = slide.getAttribute('aria-hidden') === 'false' ? 0 : -1;
     });
   };
@@ -853,18 +928,19 @@
   };
 
   const enhanceApproachIcons = () => {
+    const approachCopy = window.PORTFOLIO_CONTENT?.approach || {};
     const approachHeading = document.querySelector('[data-approach-heading="true"]')
       || document.querySelector('.approach-heading__second-line')?.closest('h2')
       || Array.from(document.querySelectorAll('section h2')).find((heading) =>
-        heading.textContent.replace(/\s+/g, ' ').trim() === 'From visual systems to digital experiences'
+        heading.textContent.replace(/\s+/g, ' ').trim() === approachCopy.title
       );
     const section = approachHeading?.closest('section');
     if (!section) return false;
 
     approachHeading.dataset.approachHeading = 'true';
-    approachHeading.setAttribute('aria-label', 'From visual systems to digital experiences');
+    approachHeading.setAttribute('aria-label', approachCopy.title || 'From visual systems to digital experiences');
     if (!approachHeading.querySelector('.approach-heading__gradient')) {
-      approachHeading.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line"><span class="approach-heading__prefix">to </span><span class="approach-heading__gradient">digital experiences</span></span>';
+      approachHeading.innerHTML = `<span class="approach-heading__first-line">${escapeHTML(approachCopy.titleFirstLine || 'From visual systems')}</span><br><span class="approach-heading__second-line"><span class="approach-heading__prefix">${escapeHTML(approachCopy.titlePrefix || 'to ')}</span><span class="approach-heading__gradient">${escapeHTML(approachCopy.titleAccent || 'digital experiences')}</span></span>`;
     }
 
     const icons = [
@@ -891,7 +967,7 @@
         const link = document.createElement('a');
         link.className = 'expertise-card__link';
         link.href = expertise[index]?.href || '/#about';
-        link.setAttribute('aria-label', `View work related to ${expertise[index]?.title || heading.textContent}`);
+        link.setAttribute('aria-label', `${window.PORTFOLIO_CONTENT?.accessibility?.viewRelatedWork || 'View work related to'} ${expertise[index]?.title || heading.textContent}`);
         row.append(link);
       }
     });
@@ -933,10 +1009,11 @@
       },
       {
         className: 'investment-project-cover',
-        src: '/assets/investment-screening/investment-screening-overview.webp',
-        alt: 'Investment Screening Assistant mobile interface shown across three smartphone mockups',
+        composition: true,
+        alt: currentLanguage() === 'it'
+          ? 'Le schermate Home, Nuova analisi e Panoramica di Investment Screening Assistant in tre mockup smartphone'
+          : 'Investment Screening Assistant Home, New Analysis and Overview screens shown across three smartphone mockups',
         label: 'Investment Screening Assistant',
-        eager: true
       },
       {
         className: 'arkipiu-project-cover',
@@ -967,9 +1044,14 @@
       visual.classList.add(cover.className);
       visual.dataset.realArtwork = 'true';
       const labelClass = `${cover.className}__label`;
-      visual.innerHTML = `
-        <img src="${cover.src}" alt="${cover.alt}" loading="${cover.eager ? 'eager' : 'lazy'}" decoding="async">
-        ${cover.label ? `<strong class="${labelClass}">${cover.label}</strong>` : ''}`;
+      const visualMarkup = cover.composition
+        ? `<div class="investment-cover-composition" role="img" aria-label="${cover.alt}">
+            <img class="investment-cover-phone investment-cover-phone--home" src="/assets/investment-screening/home-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+            <img class="investment-cover-phone investment-cover-phone--analysis" src="/assets/investment-screening/new-analysis-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+            <img class="investment-cover-phone investment-cover-phone--overview" src="/assets/investment-screening/overview-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+          </div>`
+        : `<img src="${cover.src}" alt="${cover.alt}" loading="${cover.eager ? 'eager' : 'lazy'}"${cover.eager ? ' fetchpriority="high"' : ''} decoding="async">`;
+      visual.innerHTML = `${visualMarkup}${cover.label ? `<strong class="${labelClass}">${cover.label}</strong>` : ''}`;
     });
   };
 
@@ -995,7 +1077,13 @@
       document.body.append(cursor);
 
       const label = cursor.querySelector('.portfolio-cursor__label');
-      const stateLabels = { view: 'VIEW', flip: 'FLIP', back: 'BACK', drag: 'DRAG' };
+      const cursorCopy = window.PORTFOLIO_CONTENT?.cursor || {};
+      const stateLabels = {
+        view: cursorCopy.view || 'VIEW',
+        flip: cursorCopy.flip || 'FLIP',
+        back: cursorCopy.back || 'BACK',
+        drag: cursorCopy.drag || 'DRAG'
+      };
       let state = 'default';
       let activeTarget = null;
       let targetX = window.innerWidth / 2;
@@ -1268,6 +1356,7 @@
     removeGrouplineProject();
     deduplicateWorkProjects();
     enhanceIntroduction();
+    enhanceLanguageSwitch();
     reorderAboutBeforeWork();
     enhanceHeroBadge();
     ensureRallyProject();
@@ -1286,9 +1375,15 @@
     const contactMarkupIsComplete = contactTitle?.querySelector('.contact-line')
       && contactTitle.querySelector('.contact-gradient');
     if (contactTitle && !contactMarkupIsComplete) {
+      const contactCopy = window.PORTFOLIO_CONTENT?.contact || {};
+      const highlightedWord = contactCopy.highlightedWord || 'experiences.';
+      const prefix = String(contactCopy.title || "Let's create clear digital experiences.")
+        .replace(highlightedWord, '')
+        .trim();
       delete contactTitle.dataset.kineticReady;
       contactTitle.dataset.gradientReady = 'true';
-      contactTitle.innerHTML = `<span class="contact-line">Let's create clear</span><span class="contact-gradient">digital experiences.</span>`;
+      contactTitle.setAttribute('aria-label', contactCopy.title || "Let's create clear digital experiences.");
+      contactTitle.innerHTML = `<span class="contact-line">${escapeHTML(prefix)}</span><span class="contact-gradient">${escapeHTML(highlightedWord)}</span>`;
     }
     enhanceContactTitleKinetics();
     enhanceContactBackground();
@@ -1299,9 +1394,10 @@
 
     const backToTop = document.querySelector('footer a[href="#top"]');
     if (backToTop && backToTop.textContent.trim() !== '↑') {
+      const backToTopLabel = window.PORTFOLIO_CONTENT?.footer?.backToTop || 'Back to top';
       backToTop.textContent = '↑';
-      backToTop.setAttribute('aria-label', 'Back to top');
-      backToTop.title = 'Back to top';
+      backToTop.setAttribute('aria-label', backToTopLabel.replace(/\s*↑\s*$/, ''));
+      backToTop.title = backToTopLabel.replace(/\s*↑\s*$/, '');
       backToTop.classList.add('footer-back-to-top');
     }
     setupCustomCursor();
@@ -1350,11 +1446,10 @@
       const revealPortfolio = (attempt = 0, stableChecks = 0) => {
         window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
           const carouselReady = document.querySelector('#work .work-carousel-stage .work-carousel-viewport');
-          const hydrationComplete = window.__portfolioHydrationComplete === true;
           const readySignal = document.documentElement.dataset.portfolioCarouselReady === 'true';
-          const nextStableChecks = carouselReady && hydrationComplete && readySignal ? stableChecks + 1 : 0;
+          const nextStableChecks = carouselReady && readySignal ? stableChecks + 1 : 0;
 
-          if (nextStableChecks < 3 && attempt < 120) {
+          if (nextStableChecks < 2 && attempt < 120) {
             window.setTimeout(() => revealPortfolio(attempt + 1, nextStableChecks), 100);
             return;
           }

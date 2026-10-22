@@ -4,7 +4,7 @@
  * Keep the property names unchanged: only edit the text between quotes.
  */
 (() => {
-  const PORTFOLIO_CONTENT = {
+  const PORTFOLIO_CONTENT_EN = {
     seo: {
       title: 'Marica Mariniello — UX/UI Designer & Visual Design Specialist',
       author: 'Marica Mariniello',
@@ -22,6 +22,12 @@
       work: 'Work',
       about: 'About',
       contact: "Let's talk"
+    },
+
+    language: {
+      label: 'Choose site language',
+      italian: 'Italiano',
+      english: 'English'
     },
 
     hero: {
@@ -144,6 +150,9 @@
     approach: {
       eyebrow: 'Core expertise',
       title: 'From visual systems to digital experiences',
+      titleFirstLine: 'From visual systems',
+      titlePrefix: 'to ',
+      titleAccent: 'digital experiences',
       description: 'I connect visual direction and interface design across digital products, brand identities and editorial communication.',
       principles: [
         { number: '01', title: 'UX/UI Design', description: 'Responsive interfaces, information architecture, user flows and reusable UI systems.', href: '/case-studies/arkipiu/' },
@@ -214,11 +223,170 @@
       nextAriaLabel: 'Show next project',
       chooseProjectAriaLabel: 'Choose project',
       selectedWorkAriaLabel: 'Selected work',
-      showProjectAriaLabel: 'Show project'
+      showProjectAriaLabel: 'Show project',
+      openCaseStudyAriaLabel: 'Open case study'
+    },
+
+    cursor: {
+      view: 'VIEW',
+      flip: 'FLIP',
+      back: 'BACK',
+      drag: 'DRAG'
+    },
+
+    accessibility: {
+      viewRelatedWork: 'View work related to'
     }
   };
 
+  const PORTFOLIO_CONTENT_IT = JSON.parse(JSON.stringify(PORTFOLIO_CONTENT_EN));
+
+  Object.assign(PORTFOLIO_CONTENT_IT.seo, {
+    title: 'Marica Mariniello — UX/UI Designer e Visual Design Specialist',
+    description: 'UX/UI Designer con una solida esperienza nel Visual Design: interfacce responsive, sistemi visivi, pattern UI riutilizzabili e design delivery.'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.navigation, { work: 'Progetti', about: 'Chi sono', contact: 'Parliamone' });
+  Object.assign(PORTFOLIO_CONTENT_IT.language, { label: 'Scegli la lingua del sito' });
+  PORTFOLIO_CONTENT_IT.hero.words = ['UX / UI', 'VISUAL', 'SISTEMI', 'DESIGN'];
+  Object.assign(PORTFOLIO_CONTENT_IT.badge, {
+    microRight: ['PROFILO', 'DIGITALE'],
+    roleSecondary: '+ Visual Design Specialist',
+    status: 'DISPONIBILE',
+    professionalId: 'ID PROFESSIONALE',
+    contactDetails: 'CONTATTI',
+    showBack: 'Mostra il retro del badge di Marica Mariniello',
+    showFront: 'Mostra il fronte del badge di Marica Mariniello'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.introduction, {
+    eyebrow: 'Marica Mariniello — UX/UI Designer e Visual Design Specialist',
+    visualKicker: 'UI × Sistemi visivi',
+    displayTitleLead: 'Progetto con',
+    displayTitleAccent: 'chiarezza.',
+    displayTitleClose: 'Con carattere.',
+    title: 'Progetto esperienze digitali chiare e coerenti, unendo UI design, sistemi visivi e una solida esperienza nel graphic design.',
+    description: 'Con oltre 6 anni di esperienza nel visual e digital design e più di 2 anni dedicati a UI e Web Design, lavoro su interfacce responsive, gerarchie dei contenuti, pattern riutilizzabili e design delivery.',
+    skills: ['UI Design', 'Design responsive', 'Sistemi visivi'],
+    primaryCta: 'Guarda i progetti',
+    secondaryCta: 'Chi sono',
+    cvCta: 'Scarica il CV',
+    experienceTag: '6+ anni · Visual & Digital',
+    visualOrbitRight: 'RESPONSIVE',
+    visualOrbitBottom: 'SISTEMI VISIVI',
+    experienceLabel: 'anni nel visual e digital',
+    interfaceLabel: 'anni dedicati a UI/Web'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.work, {
+    title: 'Portfolio',
+    description: 'Cinque progetti tra product design, UI design, sistemi visivi e illustrazione editoriale.',
+    mockupLabel: 'Mockup in arrivo',
+    viewCaseStudy: 'Vedi il case study'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.work.investmentProject, {
+    title: 'Supporto alle decisioni immobiliari',
+    description: 'Un concept mobile per professionisti del Real Estate italiano che riunisce dati di mercato, area e urbanistica in un unico flusso di screening, con l’AI come supporto contestuale al giudizio professionale.',
+    skills: ['Product Design', 'Ricerca UX', 'Data Visualization', 'AI UX']
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.work.projects[0], {
+    title: 'Sistema visivo per eventi',
+    description: 'Un’identità di sponsorizzazione sviluppata su livrea, racewear e comunicazione, traducendo il brand Arkipiù in un sistema coerente e ad alto impatto per il Rallye Monte-Carlo 2026.',
+    skills: ['Direzione visiva', 'Livery Design', 'Applicazioni di brand']
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.work.projects[1], {
+    title: 'Redesign del sito corporate',
+    description: 'Redesign end-to-end di un sito corporate Real Estate di 12 pagine, orientato a chiarire il posizionamento, migliorare la gerarchia dei contenuti e costruire un’esperienza responsive più coerente.',
+    skills: ['UI Design', 'Architettura dell’informazione', 'Design responsive', 'Design QA'],
+    stats: [
+      { value: '12', label: 'pagine riprogettate' },
+      { value: '+89%', label: 'visitatori unici' },
+      { value: '+111%', label: 'sessioni organiche Google YoY' }
+    ],
+    note: 'Performance misurate nei 12 mesi successivi al redesign.'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.work.projects[2], {
+    title: 'Naili & Gatto Perry — Storie illustrate sulla sicurezza',
+    description: 'Character art e illustrazione end-to-end per due edizioni di una pubblicazione educativa, trasformando salute e sicurezza sul lavoro in storie visive chiare e coinvolgenti.',
+    skills: ['Illustrazione', 'Character Art', 'Fumetto', 'Concept Art']
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.work.projects[3], {
+    title: 'Brand & Visual Identity',
+    description: 'Un sistema di identità completo per un’azienda di costruzioni moderna e sostenibile, sviluppato dalla strategia del logo e dal colore fino alle applicazioni fisiche e digitali.',
+    skills: ['Logo Design', 'Identità visiva', 'Applicazioni di brand']
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.about, {
+    eyebrow: 'Chi sono',
+    title: 'Progetto tra linguaggio visivo ed esperienza digitale',
+    paragraphs: [
+      'Sono una UX/UI Designer con una solida esperienza nel Visual e Graphic Design.',
+      'Il mio percorso comprende siti corporate, landing page orientate alla conversione, identità visive, progetti editoriali e comunicazione digitale.',
+      'Negli ultimi anni ho concentrato progressivamente il mio lavoro su interface design, esperienze responsive, architettura dell’informazione e sistemi UI riutilizzabili.',
+      'Collaboro con Marketing, Sviluppo e stakeholder interni dalle prime decisioni su contenuti e design fino a implementazione, handoff e Design QA.'
+    ]
+  });
+  PORTFOLIO_CONTENT_IT.capabilities.eyebrow = 'Competenze';
+  PORTFOLIO_CONTENT_IT.capabilities.groups = [
+    { title: 'UX', items: ['Architettura dell’informazione', 'User flow', 'Wireframing', 'Prototipazione', 'Analisi dei competitor', 'Feedback degli utenti', 'Design Thinking'] },
+    { title: 'UI', items: ['UI responsive', 'Design mobile-first', 'Gerarchia visiva', 'Pattern UI', 'Componenti riutilizzabili', 'Fondamenti di Design System'] },
+    { title: 'Delivery', items: ['Figma', 'Handoff per sviluppatori', 'Design QA', 'HTML / CSS', 'Wix Studio', 'QA cross-device'] },
+    { title: 'Visual', items: ['Tipografia', 'Sistemi visivi', 'Coerenza di brand', 'Editorial Design', 'Adobe Creative Suite'] }
+  ];
+  Object.assign(PORTFOLIO_CONTENT_IT.approach, {
+    eyebrow: 'Competenze principali',
+    title: 'Dai sistemi visivi alle esperienze digitali',
+    titleFirstLine: 'Dai sistemi visivi',
+    titlePrefix: 'alle ',
+    titleAccent: 'esperienze digitali',
+    description: 'Collego direzione visiva e interface design tra prodotti digitali, identità di brand e comunicazione editoriale.',
+    principles: [
+      { number: '01', title: 'UX/UI Design', description: 'Interfacce responsive, architettura dell’informazione, user flow e sistemi UI riutilizzabili.', href: '/case-studies/arkipiu/' },
+      { number: '02', title: 'Digital Design', description: 'Sistemi visivi e asset di comunicazione coerenti su tutti i touchpoint digitali.', href: '/case-studies/brand-digital-design/' },
+      { number: '03', title: 'Brand Identity', description: 'Identità distintive, art direction e applicazioni flessibili per digitale e stampa.', href: '/case-studies/brand-digital-design/' },
+      { number: '04', title: 'Editorial Design', description: 'Layout editoriali, brochure, poster e presentazioni costruiti con tipografia, griglie e una gerarchia visiva chiara.', href: '/case-studies/naili-gatto-perry/' }
+    ]
+  });
+  PORTFOLIO_CONTENT_IT.experience.eyebrow = 'Esperienza';
+  PORTFOLIO_CONTENT_IT.education.eyebrow = 'Formazione continua';
+  PORTFOLIO_CONTENT_IT.education.description = 'Il mio percorso unisce una formazione accademica nel graphic design a una specializzazione continua in UX/UI e digital product design.';
+  PORTFOLIO_CONTENT_IT.tools.eyebrow = 'Strumenti';
+  Object.assign(PORTFOLIO_CONTENT_IT.contact, {
+    title: 'Creiamo esperienze digitali chiare.',
+    highlightedWord: 'chiare.',
+    description: 'Sono interessata a opportunità in UI/UX Design, Visual UI Design e Product Design, dove unire la mia esperienza visiva alla progettazione di interfacce ed esperienze.',
+    cta: 'Contattami'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.footer, {
+    backToTop: 'Torna su ↑',
+    linkedinAriaLabel: 'Marica Mariniello su LinkedIn',
+    behanceAriaLabel: 'Marica Mariniello su Behance'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.carousel, {
+    previous: 'Precedente',
+    next: 'Successivo',
+    previousAriaLabel: 'Mostra il progetto precedente',
+    nextAriaLabel: 'Mostra il progetto successivo',
+    chooseProjectAriaLabel: 'Scegli un progetto',
+    selectedWorkAriaLabel: 'Progetti selezionati',
+    showProjectAriaLabel: 'Mostra il progetto',
+    openCaseStudyAriaLabel: 'Apri il case study'
+  });
+  Object.assign(PORTFOLIO_CONTENT_IT.cursor, { view: 'APRI', flip: 'GIRA', back: 'FRONTE', drag: 'TRASCINA' });
+  PORTFOLIO_CONTENT_IT.accessibility.viewRelatedWork = 'Guarda i progetti relativi a';
+
+  const languagePreference = (() => {
+    try { return window.localStorage.getItem('portfolio-language') === 'it' ? 'it' : 'en'; }
+    catch { return 'en'; }
+  })();
+  let PORTFOLIO_CONTENT = languagePreference === 'it' ? PORTFOLIO_CONTENT_IT : PORTFOLIO_CONTENT_EN;
+
+  window.PORTFOLIO_CONTENTS = { en: PORTFOLIO_CONTENT_EN, it: PORTFOLIO_CONTENT_IT };
+  window.PORTFOLIO_LANGUAGE = languagePreference;
   window.PORTFOLIO_CONTENT = PORTFOLIO_CONTENT;
+  window.setPortfolioLanguage = (language) => {
+    const nextLanguage = language === 'it' ? 'it' : 'en';
+    if (nextLanguage === window.PORTFOLIO_LANGUAGE) return;
+    try { window.localStorage.setItem('portfolio-language', nextLanguage); } catch {}
+    document.documentElement.classList.add('language-changing');
+    window.setTimeout(() => window.location.reload(), 120);
+  };
 
   const text = (element, value) => {
     if (element && value !== undefined) element.textContent = value;
@@ -262,7 +430,7 @@
     });
     if (project.note) text(copy?.querySelector('.col-span-3'), project.note);
     const caseStudy = Array.from(copy?.querySelectorAll('a, button') || []).find((item) =>
-      item.textContent.includes('Case Study')
+      /case study/i.test(item.textContent)
     );
     text(caseStudy, PORTFOLIO_CONTENT.work.viewCaseStudy);
   };
@@ -270,6 +438,7 @@
   const applyContent = () => {
     const content = PORTFOLIO_CONTENT;
 
+    document.documentElement.lang = window.PORTFOLIO_LANGUAGE;
     document.title = content.seo.title;
     document.querySelectorAll('meta[name="author"]').forEach((meta) => meta.content = content.seo.author);
     document.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]').forEach((meta) => meta.content = content.seo.description);
@@ -285,6 +454,23 @@
       text(introduction.querySelector('[data-intro="eyebrow"]'), content.introduction.eyebrow);
       text(introduction.querySelector('[data-intro="title-lead"]'), content.introduction.displayTitleLead);
       text(introduction.querySelector('[data-intro="title-accent"]'), content.introduction.displayTitleAccent);
+      const closing = introduction.querySelector('[data-intro="title-close"]');
+      if (closing) {
+        const closingWords = String(content.introduction.displayTitleClose || '').trim().split(/\s+/);
+        const closingAccent = closingWords.pop() || '';
+        const closingLead = closingWords.join(' ');
+        const strong = document.createElement('strong');
+        strong.textContent = closingAccent;
+        closing.replaceChildren(document.createTextNode(closingLead ? `${closingLead} ` : ''), strong);
+      }
+      const title = introduction.querySelector('h1');
+      if (title) {
+        title.setAttribute('aria-label', [
+          content.introduction.displayTitleLead,
+          content.introduction.displayTitleAccent,
+          content.introduction.displayTitleClose
+        ].filter(Boolean).join(' '));
+      }
       text(introduction.querySelector('[data-intro="description"]'), content.introduction.description);
       text(introduction.querySelector('[data-intro="primary-cta"]'), content.introduction.primaryCta);
       text(introduction.querySelector('[data-intro="secondary-cta"]'), content.introduction.secondaryCta);
@@ -311,6 +497,7 @@
       work.querySelectorAll('.work-carousel-visual span, article > div:first-child span').forEach((label) => text(label, content.work.mockupLabel));
       Array.from(work.querySelectorAll('article:not([data-carousel-clone]):not([data-investment-project])'))
         .forEach((article, index) => applyProject(article, content.work.projects[index]));
+      applyProject(work.querySelector('article[data-investment-project]'), content.work.investmentProject);
     }
 
     const about = document.querySelector('#about');
@@ -338,7 +525,7 @@
       if (approachTitle) {
         approachTitle.dataset.approachHeading = 'true';
         approachTitle.setAttribute('aria-label', content.approach.title);
-        approachTitle.innerHTML = '<span class="approach-heading__first-line">From visual systems</span><br><span class="approach-heading__second-line"><span class="approach-heading__prefix">to </span><span class="approach-heading__gradient">digital experiences</span></span>';
+        approachTitle.innerHTML = `<span class="approach-heading__first-line">${content.approach.titleFirstLine}</span><br><span class="approach-heading__second-line"><span class="approach-heading__prefix">${content.approach.titlePrefix}</span><span class="approach-heading__gradient">${content.approach.titleAccent}</span></span>`;
       }
       text(topParagraphs[1], content.approach.description);
       Array.from(approach.querySelectorAll('h3')).forEach((heading, index) => {
@@ -398,9 +585,17 @@
     }
   };
 
-  const start = () => {
+  const applyAfterHydration = () => {
     applyContent();
     [220, 780, 1400].forEach((delay) => window.setTimeout(applyContent, delay));
+  };
+
+  const start = () => {
+    if (typeof window.__whenPortfolioHydrated === 'function') {
+      window.__whenPortfolioHydrated(applyAfterHydration);
+      return;
+    }
+    applyAfterHydration();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });

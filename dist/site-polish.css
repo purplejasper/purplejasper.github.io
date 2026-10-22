@@ -141,6 +141,68 @@ header nav > a[href='#contact']:focus-visible {
   outline: none;
 }
 
+.language-switch {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  flex: 0 0 92px;
+  width: 92px;
+  height: 40px;
+  margin-left: .2rem;
+  padding: 3px;
+  overflow: hidden;
+  border: 1px solid rgb(221 180 244 / .24);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .055);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .07);
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.language-switch__thumb {
+  position: absolute;
+  z-index: -1;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: 42px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--portfolio-lilac), #a96bd2);
+  box-shadow: 0 6px 16px rgb(95 49 128 / .36);
+  transform: translateX(0);
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1);
+}
+
+.language-switch[data-language='en'] .language-switch__thumb {
+  transform: translateX(44px);
+}
+
+.language-switch button {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  color: rgb(247 243 250 / .62);
+  background: transparent;
+  font: 700 .67rem/1 Manrope, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+
+.language-switch button[aria-pressed='true'] { color: #160b1e; }
+.language-switch button:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+
+html.language-changing body {
+  opacity: .72;
+  transition: opacity .12s ease;
+}
+
 /* Merged hero: introduction on the left, interactive badge on the right. */
 #top.hero-merged {
   --hero-x: 50%;
@@ -929,7 +991,9 @@ header nav > a[href='#contact']:focus-visible {
 }
 
 #work .investment-project-cover {
-  background: #f4f0ed !important;
+  background:
+    radial-gradient(circle at 70% 23%, rgb(255 129 79 / .28), transparent 34%),
+    linear-gradient(145deg, #fff8f2, #f0ded5) !important;
 }
 
 #work .investment-project-cover::after {
@@ -939,13 +1003,45 @@ header nav > a[href='#contact']:focus-visible {
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, transparent 42%, rgb(244 240 237 / .08) 58%, rgb(244 240 237 / .94) 100%),
-    linear-gradient(90deg, rgb(244 240 237 / .2), transparent 46%);
+    linear-gradient(180deg, transparent 48%, rgb(244 240 237 / .04) 65%, rgb(244 240 237 / .93) 100%),
+    linear-gradient(90deg, rgb(255 247 241 / .18), transparent 48%);
 }
 
-#work .investment-project-cover img {
-  object-fit: cover;
-  object-position: right center;
+#work .investment-cover-composition {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#work .work-carousel-visual .investment-cover-phone {
+  position: absolute;
+  inset: auto;
+  display: block;
+  width: 38%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 24px 24px rgb(57 31 22 / .25));
+}
+
+#work .work-carousel-visual .investment-cover-phone--home {
+  z-index: 1;
+  top: 8%;
+  left: 1%;
+}
+
+#work .work-carousel-visual .investment-cover-phone--analysis {
+  z-index: 3;
+  top: 2%;
+  left: 30.5%;
+  width: 39%;
+}
+
+#work .work-carousel-visual .investment-cover-phone--overview {
+  z-index: 2;
+  top: 8%;
+  right: 1%;
 }
 
 #work .investment-project-cover__label {
@@ -955,6 +1051,7 @@ header nav > a[href='#contact']:focus-visible {
   bottom: clamp(1.25rem, 3vw, 2.5rem);
   max-width: 11ch;
   color: #171119;
+  text-shadow: 0 1px 12px rgb(255 249 246 / .85);
   font-family: 'Bricolage Grotesque', Manrope, sans-serif;
   font-size: clamp(1.55rem, 3.25vw, 3.55rem);
   font-weight: 800;
@@ -2144,8 +2241,21 @@ footer a:focus-visible { color: #e0b4ee !important; }
   }
 
   header nav > a[href='#contact'] {
-    margin-left: .08rem;
-    padding: .66rem .72rem !important;
+    display: none;
+  }
+
+  header nav .language-switch {
+    flex-basis: 84px;
+    width: 84px;
+    margin-left: .1rem;
+  }
+
+  header nav .language-switch__thumb {
+    width: 38px;
+  }
+
+  header nav .language-switch[data-language='en'] .language-switch__thumb {
+    transform: translateX(40px);
   }
 
   #top.hero-merged { min-height: 1150px !important; }
@@ -2319,6 +2429,12 @@ footer a:focus-visible { color: #e0b4ee !important; }
 #work .work-carousel-visual:active video,
 #work .work-carousel-visual:active > div:not(.work-carousel-visual-hit) {
   transform: scale(1.035) !important;
+}
+
+#work .investment-project-cover .investment-cover-phone,
+#work .investment-project-cover:hover .investment-cover-phone,
+#work .investment-project-cover:active .investment-cover-phone {
+  transform: none !important;
 }
 
 @media (hover: none), (pointer: coarse) {
