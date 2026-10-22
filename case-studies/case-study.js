@@ -266,15 +266,15 @@ if (slug === 'investment-screening-assistant') {
           </figure>
           <div class="isa-screen-grid" aria-label="Completed interface screens">
             <figure>
-              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/home-screen.webp" alt="Home screen showing saved analyses and a new analysis action" loading="lazy" decoding="async"></div>
+              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/home-phone-mockup.webp" alt="Home screen displayed inside an iPhone mockup" loading="lazy" decoding="async"></div>
               <figcaption><span>01</span><strong>Home</strong><p>Start a screening or resume a previous opportunity.</p></figcaption>
             </figure>
             <figure>
-              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/new-analysis-screen.webp" alt="New Analysis screen collecting the essential property data" loading="lazy" decoding="async"></div>
+              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/new-analysis-phone-mockup.webp" alt="New Analysis screen displayed inside an iPhone mockup" loading="lazy" decoding="async"></div>
               <figcaption><span>02</span><strong>New Analysis</strong><p>Guided input, automatic calculations and early warnings.</p></figcaption>
             </figure>
             <figure>
-              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/overview-screen.webp" alt="Overview screen presenting the preliminary investment assessment" loading="lazy" decoding="async"></div>
+              <div class="isa-screen-frame"><img class="isa-screen" src="/assets/investment-screening/overview-phone-mockup.webp" alt="Overview screen displayed inside an iPhone mockup" loading="lazy" decoding="async"></div>
               <figcaption><span>03</span><strong>Overview</strong><p>Potential, benchmark, opportunities and checks in one hierarchy.</p></figcaption>
             </figure>
           </div>
