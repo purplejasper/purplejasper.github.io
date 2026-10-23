@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '88';
+  const styleVersion = '89';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());

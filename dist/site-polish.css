@@ -2349,6 +2349,10 @@ footer a:focus-visible { color: #e0b4ee !important; }
     padding: 1rem .35rem 1.15rem;
   }
 
+  #work .work-carousel-slide a[data-case-study-link] {
+    margin-top: 1.75rem;
+  }
+
   #work .work-carousel-arrow {
     top: auto;
     bottom: .45rem;
