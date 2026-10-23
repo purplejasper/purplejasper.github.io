@@ -84,7 +84,7 @@
       investmentProject: {
         number: '02',
         name: 'Investment Screening Assistant',
-        title: 'Real Estate Decision Support',
+        title: 'Investment Screening Assistant',
         description: 'A mobile concept for Italian real estate professionals that turns market, area and urban-planning data into one clear screening flow, with contextual AI supporting professional judgement.',
         skills: ['Product Design', 'UX Research', 'Data Visualization', 'AI UX']
       },
@@ -258,11 +258,11 @@
     showFront: 'Mostra il fronte del badge di Marica Mariniello'
   });
   Object.assign(PORTFOLIO_CONTENT_IT.introduction, {
-    eyebrow: 'Marica Mariniello — UX/UI Designer e Visual Design Specialist',
-    visualKicker: 'UI × Sistemi visivi',
-    displayTitleLead: 'Progetto con',
-    displayTitleAccent: 'chiarezza.',
-    displayTitleClose: 'Con carattere.',
+    eyebrow: 'Marica Mariniello — UX/UI Designer & Visual Design Specialist',
+    visualKicker: 'UI × Visual Systems',
+    displayTitleLead: 'Design with',
+    displayTitleAccent: 'clarity.',
+    displayTitleClose: 'Built with character.',
     title: 'Progetto esperienze digitali chiare e coerenti, unendo UI design, sistemi visivi e una solida esperienza nel graphic design.',
     description: 'Con oltre 6 anni di esperienza nel visual e digital design e più di 2 anni dedicati a UI e Web Design, lavoro su interfacce responsive, gerarchie dei contenuti, pattern riutilizzabili e design delivery.',
     skills: ['UI Design', 'Design responsive', 'Sistemi visivi'],
@@ -282,7 +282,7 @@
     viewCaseStudy: 'Vedi il case study'
   });
   Object.assign(PORTFOLIO_CONTENT_IT.work.investmentProject, {
-    title: 'Supporto alle decisioni immobiliari',
+    title: 'Investment Screening Assistant',
     description: 'Un concept mobile per professionisti del Real Estate italiano che riunisce dati di mercato, area e urbanistica in un unico flusso di screening, con l’AI come supporto contestuale al giudizio professionale.',
     skills: ['Product Design', 'Ricerca UX', 'Data Visualization', 'AI UX']
   });
@@ -348,10 +348,10 @@
   PORTFOLIO_CONTENT_IT.education.description = 'Il mio percorso unisce una formazione accademica nel graphic design a una specializzazione continua in UX/UI e digital product design.';
   PORTFOLIO_CONTENT_IT.tools.eyebrow = 'Strumenti';
   Object.assign(PORTFOLIO_CONTENT_IT.contact, {
-    title: 'Creiamo esperienze digitali chiare.',
-    highlightedWord: 'chiare.',
+    title: "Let's create clear digital experiences.",
+    highlightedWord: 'experiences.',
     description: 'Sono interessata a opportunità in UI/UX Design, Visual UI Design e Product Design, dove unire la mia esperienza visiva alla progettazione di interfacce ed esperienze.',
-    cta: 'Contattami'
+    cta: 'Get in touch'
   });
   Object.assign(PORTFOLIO_CONTENT_IT.footer, {
     backToTop: 'Torna su ↑',
