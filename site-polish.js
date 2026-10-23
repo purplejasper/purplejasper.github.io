@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '87';
+  const styleVersion = '88';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -84,6 +84,14 @@
         ? (labels.italian || 'Italiano')
         : (labels.english || 'English'));
     });
+    return true;
+  };
+
+  const routeAboutLinkToBadge = () => {
+    const aboutLink = document.querySelector('header nav > a[href="#about"], header nav > a[data-top-card-link="true"]');
+    if (!aboutLink) return false;
+    aboutLink.href = '#top';
+    aboutLink.dataset.topCardLink = 'true';
     return true;
   };
 
@@ -1357,6 +1365,7 @@
     deduplicateWorkProjects();
     enhanceIntroduction();
     enhanceLanguageSwitch();
+    routeAboutLinkToBadge();
     reorderAboutBeforeWork();
     enhanceHeroBadge();
     ensureRallyProject();
