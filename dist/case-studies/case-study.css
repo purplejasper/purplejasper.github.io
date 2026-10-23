@@ -754,14 +754,104 @@ html.language-changing body { opacity: .72; transition: opacity .12s ease; }
 .case-next__arrow { font-size: clamp(3rem, 8vw, 7rem); }
 
 .case-footer {
+  color: rgb(247 243 250 / .56);
+  border-top: 1px solid rgb(247 243 250 / .08);
+  background: #08050d;
+  font-size: .875rem;
+}
+
+.case-footer__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 58px;
-  padding: .75rem max(1.25rem, calc((100vw - 1180px) / 2));
-  color: rgb(244 243 246 / .55);
-  font-size: .78rem;
-  background: #08050d;
+  gap: .75rem;
+  width: min(100%, 1400px);
+  min-height: 66px;
+  margin: 0 auto;
+  padding: .75rem 1.5rem;
+}
+
+.footer-profile-identity {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  min-width: 0;
+}
+
+.footer-profile-identity p {
+  margin: 0 .25rem 0 0;
+  font-size: .75rem;
+}
+
+.case-footer a { color: rgb(247 243 250 / .68); }
+.case-footer a:hover,
+.case-footer a:focus-visible { color: #e0b4ee; }
+
+.footer-linkedin {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 2.45rem;
+  width: 2.45rem;
+  height: 2.45rem;
+  padding: 0;
+  border: 1px solid rgb(247 243 250 / .17);
+  border-radius: 50%;
+  line-height: 1;
+  text-decoration: none;
+  transition: color .25s ease, border-color .25s ease, background-color .25s ease;
+}
+
+.footer-linkedin:hover,
+.footer-linkedin:focus-visible,
+.footer-back-to-top:hover,
+.footer-back-to-top:focus-visible,
+.footer-back-to-top:active {
+  color: #13091c;
+  border-color: #b95fda;
+  background: #b95fda;
+  outline: none;
+}
+
+.footer-linkedin svg {
+  display: block;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.footer-behance {
+  font-size: .82rem;
+}
+
+.behance-mark {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .08em;
+  width: 1.05rem;
+  font-family: Arial, sans-serif;
+  font-size: .82rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: -.05em;
+}
+
+.behance-mark i { font-style: normal; }
+
+.footer-back-to-top {
+  display: grid;
+  place-items: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  padding: 0;
+  border: 1px solid rgb(247 243 250 / .17);
+  border-radius: 50%;
+  font-size: 1.15rem;
+  text-decoration: none;
+  transition: color .25s ease, border-color .25s ease, background-color .25s ease;
+}
+
+@media (min-width: 1024px) {
+  .case-footer__inner { padding-inline: 3rem; }
 }
 
 @media (max-width: 760px) {
@@ -880,7 +970,11 @@ html.language-changing body { opacity: .72; transition: opacity .12s ease; }
   .case-card__number { font-size: clamp(4.5rem, 25vw, 7rem); }
   .case-card h3 { margin-top: auto; }
   .case-next { align-items: flex-end; }
-  .case-footer { gap: 1rem; }
+  .case-footer__inner {
+    flex-direction: column;
+    justify-content: center;
+    gap: .75rem;
+  }
 }
 
 /* Investment Screening Assistant — recruiter-led product case study. */

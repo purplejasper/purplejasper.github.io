@@ -241,13 +241,15 @@ const UI_COPY = {
     navigationLabel: 'Primary navigation', work: 'Work', about: 'About', contact: "Let's talk",
     languageLabel: 'Choose site language', italian: 'Italiano', english: 'English',
     projectMetadata: 'Project metadata', projectFocus: 'Project focus', visualDirection: 'Visual direction',
-    output: 'Output', delivered: 'What the work delivered.', nextCaseStudy: 'Next case study', getInTouch: 'Get in touch'
+    output: 'Output', delivered: 'What the work delivered.', nextCaseStudy: 'Next case study', getInTouch: 'Get in touch',
+    backToTop: 'Back to top', linkedinAriaLabel: 'Marica Mariniello on LinkedIn', behanceAriaLabel: 'Marica Mariniello on Behance'
   },
   it: {
     navigationLabel: 'Navigazione principale', work: 'Progetti', about: 'Chi sono', contact: 'Parliamone',
     languageLabel: 'Scegli la lingua del sito', italian: 'Italiano', english: 'English',
     projectMetadata: 'Dettagli del progetto', projectFocus: 'Focus del progetto', visualDirection: 'Direzione visiva',
-    output: 'Risultati', delivered: 'Cosa ha prodotto il progetto.', nextCaseStudy: 'Prossimo case study', getInTouch: 'Contattami'
+    output: 'Risultati', delivered: 'Cosa ha prodotto il progetto.', nextCaseStudy: 'Prossimo case study', getInTouch: 'Contattami',
+    backToTop: 'Torna su', linkedinAriaLabel: 'Marica Mariniello su LinkedIn', behanceAriaLabel: 'Marica Mariniello su Behance'
   }
 };
 
@@ -265,6 +267,22 @@ const languageSwitchMarkup = () => `
     <button type="button" data-language="it" aria-label="${ui.italian}" aria-pressed="${language === 'it'}">IT</button>
     <button type="button" data-language="en" aria-label="${ui.english}" aria-pressed="${language === 'en'}">EN</button>
   </div>`;
+
+const footerMarkup = () => `
+  <footer class="case-footer">
+    <div class="case-footer__inner">
+      <div class="footer-profile-identity">
+        <p>© 2026 Marica Mariniello</p>
+        <a class="footer-linkedin" href="https://www.linkedin.com/in/maricamariniello/" target="_blank" rel="noopener noreferrer" aria-label="${ui.linkedinAriaLabel}" title="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.42v1.57h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.29ZM5.32 7.41a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.1 20.45H3.54V8.98H7.1v11.47Z"/></svg>
+        </a>
+        <a class="footer-linkedin footer-behance" href="https://www.behance.net/maricamarinie" target="_blank" rel="noopener noreferrer" aria-label="${ui.behanceAriaLabel}" title="Behance">
+          <span class="behance-mark" aria-hidden="true"><b>B</b><i>ē</i></span>
+        </a>
+      </div>
+      <a class="footer-back-to-top" href="#top" aria-label="${ui.backToTop}" title="${ui.backToTop}">↑</a>
+    </div>
+  </footer>`;
 
 const bindLanguageSwitch = () => {
   const control = document.querySelector('[data-language-switch]');
@@ -304,7 +322,7 @@ document.body.classList.toggle('case-study--arkipiu', slug === 'arkipiu');
 document.body.classList.toggle('case-study--buildit', slug === 'brand-digital-design');
 document.title = `${study.title} — Marica Mariniello`;
 document.querySelector('#case-study').innerHTML = `
-  <nav class="case-nav" aria-label="${ui.navigationLabel}">
+  <nav id="top" class="case-nav" aria-label="${ui.navigationLabel}">
     <a class="case-nav__brand" href="/">Marica Mariniello</a>
     <div class="case-nav__links">
       <a href="/#work">${ui.work}</a>
@@ -349,7 +367,7 @@ document.querySelector('#case-study').innerHTML = `
   <a class="case-next" href="/case-studies/${study.next}/">
     <span><small>${ui.nextCaseStudy}</small><strong>${study.nextTitle}</strong></span><span class="case-next__arrow" aria-hidden="true">→</span>
   </a>
-  <footer class="case-footer"><span>© 2026 Marica Mariniello</span><a href="mailto:mariniello.marica@gmail.com">${ui.getInTouch}</a></footer>
+  ${footerMarkup()}
 `;
 
 const INVESTMENT_COPY = {
@@ -464,7 +482,7 @@ if (slug === 'investment-screening-assistant') {
     '/assets/investment-screening/overview-phone-mockup.webp'
   ];
   document.querySelector('#case-study').innerHTML = `
-    <nav class="case-nav" aria-label="${ui.navigationLabel}">
+    <nav id="top" class="case-nav" aria-label="${ui.navigationLabel}">
       <a class="case-nav__brand" href="/">Marica Mariniello</a>
       <div class="case-nav__links">
         <a href="/#work">${ui.work}</a>
@@ -596,7 +614,7 @@ if (slug === 'investment-screening-assistant') {
     <a class="case-next" href="/case-studies/arkipiu/">
       <span><small>${ui.nextCaseStudy}</small><strong>Arkipiù Website</strong></span><span class="case-next__arrow" aria-hidden="true">→</span>
     </a>
-    <footer class="case-footer"><span>© 2026 Marica Mariniello</span><a href="mailto:mariniello.marica@gmail.com">${ui.getInTouch}</a></footer>
+    ${footerMarkup()}
   `;
 }
 
