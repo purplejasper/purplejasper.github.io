@@ -133,7 +133,7 @@ const STUDIES_EN = {
 const STUDIES_IT = JSON.parse(JSON.stringify(STUDIES_EN));
 
 Object.assign(STUDIES_IT['rallye-monte-carlo'], {
-  title: 'Sistema visivo per eventi',
+  title: 'Visual System per Eventi',
   intro: 'Un’identità di sponsorizzazione estesa dalla livrea alla racewear e alla comunicazione, traducendo il brand Arkipiù in un sistema coerente per un contesto motorsport internazionale.',
   tags: ['Direzione visiva', 'Livery Design', 'Applicazioni di brand'],
   challenge: 'Trasformare un’identità corporate in un sistema riconoscibile per un evento.',
@@ -293,8 +293,12 @@ const bindLanguageSwitch = () => {
     const normalized = nextLanguage === 'it' ? 'it' : 'en';
     if (normalized === language) return;
     try { window.localStorage.setItem('portfolio-language', normalized); } catch {}
+    control.dataset.language = normalized;
+    control.querySelectorAll('button[data-language]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.language === normalized));
+    });
     document.documentElement.classList.add('language-changing');
-    window.setTimeout(() => window.location.reload(), 120);
+    window.setTimeout(() => window.location.reload(), 340);
   };
   control.addEventListener('pointerdown', (event) => { startX = event.clientX; }, { passive: true });
   control.addEventListener('pointerup', (event) => {

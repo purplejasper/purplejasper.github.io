@@ -287,7 +287,7 @@
     skills: ['Product Design', 'Ricerca UX', 'Data Visualization', 'AI UX']
   });
   Object.assign(PORTFOLIO_CONTENT_IT.work.projects[0], {
-    title: 'Sistema visivo per eventi',
+    title: 'Visual System per Eventi',
     description: 'Un’identità di sponsorizzazione sviluppata su livrea, racewear e comunicazione, traducendo il brand Arkipiù in un sistema coerente e ad alto impatto per il Rallye Monte-Carlo 2026.',
     skills: ['Direzione visiva', 'Livery Design', 'Applicazioni di brand']
   });
@@ -384,8 +384,15 @@
     const nextLanguage = language === 'it' ? 'it' : 'en';
     if (nextLanguage === window.PORTFOLIO_LANGUAGE) return;
     try { window.localStorage.setItem('portfolio-language', nextLanguage); } catch {}
+    window.PORTFOLIO_LANGUAGE = nextLanguage;
+    document.querySelectorAll('[data-language-switch]').forEach((control) => {
+      control.dataset.language = nextLanguage;
+      control.querySelectorAll('button[data-language]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.language === nextLanguage));
+      });
+    });
     document.documentElement.classList.add('language-changing');
-    window.setTimeout(() => window.location.reload(), 120);
+    window.setTimeout(() => window.location.reload(), 340);
   };
 
   const text = (element, value) => {
