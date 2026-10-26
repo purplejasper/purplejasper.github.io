@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '89';
+  const styleVersion = '90';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -9,9 +9,9 @@
   if (!currentStyles.isConnected) document.head.appendChild(currentStyles);
 
   const caseStudies = [
-    '/case-studies/rallye-monte-carlo/',
     '/case-studies/investment-screening-assistant/',
     '/case-studies/arkipiu/',
+    '/case-studies/rallye-monte-carlo/',
     '/case-studies/naili-gatto-perry/',
     '/case-studies/brand-digital-design/'
   ];
@@ -207,6 +207,7 @@
     const project = window.PORTFOLIO_CONTENT?.work?.projects?.[0] || {};
     const slide = source;
     slide.dataset.rallyProject = 'true';
+    slide.dataset.projectKey = 'rally';
     slide.style.cssText = '';
 
     const visual = slide.children[0];
@@ -249,6 +250,7 @@
     if (!source) return false;
     const slide = source.cloneNode(true);
     slide.dataset.investmentProject = 'true';
+    slide.dataset.projectKey = 'investment';
     rally.after(slide);
 
     slide.style.cssText = '';
@@ -305,6 +307,32 @@
         dots.append(dot);
       }
     }
+    return true;
+  };
+
+  const reorderWorkProjects = () => {
+    const section = document.querySelector('#work');
+    if (!section || section.dataset.projectOrder === 'investment-arkipiu-rally-v1') return false;
+
+    const projects = Array.from(section.querySelectorAll('article:not([data-carousel-clone])'));
+    if (projects.length < 3) return false;
+
+    projects.forEach((article) => {
+      article.dataset.projectKey = projectKey(article);
+    });
+
+    const preferredOrder = ['investment', 'arkipiu', 'rally', 'naili', 'buildit'];
+    const ranked = [...projects].sort((first, second) => {
+      const firstRank = preferredOrder.indexOf(first.dataset.projectKey);
+      const secondRank = preferredOrder.indexOf(second.dataset.projectKey);
+      return (firstRank < 0 ? preferredOrder.length : firstRank)
+        - (secondRank < 0 ? preferredOrder.length : secondRank);
+    });
+
+    const parent = projects[0].parentElement;
+    if (!parent) return false;
+    ranked.forEach((article) => parent.append(article));
+    section.dataset.projectOrder = 'investment-arkipiu-rally-v1';
     return true;
   };
 
@@ -1009,13 +1037,6 @@
     const slides = Array.from(document.querySelectorAll('#work article:not([data-carousel-clone])'));
     const covers = [
       {
-        className: 'rally-project-cover',
-        src: '/assets/rallye-monte-carlo/rallye-night.webp',
-        alt: 'Arkipiù branded rally car racing at night during the Rallye Monte-Carlo',
-        label: 'Rallye Monte-Carlo 2026',
-        eager: true
-      },
-      {
         className: 'investment-project-cover',
         composition: true,
         alt: currentLanguage() === 'it'
@@ -1028,6 +1049,12 @@
         src: '/assets/arkipiu/contact-page-full.webp',
         alt: 'Arkipiù contact page redesign with lead form and orange visual system',
         label: 'Corporate Website Redesign'
+      },
+      {
+        className: 'rally-project-cover',
+        src: '/assets/rallye-monte-carlo/rallye-night.webp',
+        alt: 'Arkipiù branded rally car racing at night during the Rallye Monte-Carlo',
+        label: 'Rallye Monte-Carlo 2026'
       },
       {
         className: 'naili-project-cover',
@@ -1370,6 +1397,7 @@
     enhanceHeroBadge();
     ensureRallyProject();
     ensureInvestmentProject();
+    reorderWorkProjects();
     ensureProjectCovers();
     enhanceCarousel();
     enhanceCaseStudyLinks();

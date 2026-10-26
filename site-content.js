@@ -82,7 +82,8 @@
       mockupLabel: 'Mockup coming soon',
       viewCaseStudy: 'View Case Study',
       investmentProject: {
-        number: '02',
+        key: 'investment',
+        number: '01',
         name: 'Investment Screening Assistant',
         title: 'Investment Screening Assistant',
         description: 'A mobile concept for Italian real estate professionals that turns market, area and urban-planning data into one clear screening flow, with contextual AI supporting professional judgement.',
@@ -90,14 +91,16 @@
       },
       projects: [
         {
-          number: '01',
+          key: 'rally',
+          number: '03',
           name: 'Arkipiù × Rallye Monte-Carlo 2026',
           title: 'Event Visual System',
           description: 'A sponsorship identity developed across vehicle livery, racewear and event communication, translating the Arkipiù brand into a coherent, high-impact system for the Rallye Monte-Carlo 2026.',
           skills: ['Visual Direction', 'Livery Design', 'Brand Applications']
         },
         {
-          number: '03',
+          key: 'arkipiu',
+          number: '02',
           name: 'Arkipiù',
           title: 'Corporate Website Redesign',
           description: 'End-to-end redesign of a corporate real estate website across 12 pages, focused on clarifying brand positioning, improving content hierarchy and creating a more coherent responsive experience.',
@@ -110,6 +113,7 @@
           note: 'Website performance measured during the 12 months following the redesign.'
         },
         {
+          key: 'naili',
           number: '04',
           name: 'INAIL Campania × NWM Network',
           title: 'Naili & Gatto Perry — Illustrated Safety Stories',
@@ -117,6 +121,7 @@
           skills: ['Illustration', 'Character Art', 'Comics', 'Concept Art']
         },
         {
+          key: 'buildit',
           number: '05',
           name: 'BUILDIT',
           title: 'Brand & Visual Identity',
@@ -264,7 +269,7 @@
     displayTitleAccent: 'clarity.',
     displayTitleClose: 'Built with character.',
     title: 'Progetto esperienze digitali chiare e coerenti, unendo UI design, sistemi visivi e una solida esperienza nel graphic design.',
-    description: 'Con oltre 6 anni di esperienza nel visual e digital design e più di 2 anni dedicati a UI e Web Design, lavoro su interfacce responsive, gerarchie dei contenuti, pattern riutilizzabili e design delivery.',
+    description: 'Unisco oltre 6 anni di esperienza nel visual e digital design a più di 2 anni in UI e Web Design. Progetto siti e landing page responsive, lavorando su struttura dei contenuti, gerarchie visive e pattern UI, in collaborazione con Marketing e Sviluppo.',
     skills: ['UI Design', 'Design responsive', 'Sistemi visivi'],
     primaryCta: 'Guarda i progetti',
     secondaryCta: 'Chi sono',
@@ -288,8 +293,8 @@
   });
   Object.assign(PORTFOLIO_CONTENT_IT.work.projects[0], {
     title: 'Visual System per Eventi',
-    description: 'Un’identità di sponsorizzazione sviluppata su livrea, racewear e comunicazione, traducendo il brand Arkipiù in un sistema coerente e ad alto impatto per il Rallye Monte-Carlo 2026.',
-    skills: ['Direzione visiva', 'Livery Design', 'Applicazioni di brand']
+    description: 'Adattamento dell’identità Arkipiù a livrea dell’auto, tute dell’equipaggio e comunicazione dell’evento, mantenendo riconoscibilità e coerenza su supporti e scale differenti.',
+    skills: ['Art Direction', 'Livery Design', 'Brand Application']
   });
   Object.assign(PORTFOLIO_CONTENT_IT.work.projects[1], {
     title: 'Redesign del sito corporate',
@@ -303,14 +308,14 @@
     note: 'Performance misurate nei 12 mesi successivi al redesign.'
   });
   Object.assign(PORTFOLIO_CONTENT_IT.work.projects[2], {
-    title: 'Naili & Gatto Perry — Storie illustrate sulla sicurezza',
-    description: 'Character art e illustrazione end-to-end per due edizioni di una pubblicazione educativa, trasformando salute e sicurezza sul lavoro in storie visive chiare e coinvolgenti.',
+    title: 'Naili & Gatto Perry',
+    description: 'Character art e illustrazioni per due edizioni di una pubblicazione educativa sulla salute e sicurezza sul lavoro, sviluppata nell’ambito del progetto “Sicuri e Connessi”.',
     skills: ['Illustrazione', 'Character Art', 'Fumetto', 'Concept Art']
   });
   Object.assign(PORTFOLIO_CONTENT_IT.work.projects[3], {
     title: 'Brand & Visual Identity',
-    description: 'Un sistema di identità completo per un’azienda di costruzioni moderna e sostenibile, sviluppato dalla strategia del logo e dal colore fino alle applicazioni fisiche e digitali.',
-    skills: ['Logo Design', 'Identità visiva', 'Applicazioni di brand']
+    description: 'Progettazione di un’identità visiva per il settore delle costruzioni: dal simbolo e dalla palette cromatica alle applicazioni su materiali aziendali, abbigliamento e touchpoint digitali.',
+    skills: ['Logo Design', 'Visual Identity', 'Brand Application']
   });
   Object.assign(PORTFOLIO_CONTENT_IT.about, {
     eyebrow: 'Chi sono',
@@ -502,8 +507,12 @@
       const headerParagraph = heading?.parentElement?.querySelector('p');
       text(headerParagraph, content.work.description);
       work.querySelectorAll('.work-carousel-visual span, article > div:first-child span').forEach((label) => text(label, content.work.mockupLabel));
+      const projectsByKey = new Map(content.work.projects.map((project) => [project.key, project]));
       Array.from(work.querySelectorAll('article:not([data-carousel-clone]):not([data-investment-project])'))
-        .forEach((article, index) => applyProject(article, content.work.projects[index]));
+        .forEach((article, index) => applyProject(
+          article,
+          projectsByKey.get(article.dataset.projectKey) || content.work.projects[index]
+        ));
       applyProject(work.querySelector('article[data-investment-project]'), content.work.investmentProject);
     }
 
