@@ -297,7 +297,7 @@
     skills: ['Art Direction', 'Livery Design', 'Brand Application']
   });
   Object.assign(PORTFOLIO_CONTENT_IT.work.projects[1], {
-    title: 'Redesign del sito corporate',
+    title: 'Corporate Website Redesign',
     description: 'Redesign end-to-end di un sito corporate Real Estate di 12 pagine, orientato a chiarire il posizionamento, migliorare la gerarchia dei contenuti e costruire un’esperienza responsive più coerente.',
     skills: ['UI Design', 'Architettura dell’informazione', 'Design responsive', 'Design QA'],
     stats: [

@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '90';
+  const styleVersion = '107';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -8,13 +8,14 @@
   currentStyles.dataset.sitePolishVersion = styleVersion;
   if (!currentStyles.isConnected) document.head.appendChild(currentStyles);
 
-  const caseStudies = [
-    '/case-studies/investment-screening-assistant/',
-    '/case-studies/arkipiu/',
-    '/case-studies/rallye-monte-carlo/',
-    '/case-studies/naili-gatto-perry/',
-    '/case-studies/brand-digital-design/'
-  ];
+  const caseStudyByProject = {
+    investment: '/case-studies/investment-screening-assistant/',
+    arkipiu: '/case-studies/arkipiu/',
+    rally: '/case-studies/rallye-monte-carlo/',
+    naili: '/case-studies/naili-gatto-perry/',
+    buildit: '/case-studies/brand-digital-design/'
+  };
+  const caseStudies = Object.values(caseStudyByProject);
 
   const escapeHTML = (value = '') => String(value).replace(/[&<>'"]/g, (character) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -494,10 +495,11 @@
     next.innerHTML = '<span aria-hidden="true">›</span>';
 
     document.querySelectorAll('#work .work-carousel-slide').forEach((slide, index) => {
+      const href = caseStudyByProject[slide.dataset.projectKey || projectKey(slide)] || caseStudies[index];
       const oldButton = Array.from(slide.querySelectorAll('button')).find((button) => /View Case Study|Vedi il case study/i.test(button.textContent));
-      if (oldButton && caseStudies[index]) {
+      if (oldButton && href) {
         const link = document.createElement('a');
-        link.href = caseStudies[index];
+        link.href = href;
         link.className = `${oldButton.className} work-case-cta`;
         link.dataset.caseStudyLink = 'true';
         link.innerHTML = `<span class="work-case-cta__label">${escapeHTML(window.PORTFOLIO_CONTENT?.work?.viewCaseStudy || 'View Case Study')}</span><span class="work-case-cta__arrow" aria-hidden="true">›</span>`;
@@ -537,7 +539,7 @@
   const enhanceCaseStudyLinks = () => {
     const slides = Array.from(document.querySelectorAll('#work .work-carousel-slide:not([data-carousel-clone])'));
     slides.forEach((slide, index) => {
-      const href = caseStudies[index];
+      const href = caseStudyByProject[slide.dataset.projectKey || projectKey(slide)] || caseStudies[index];
       if (!href) return;
 
       let link = slide.querySelector('a[data-case-study-link]');
@@ -736,6 +738,7 @@
     let startScrollLeft = 0;
     let dragged = false;
     let suppressClick = false;
+    const dragThreshold = 10;
 
     const finish = (event) => {
       if (pointerId === null || event.pointerId !== pointerId) return;
@@ -745,7 +748,7 @@
 
       if (!dragged) return;
       suppressClick = true;
-      window.setTimeout(() => { suppressClick = false; }, 0);
+      window.setTimeout(() => { suppressClick = false; }, 350);
       const slides = Array.from(track.querySelectorAll('.work-carousel-slide'));
       const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
       const closest = slides.reduce((best, slide) => {
@@ -770,7 +773,7 @@
     viewport.addEventListener('pointermove', (event) => {
       if (pointerId === null || event.pointerId !== pointerId) return;
       const movement = event.clientX - startX;
-      if (Math.abs(movement) > 5 && !dragged) {
+      if (Math.abs(movement) > dragThreshold && !dragged) {
         dragged = true;
         viewport.classList.add('is-mouse-dragging');
         viewport.setPointerCapture(pointerId);
@@ -788,6 +791,24 @@
       event.stopImmediatePropagation();
       suppressClick = false;
     }, true);
+    return true;
+  };
+
+  const enhanceVisualNavigationFallback = () => {
+    const viewport = document.querySelector('#work .work-carousel-viewport');
+    if (!viewport || viewport.dataset.visualNavigationReady === 'true') return false;
+    viewport.dataset.visualNavigationReady = 'true';
+
+    viewport.addEventListener('click', (event) => {
+      if (event.defaultPrevented || event.target.closest('a, button')) return;
+      const visual = event.target.closest('.work-carousel-visual');
+      if (!visual) return;
+      const slide = visual.closest('.work-carousel-slide');
+      if (!slide) return;
+      const href = caseStudyByProject[slide.dataset.projectKey || projectKey(slide)]
+        || slide.querySelector('a[data-case-study-link], .work-carousel-visual-hit')?.getAttribute('href');
+      if (href) window.location.assign(href);
+    });
     return true;
   };
 
@@ -1058,7 +1079,7 @@
       },
       {
         className: 'naili-project-cover',
-        src: '/assets/naili-gatto-perry/naili-cover-2x.webp',
+        src: '/assets/naili-gatto-perry/naili-cover-hd.png',
         alt: 'Cover illustration for Naili & Gatto Perry, created for the Sicuri e Connessi project',
         label: 'Naili &amp; Gatto Perry'
       },
@@ -1079,14 +1100,24 @@
       visual.classList.add(cover.className);
       visual.dataset.realArtwork = 'true';
       const labelClass = `${cover.className}__label`;
-      const visualMarkup = cover.composition
-        ? `<div class="investment-cover-composition" role="img" aria-label="${cover.alt}">
-            <img class="investment-cover-phone investment-cover-phone--home" src="/assets/investment-screening/home-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
-            <img class="investment-cover-phone investment-cover-phone--analysis" src="/assets/investment-screening/new-analysis-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
-            <img class="investment-cover-phone investment-cover-phone--overview" src="/assets/investment-screening/overview-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
-          </div>`
-        : `<img src="${cover.src}" alt="${cover.alt}" loading="${cover.eager ? 'eager' : 'lazy'}"${cover.eager ? ' fetchpriority="high"' : ''} decoding="async">`;
-      visual.innerHTML = `${visualMarkup}${cover.label ? `<strong class="${labelClass}">${cover.label}</strong>` : ''}`;
+      const expectedArtwork = cover.composition
+        ? visual.querySelector('.investment-cover-composition')
+        : visual.querySelector(`img[src="${cover.src}"]`);
+
+      if (visual.dataset.projectCover !== cover.className || !expectedArtwork) {
+        const stableHitArea = visual.querySelector('.work-carousel-visual-hit');
+        stableHitArea?.remove();
+        const visualMarkup = cover.composition
+          ? `<div class="investment-cover-composition" role="img" aria-label="${cover.alt}">
+              <img class="investment-cover-phone investment-cover-phone--home" src="/assets/investment-screening/home-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+              <img class="investment-cover-phone investment-cover-phone--analysis" src="/assets/investment-screening/new-analysis-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+              <img class="investment-cover-phone investment-cover-phone--overview" src="/assets/investment-screening/overview-phone-mockup.webp" alt="" width="941" height="1672" loading="lazy" decoding="async">
+            </div>`
+          : `<img src="${cover.src}" alt="${cover.alt}" loading="${cover.eager ? 'eager' : 'lazy'}"${cover.eager ? ' fetchpriority="high"' : ''} decoding="async">`;
+        visual.innerHTML = `${visualMarkup}${cover.label ? `<strong class="${labelClass}">${cover.label}</strong>` : ''}`;
+        if (stableHitArea) visual.append(stableHitArea);
+        visual.dataset.projectCover = cover.className;
+      }
     });
   };
 
@@ -1404,6 +1435,7 @@
     enhanceInfiniteCarousel();
     syncCarouselClones();
     enhanceMouseDragCarousel();
+    enhanceVisualNavigationFallback();
     enhanceApproachIcons();
     enhanceApproachScrollReveal();
     enhanceEditorialMotion();

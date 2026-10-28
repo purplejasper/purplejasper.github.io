@@ -1114,8 +1114,11 @@ html.language-changing body {
     linear-gradient(90deg, rgb(9 5 13 / .3), transparent 50%);
 }
 
-#work .naili-project-cover img {
-  object-position: center 22%;
+#work .work-carousel-visual.naili-project-cover img {
+  left: -4px;
+  right: auto;
+  width: calc(100% + 4px);
+  object-position: center 24%;
 }
 
 #work .naili-project-cover__label {

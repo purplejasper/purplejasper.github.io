@@ -44,14 +44,14 @@ const STUDIES_EN = {
     heroAlt: 'Investment Screening Assistant concept shown across three mobile interface mockups',
     results: [['1', 'structured screening workflow'], ['3', 'decision layers: market, area and planning'], ['Contextual AI', 'supporting professional judgement']],
     note: 'The outcome is a high-fidelity mobile prototype shaped through qualitative feedback from two real estate professionals. It explores how data visualisation, urban-planning information and conversational AI can coexist without removing professional control.',
-    next: 'arkipiu', nextTitle: 'Arkipiù Website'
+    next: 'arkipiu', nextTitle: 'Corporate Website Redesign'
   },
   'arkipiu': {
-    index: '03', client: 'Arkipiù', title: 'Corporate Website Redesign',
-    intro: 'An end-to-end redesign across 12 pages to clarify the brand, strengthen content hierarchy and create a more coherent responsive experience.',
+    index: '03', client: 'Real Estate', title: 'Corporate Website Redesign',
+    intro: 'A 12-page redesign created to clarify a Real Estate Developer’s positioning and organise content, interfaces and contact journeys.',
     tags: ['UI Design', 'Information Architecture', 'Responsive Design', 'Design QA'],
     challenge: 'From perception gap to experience.',
-    challengeText: 'Client feedback revealed an ambiguous brand perception: Arkipiù was sometimes perceived as a construction company rather than a real estate developer. The website also showed inconsistencies in navigation, content hierarchy and responsive behaviour.',
+    challengeText: 'Customer feedback revealed an ambiguous perception: the company was sometimes seen as a construction business rather than a Real Estate Developer. The website also showed inconsistencies in navigation, content hierarchy and responsive behaviour.',
     steps: [
       ['01', 'Discover', 'Website audit, client feedback, target research and competitor analysis.'],
       ['02', 'Define', 'Three target personas — Investor, Architect and Business Partner — shaped the priorities and key findings.'],
@@ -62,11 +62,11 @@ const STUDIES_EN = {
     visual: 'Clearer.\nStronger.\nResponsive.',
     visualHeading: 'A responsive interface system built for clearer paths and stronger brand perception.',
     heroImage: '/assets/arkipiu/contact-page-full.webp',
-    heroAlt: 'Arkipiù contact page redesign with lead form and orange visual system',
+    heroAlt: 'Responsive corporate website redesign shown on desktop and mobile',
     media: [
-      { src: '/assets/arkipiu/contact-page-full.webp', alt: 'Full Arkipiù contact page with lead form and contact information', caption: 'Contact page and lead form system', layout: 'wide' },
-      { src: '/assets/arkipiu/areas-of-intervention.webp', alt: 'Arkipiù areas of intervention presented as a responsive card system', caption: 'Areas of intervention content system', layout: 'contain' },
-      { src: '/assets/arkipiu/esg-responsive-page.webp', alt: 'Arkipiù ESG page displayed on laptop and mobile', caption: 'New ESG page across desktop and mobile', layout: 'contain' }
+      { src: '/assets/arkipiu/contact-page-full.webp', alt: 'Corporate contact page with lead form and contact information', caption: 'Contact page and lead form system', layout: 'wide' },
+      { src: '/assets/arkipiu/areas-of-intervention.webp', alt: 'Business areas presented as a responsive card system', caption: 'Service-area content system', layout: 'contain' },
+      { src: '/assets/arkipiu/esg-responsive-page.webp', alt: 'ESG page displayed on laptop and mobile', caption: 'New ESG page across desktop and mobile', layout: 'contain' }
     ],
     results: [['12', 'pages redesigned'], ['+89%', 'unique visitors'], ['+111%', 'organic Google sessions YoY']],
     note: 'Source: Wix Analytics 2024–2025. Website performance measured year over year following the redesign.',
@@ -169,11 +169,12 @@ Object.assign(STUDIES_IT['investment-screening-assistant'], {
 });
 
 Object.assign(STUDIES_IT.arkipiu, {
-  title: 'Redesign del sito corporate',
-  intro: 'Un redesign end-to-end di 12 pagine per chiarire il brand, rafforzare la gerarchia dei contenuti e costruire un’esperienza responsive più coerente.',
+  title: 'Corporate Website Redesign',
+  client: 'Real Estate',
+  intro: 'Un redesign di 12 pagine per chiarire il posizionamento di un Real Estate Developer e organizzare contenuti, interfacce e percorsi di contatto.',
   tags: ['UI Design', 'Architettura dell’informazione', 'Design responsive', 'Design QA'],
   challenge: 'Dal gap di percezione all’esperienza.',
-  challengeText: 'I feedback dei clienti mostravano una percezione ambigua: Arkipiù veniva talvolta interpretata come impresa edile anziché come real estate developer. Il sito presentava inoltre incoerenze nella navigazione, nella gerarchia dei contenuti e nel comportamento responsive.',
+  challengeText: 'I feedback dei clienti mostravano una percezione ambigua: l’azienda veniva talvolta interpretata come impresa edile anziché come Real Estate Developer. Il sito presentava inoltre incoerenze nella navigazione, nella gerarchia dei contenuti e nel comportamento responsive.',
   steps: [
     ['01', 'Scoprire', 'Audit del sito, feedback dei clienti, ricerca sul target e analisi dei competitor.'],
     ['02', 'Definire', 'Tre personas — Investitore, Architetto e Business Partner — hanno guidato priorità e insight.'],
@@ -183,14 +184,14 @@ Object.assign(STUDIES_IT.arkipiu, {
   ],
   visual: 'Più chiaro.\nPiù forte.\nResponsive.',
   visualHeading: 'Un sistema di interfaccia responsive per percorsi più chiari e una percezione di brand più solida.',
-  heroAlt: 'Redesign della pagina contatti Arkipiù con form lead e sistema visivo arancione',
+  heroAlt: 'Redesign responsive del sito corporate mostrato su desktop e mobile',
   results: [['12', 'pagine riprogettate'], ['+89%', 'visitatori unici'], ['+111%', 'sessioni organiche Google YoY']],
   note: 'Fonte: Wix Analytics 2024–2025. Performance misurate anno su anno dopo il redesign.'
 });
 STUDIES_IT.arkipiu.media = [
-  { src: '/assets/arkipiu/contact-page-full.webp', alt: 'Pagina contatti Arkipiù completa di form lead e informazioni', caption: 'Pagina contatti e sistema del form lead', layout: 'wide' },
-  { src: '/assets/arkipiu/areas-of-intervention.webp', alt: 'Aree di intervento Arkipiù organizzate in un sistema di card responsive', caption: 'Sistema dei contenuti per le aree di intervento', layout: 'contain' },
-  { src: '/assets/arkipiu/esg-responsive-page.webp', alt: 'Pagina ESG Arkipiù su laptop e mobile', caption: 'Nuova pagina ESG su desktop e mobile', layout: 'contain' }
+  { src: '/assets/arkipiu/contact-page-full.webp', alt: 'Pagina contatti corporate completa di form lead e informazioni', caption: 'Pagina contatti e sistema del form lead', layout: 'wide' },
+  { src: '/assets/arkipiu/areas-of-intervention.webp', alt: 'Ambiti di intervento organizzati in un sistema di card responsive', caption: 'Sistema dei contenuti per gli ambiti di intervento', layout: 'contain' },
+  { src: '/assets/arkipiu/esg-responsive-page.webp', alt: 'Pagina ESG su laptop e mobile', caption: 'Nuova pagina ESG su desktop e mobile', layout: 'contain' }
 ];
 
 Object.assign(STUDIES_IT['naili-gatto-perry'], {
@@ -280,7 +281,7 @@ const footerMarkup = () => `
           <span class="behance-mark" aria-hidden="true"><b>B</b><i>ē</i></span>
         </a>
       </div>
-      <a class="footer-back-to-top" href="#top" aria-label="${ui.backToTop}" title="${ui.backToTop}">↑</a>
+      <a class="footer-back-to-top" href="#case-study" aria-label="${ui.backToTop}" title="${ui.backToTop}">↑</a>
     </div>
   </footer>`;
 
@@ -616,7 +617,201 @@ if (slug === 'investment-screening-assistant') {
     </article>
 
     <a class="case-next" href="/case-studies/arkipiu/">
-      <span><small>${ui.nextCaseStudy}</small><strong>Arkipiù Website</strong></span><span class="case-next__arrow" aria-hidden="true">→</span>
+      <span><small>${ui.nextCaseStudy}</small><strong>Corporate Website Redesign</strong></span><span class="case-next__arrow" aria-hidden="true">→</span>
+    </a>
+    ${footerMarkup()}
+  `;
+}
+
+const CORPORATE_COPY = {
+  it: {
+    eyebrow: '03 — Real Estate',
+    title: 'Corporate Website Redesign',
+    intro: '12 pagine per chiarire il posizionamento di un Real Estate Developer e organizzare contenuti, interfacce e percorsi di contatto.',
+    coverAlt: 'Pagina contatti del sito corporate utilizzata come visual di copertina',
+    tags: ['UI Design', 'Architettura dell’informazione', 'Design responsive', 'Design QA'],
+    metadata: [
+      ['Ruolo', 'UI & Visual Designer'],
+      ['Ambito', '12 pagine · UX/UI e Web'],
+      ['Collaborazione', 'Responsabile di progetto e Marketing'],
+      ['Piattaforma', 'Wix Studio']
+    ],
+    problemTitle: 'Il problema da risolvere',
+    problemText: 'I feedback dei clienti evidenziavano una percezione ambigua: l’azienda veniva talvolta associata a un’impresa edile, anziché riconosciuta come Real Estate Developer. Il sito presentava inoltre gerarchie poco chiare e percorsi di contatto frammentati.',
+    contributionTitle: 'Il mio contributo',
+    contributionText: 'Ho collaborato alle attività di UX Research e all’analisi con il responsabile di progetto, definito l’architettura dei contenuti, progettato interfacce responsive e seguito l’implementazione in Wix Studio.',
+    choicesTitle: 'Dall’analisi alle scelte',
+    choices: [
+      ['01', 'Posizionamento', 'Rendere immediatamente comprensibile il ruolo dell’azienda e la sua proposta di valore.'],
+      ['02', 'Struttura dei contenuti', 'Organizzare pagine, ambiti e priorità informative in una gerarchia coerente.'],
+      ['03', 'Percorsi di contatto', 'Rafforzare le CTA e rendere più chiari i punti di ingresso verso il contatto.']
+    ],
+    areasTitle: 'Organizzare gli ambiti di intervento',
+    areasAlt: 'Sezione del sito con sei ambiti di intervento organizzati in card',
+    areasCaption: 'Sistema di card per gli ambiti di intervento',
+    areasCalloutTitle: 'Icone chiare, contenuti organizzati.',
+    areasCalloutText: 'Una sezione progettata per comunicare a colpo d’occhio le principali aree di intervento, mantenendo coerenza tra icone, titoli e descrizioni.',
+    callouts: [
+      ['Categorie riconoscibili', 'Icone e label rendono ogni area subito distinguibile.'],
+      ['Gerarchia coerente', 'Una struttura ripetibile facilita confronto e scansione.']
+    ],
+    contactTitle: 'Il percorso verso il contatto',
+    contactLead: 'Messaggio, recapiti e form in una struttura a due colonne.',
+    contactAlt: 'Pagina contatti desktop con messaggio, recapiti e form',
+    contactCaption: 'Pagina contatti · interfaccia desktop',
+    metricsTitle: 'Portata e indicatori di traffico',
+    metrics: [
+      ['12', 'pagine riprogettate'],
+      ['+89%', 'visitatori unici'],
+      ['+111%', 'sessioni organiche Google']
+    ],
+    source: 'Fonte: Wix Analytics · confronto anno su anno 2024–2025',
+    nextTitle: 'Rallye Monte-Carlo 2026'
+  },
+  en: {
+    eyebrow: '03 — Real Estate',
+    title: 'Corporate Website Redesign',
+    intro: 'A 12-page redesign created to clarify a Real Estate Developer’s positioning and organise content, interfaces and contact journeys.',
+    coverAlt: 'Corporate contact page used as the case-study cover visual',
+    tags: ['UI Design', 'Information Architecture', 'Responsive Design', 'Design QA'],
+    metadata: [
+      ['Role', 'UI & Visual Designer'],
+      ['Scope', '12 pages · UX/UI & Web'],
+      ['Collaboration', 'Project Lead & Marketing'],
+      ['Platform', 'Wix Studio']
+    ],
+    problemTitle: 'The problem to solve',
+    problemText: 'Customer feedback pointed to an ambiguous perception: the company was sometimes associated with a construction business instead of being recognised as a Real Estate Developer. The website also had unclear hierarchies and fragmented contact journeys.',
+    contributionTitle: 'My contribution',
+    contributionText: 'I collaborated on UX Research and analysis with the project lead, shaped the content architecture, designed responsive interfaces and supported implementation in Wix Studio.',
+    choicesTitle: 'From analysis to decisions',
+    choices: [
+      ['01', 'Positioning', 'Make the company’s role and value proposition immediately understandable.'],
+      ['02', 'Content structure', 'Organise pages, service areas and information priorities into a coherent hierarchy.'],
+      ['03', 'Contact journeys', 'Strengthen calls to action and clarify the paths leading to contact.']
+    ],
+    areasTitle: 'Organising the service areas',
+    areasAlt: 'Website section with six service areas organised as cards',
+    areasCaption: 'Card system for the main service areas',
+    areasCalloutTitle: 'Clear icons. Structured content.',
+    areasCalloutText: 'A section designed to communicate the main service areas at a glance, keeping icons, headings and descriptions consistent.',
+    callouts: [
+      ['Recognisable categories', 'Icons and labels make every area immediately distinguishable.'],
+      ['Consistent hierarchy', 'A repeatable structure makes comparison and scanning easier.']
+    ],
+    contactTitle: 'The path to contact',
+    contactLead: 'Message, contact details and form within a clear two-column structure.',
+    contactAlt: 'Desktop contact page with message, contact details and form',
+    contactCaption: 'Contact page · desktop interface',
+    metricsTitle: 'Scope and traffic indicators',
+    metrics: [
+      ['12', 'pages redesigned'],
+      ['+89%', 'unique visitors'],
+      ['+111%', 'organic Google sessions']
+    ],
+    source: 'Source: Wix Analytics · year-over-year comparison 2024–2025',
+    nextTitle: 'Rallye Monte-Carlo 2026'
+  }
+};
+
+if (slug === 'arkipiu') {
+  const copy = CORPORATE_COPY[language];
+  const calloutIcons = [
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><rect x="14" y="14" width="6" height="6" rx="1"></rect></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.5-8 4.5-8-4.5L12 3Z"></path><path d="m4 12 8 4.5 8-4.5"></path><path d="m4 16.5 8 4.5 8-4.5"></path></svg>'
+  ];
+  document.title = `${copy.title} — Marica Mariniello`;
+  document.querySelector('#case-study').innerHTML = `
+    <nav id="top" class="case-nav" aria-label="${ui.navigationLabel}">
+      <a class="case-nav__brand" href="/">Marica Mariniello</a>
+      <div class="case-nav__links">
+        <a href="/#work">${ui.work}</a>
+        <a href="/#about">${ui.about}</a>
+        ${languageSwitchMarkup()}
+        <a class="case-nav__contact" href="/#contact">${ui.contact}</a>
+      </div>
+    </nav>
+
+    <article class="cwr-case">
+      <header class="cwr-cover">
+        <img class="cwr-cover__backdrop" src="/assets/arkipiu/contact-page-full.webp" alt="${copy.coverAlt}" width="2048" height="959" loading="eager" fetchpriority="high" decoding="async">
+        <span class="cwr-cover__shade" aria-hidden="true"></span>
+        <div class="cwr-shell cwr-cover__inner">
+          <div class="cwr-cover__copy">
+            <p class="cwr-kicker">${copy.eyebrow}</p>
+            <h1>${copy.title}</h1>
+            <p class="cwr-cover__intro">${copy.intro}</p>
+            <div class="case-meta cwr-cover__tags" aria-label="${ui.projectMetadata}">${copy.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
+          </div>
+        </div>
+      </header>
+
+      <section class="cwr-meta-band" aria-label="${ui.projectMetadata}">
+        <div class="cwr-shell">
+          <dl class="cwr-meta" aria-label="${ui.projectMetadata}">
+            ${copy.metadata.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}
+          </dl>
+        </div>
+      </section>
+
+      <section id="cwr-overview" class="cwr-section cwr-section--overview">
+        <div class="cwr-shell">
+          <div class="cwr-overview-grid">
+            <article><h2>${copy.problemTitle}</h2><p>${copy.problemText}</p></article>
+            <article><h2>${copy.contributionTitle}</h2><p>${copy.contributionText}</p></article>
+          </div>
+          <h2 class="cwr-section-title">${copy.choicesTitle}</h2>
+          <div class="cwr-choice-grid">
+            ${copy.choices.map(([number, title, body]) => `<article><span>${number}</span><h3>${title}</h3><p>${body}</p></article>`).join('')}
+          </div>
+        </div>
+      </section>
+
+      <section class="cwr-section cwr-section--areas">
+        <div class="cwr-shell">
+          <h2 class="cwr-section-title">${copy.areasTitle}</h2>
+          <div class="cwr-feature-grid">
+            <figure class="cwr-browser">
+              <div class="cwr-browser__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <img src="/assets/arkipiu/areas-of-intervention.webp" alt="${copy.areasAlt}" width="2048" height="1649" loading="lazy" decoding="async">
+              <figcaption>${copy.areasCaption}</figcaption>
+            </figure>
+            <div class="cwr-feature-copy">
+              <h3>${copy.areasCalloutTitle}</h3>
+              <p>${copy.areasCalloutText}</p>
+              <div class="cwr-callouts">
+                ${copy.callouts.map(([title, text], index) => `<article><span class="cwr-callout-icon">${calloutIcons[index]}</span><div><h4>${title}</h4><p>${text}</p></div></article>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cwr-section cwr-section--contact">
+        <div class="cwr-shell">
+          <h2 class="cwr-section-title">${copy.contactTitle}</h2>
+          <p class="cwr-section-lead">${copy.contactLead}</p>
+          <figure class="cwr-browser cwr-browser--wide">
+            <div class="cwr-browser__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/assets/arkipiu/contact-page-full.webp" alt="${copy.contactAlt}" width="2048" height="959" loading="lazy" decoding="async">
+            <figcaption>${copy.contactCaption}</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="cwr-section cwr-section--metrics">
+        <div class="cwr-shell">
+          <h2 class="cwr-section-title">${copy.metricsTitle}</h2>
+          <div class="cwr-metric-grid">
+            ${copy.metrics.map(([value, label]) => `<article><strong>${value}</strong><span>${label}</span></article>`).join('')}
+          </div>
+          <p class="cwr-source">${copy.source}</p>
+        </div>
+      </section>
+    </article>
+
+    <a class="case-next" href="/case-studies/rallye-monte-carlo/">
+      <span><small>${ui.nextCaseStudy}</small><strong>${copy.nextTitle}</strong></span><span class="case-next__arrow" aria-hidden="true">→</span>
     </a>
     ${footerMarkup()}
   `;
