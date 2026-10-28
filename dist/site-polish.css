@@ -80,7 +80,7 @@ header nav {
   padding: .5rem .6rem .5rem 1.25rem !important;
   gap: .35rem !important;
   border: 1px solid rgb(247 243 250 / .15) !important;
-  border-radius: 1.15rem !important;
+  border-radius: 999px !important;
   background: rgb(12 8 18 / .76) !important;
   box-shadow: 0 12px 40px rgb(0 0 0 / .24);
   backdrop-filter: blur(18px);
@@ -89,11 +89,11 @@ header nav {
 
 header nav > a {
   flex: 0 0 auto;
-  border-radius: .78rem !important;
+  border-radius: 999px !important;
   color: rgb(247 243 250 / .78) !important;
   font-family: Manrope, ui-sans-serif, system-ui, sans-serif !important;
   font-size: .875rem !important;
-  font-weight: 500 !important;
+  font-weight: 700 !important;
   line-height: 1.25rem !important;
   text-decoration: none;
   transition: color .2s ease, background-color .2s ease, transform .2s ease;
@@ -129,8 +129,13 @@ header nav > a[data-top-card-link='true']:focus-visible {
 }
 
 header nav > a[href='#contact'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
   margin-left: .25rem;
   padding: .75rem 1.25rem !important;
+  border-radius: 999px !important;
   color: #fff !important;
   background: linear-gradient(135deg, #7f45bf, #ad55c8) !important;
   box-shadow: 0 8px 24px rgb(127 69 191 / .3);
@@ -168,7 +173,7 @@ header nav > a[href='#contact']:focus-visible {
   top: 3px;
   bottom: 3px;
   left: 3px;
-  width: 42px;
+  width: calc(50% - 3px);
   border-radius: 999px;
   background: linear-gradient(135deg, var(--portfolio-lilac), #a96bd2);
   box-shadow: 0 6px 16px rgb(95 49 128 / .36);
@@ -177,22 +182,27 @@ header nav > a[href='#contact']:focus-visible {
 }
 
 .language-switch[data-language='en'] .language-switch__thumb {
-  transform: translateX(44px);
+  transform: translateX(100%);
 }
 
 .language-switch button {
   position: relative;
   z-index: 1;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   min-width: 0;
   padding: 0;
   border: 0;
   border-radius: 999px;
   color: rgb(247 243 250 / .62);
   background: transparent;
-  font: 700 .67rem/1 Manrope, ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: .08em;
+  font: 800 .67rem/1 Manrope, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+  text-align: center;
+  text-indent: 0;
   cursor: pointer;
   transition: color .2s ease;
 }
@@ -1215,15 +1225,14 @@ html.language-changing body {
 
 #work .work-carousel-slide a[data-case-study-link] {
   position: relative;
-  display: inline-grid;
-  grid-template-columns: auto 1.5rem;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  column-gap: .65rem;
+  gap: .7rem;
   align-self: center;
   min-width: 244px;
   min-height: 58px;
-  padding: .35rem 1.35rem;
+  padding: .35rem 1.15rem .35rem 1.35rem;
   border-radius: 999px;
   color: #fff;
   text-decoration: none;
@@ -1240,28 +1249,35 @@ html.language-changing body {
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
   white-space: nowrap;
 }
 
 #work .work-case-cta__arrow {
   position: static;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-grid;
+  place-items: center;
   flex: 0 0 auto;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.55rem;
+  height: 1.55rem;
   color: #fff;
   border: 0;
   background: transparent;
-  font-family: Manrope, sans-serif;
-  font-size: 1.65rem;
-  font-weight: 500;
-  line-height: 1;
   transform: none;
   transition: transform .32s cubic-bezier(.16, 1, .3, 1), background-color .25s ease;
+}
+
+#work .work-case-cta__arrow svg {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 #work .work-carousel-slide a[data-case-study-link]:hover,
@@ -1274,6 +1290,15 @@ html.language-changing body {
 #work .work-carousel-slide a[data-case-study-link]:hover .work-case-cta__arrow,
 #work .work-carousel-slide a[data-case-study-link]:focus-visible .work-case-cta__arrow {
   transform: translateX(4px);
+}
+
+/* Every interactive control keeps a consistently bold label. */
+button,
+header nav > a,
+#work .work-carousel-slide a[data-case-study-link],
+.approach-about-link,
+#contact a[href^='mailto:'] {
+  font-weight: 700 !important;
 }
 
 #work .work-carousel-arrow {
@@ -2228,7 +2253,7 @@ footer a:focus-visible { color: #e0b4ee !important; }
     padding: .38rem .42rem .38rem .75rem !important;
     gap: .1rem !important;
     overflow: hidden;
-    border-radius: 1rem !important;
+    border-radius: 999px !important;
   }
 
   header nav > a {
@@ -2256,11 +2281,11 @@ footer a:focus-visible { color: #e0b4ee !important; }
   }
 
   header nav .language-switch__thumb {
-    width: 38px;
+    width: calc(50% - 3px);
   }
 
   header nav .language-switch[data-language='en'] .language-switch__thumb {
-    transform: translateX(40px);
+    transform: translateX(100%);
   }
 
   #top.hero-merged { min-height: 1150px !important; }

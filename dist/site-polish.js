@@ -1,5 +1,5 @@
 (() => {
-  const styleVersion = '107';
+  const styleVersion = '109';
   const polishStyles = [...document.querySelectorAll('link[href^="/site-polish.css"]')];
   const currentStyles = polishStyles.shift() || document.createElement('link');
   polishStyles.forEach((stylesheet) => stylesheet.remove());
@@ -20,6 +20,12 @@
   const escapeHTML = (value = '') => String(value).replace(/[&<>'"]/g, (character) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
   })[character]);
+
+  const caseStudyCtaMarkup = (label) => `
+    <span class="work-case-cta__label">${escapeHTML(label)}</span>
+    <span class="work-case-cta__arrow" aria-hidden="true">
+      <svg viewBox="0 0 16 16" focusable="false"><path d="M5 3.25 9.75 8 5 12.75"></path></svg>
+    </span>`;
 
   const currentLanguage = () => window.PORTFOLIO_LANGUAGE === 'it' ? 'it' : 'en';
 
@@ -502,7 +508,7 @@
         link.href = href;
         link.className = `${oldButton.className} work-case-cta`;
         link.dataset.caseStudyLink = 'true';
-        link.innerHTML = `<span class="work-case-cta__label">${escapeHTML(window.PORTFOLIO_CONTENT?.work?.viewCaseStudy || 'View Case Study')}</span><span class="work-case-cta__arrow" aria-hidden="true">›</span>`;
+        link.innerHTML = caseStudyCtaMarkup(window.PORTFOLIO_CONTENT?.work?.viewCaseStudy || 'View Case Study');
         oldButton.replaceWith(link);
       }
 
@@ -557,7 +563,7 @@
       link.href = href;
       link.classList.add('work-case-cta');
       if (!link.querySelector('.work-case-cta__label')) {
-        link.innerHTML = `<span class="work-case-cta__label">${escapeHTML(window.PORTFOLIO_CONTENT?.work?.viewCaseStudy || 'View Case Study')}</span><span class="work-case-cta__arrow" aria-hidden="true">›</span>`;
+        link.innerHTML = caseStudyCtaMarkup(window.PORTFOLIO_CONTENT?.work?.viewCaseStudy || 'View Case Study');
       }
 
       const visual = slide.querySelector('.work-carousel-visual');
